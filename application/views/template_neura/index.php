@@ -519,6 +519,34 @@ $(document).ready(function(){
 });  
 </script>
 
+<script>  
+$(document).ready(function(){   
+    $("#btn-tambah-form").click(function(){      
+        var jumlah = parseInt($("#jumlah-form").val());    
+        var nextform = jumlah + 1; 
+        $("#insert-form").append('<div class="table-responsive">'+
+                    '<table class="table table-hover display" style="width:100%">'+
+                            '<tr>'+
+                                '<td style="width:80%">'+
+                                    '<textarea class="form-control" name="item_name[]" placeholder="Description Detail"></textarea>'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input type="number" name="pre_qty[]" placeholder="Qty" class="form-control" id="request_user_id" autocomplete="off">'+
+                                '</td>'+
+                                '<td>'+
+                                    '<button type="button" class="btn bg-danger" id="btn-reset-form" data-dismiss="modal">Remove</button>'+
+                                '</td>'+
+                            '</tr>'+
+                    '</table>'+
+            '</div>');            
+        $("#jumlah-form").val(nextform); 
+    });       
+        $("#btn-reset-form").click(function(){      
+            $("#insert-form").html("");      
+            $("#jumlah-form").val("1"); 
+        });  
+});  
+</script>
 
 </body>
 </html>

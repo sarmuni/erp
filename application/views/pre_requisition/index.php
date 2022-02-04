@@ -12,14 +12,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_pre_requisition">
+            <!-- <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_pre_requisition">
+                <i class="fas fa-user-plus"></i>
+            </a> -->
+            <a role="button" href="<?php base_url(); ?>pre_requisition/form" class="btn bg-danger" title="Refresh">
                 <i class="fas fa-user-plus"></i>
             </a>
 
             <a role="button" href="#" class="btn bg-danger" title="Print">
                 <i class="fas fa-print"></i>
             </a>
-            <a role="button" href="<?php base_url('pre_requisition'); ?>" class="btn bg-danger" title="Refresh">
+            <a role="button" href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger" title="Refresh">
                 <i class="fas fa-sync-alt"></i>
             </a>
             <hr>

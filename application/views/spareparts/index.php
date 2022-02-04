@@ -331,14 +331,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php
 foreach ($spareparts as $i) :
     $id                     = $i['id'];
-    $gln_spt_in              = $i['gln_spt_in'];
-    $parts_name         = $i['parts_name'];
-    $parts_number          = $i['parts_number'];
+    $gln_spt_in             = $i['gln_spt_in'];
     $origin                 = $i['origin'];
     $supplier_id            = $i['supplier_id'];
-    // $net_weight             = $i['net_weight'];
+    $parts_name             = $i['parts_name'];
+    $parts_number           = $i['parts_number'];
+    $machinery_name         = $i['machinery_name'];
     $unit_of_measurment     = $i['unit_of_measurment'];
     $qty                    = $i['qty'];
+    $critical               = $i['critical'];
+    $minimum_stock          = $i['minimum_stock'];
+    $maximum_stock          = $i['maximum_stock'];
     $made_in                = $i['made_in'];
     $factory_location_id    = $i['factory_location_id'];
     $zone_division_id       = $i['zone_division_id'];
@@ -355,7 +358,7 @@ foreach ($spareparts as $i) :
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form Edit spareparts</h5>
+                    <h5 class="modal-title">Form Edit Spareparts</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -371,31 +374,31 @@ foreach ($spareparts as $i) :
 
                             <form autocomplete="off" action="<?php echo base_url('spareparts/edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
 
-                                <div class="form-row">
+                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="gln_spt_in">Global Location Number</label>
                                     <input type="text" name="gln_spt_in" readonly required class="form-control" id="gln_spt_in" value="<?php echo $gln_spt_in; ?>">
                                     <?= form_error('gln_spt_in', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="parts_number">Serial Number</label>
+                                    <label for="parts_number">Parts Number</label>
                                     <input type="text" name="parts_number" required class="form-control" id="parts_number" value="<?php echo $parts_number; ?>">
                                     <?= form_error('parts_number', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="container_number">Container Number</label>
-                                    <input type="text" name="container_number" required class="form-control" id="container_number" value="<?php echo $container_number; ?>">
-                                    <?= form_error('container_number', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="parts_name">Parts Name</label>
+                                    <input type="text" name="parts_name" required class="form-control" id="parts_name" value="<?php echo $parts_name; ?>">
+                                    <?= form_error('parts_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="driver_id">Driver Name</label>
                                     <select id="driver_id" name="driver_id" required class="form-control" value="<?= set_value('driver_id'); ?>">
                                         <option value="0">--Select--</option>
                                         <?php foreach ($driver as $row) {?>
-                                            <?php if ($row['id']==$driver_id) {?>
-                                                <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper($row['name']); ?></option>
+                                            <?php if ($row['id']==$driver_id) { ?>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper($row['name']); ?></option>
                                             <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper($row['name']); ?></option>
                                             <?php } ?>
@@ -408,9 +411,9 @@ foreach ($spareparts as $i) :
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="parts_name">spareparts Name</label>
-                                    <input type="text" name="parts_name" required class="form-control" id="parts_name" value="<?php echo $parts_name; ?>">
-                                    <?= form_error('parts_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="machinery_name">Machinery Name</label>
+                                    <input type="text" name="machinery_name" required class="form-control" id="machinery_name" value="<?php echo $machinery_name; ?>">
+                                    <?= form_error('machinery_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="origin">Origin</label>
@@ -422,14 +425,14 @@ foreach ($spareparts as $i) :
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="packing_list">Packing List</label>
-                                    <input type="text" name="packing_list" required class="form-control" id="packing_list" value="<?php echo $packing_list; ?>">
-                                    <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="minimum_stock">Minimum Stock</label>
+                                    <input type="text" name="minimum_stock" required class="form-control" id="minimum_stock" value="<?php echo $minimum_stock; ?>">
+                                    <?= form_error('minimum_stock', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="net_weight">Net Weight</label>
-                                    <input type="text" name="net_weight" required class="form-control" id="net_weight" value="<?php echo $net_weight; ?>">
-                                    <?= form_error('net_weight', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="maximum_stock">Maximum Stock</label>
+                                    <input type="text" name="maximum_stock" required class="form-control" id="maximum_stock" value="<?php echo $maximum_stock; ?>">
+                                    <?= form_error('maximum_stock', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
 
@@ -448,6 +451,28 @@ foreach ($spareparts as $i) :
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    <label for="packing_list">Packing List</label>
+                                    <input type="text" name="packing_list" required class="form-control" id="packing_list" value="<?php echo $packing_list; ?>">
+                                    <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="critical">Critical</label>
+                                    <select id="critical" name="critical" required class="form-control" value="<?= set_value('critical'); ?>">
+                                        <option value="0">--Select--</option>
+                                            <?php if ($critical==1) { ?>
+                                                <option value="1"selected>Yes</option>
+                                                <option value="2">No</option>
+                                            <?php }else{ ?>
+                                                <option value="1">Yes</option>
+                                                <option value="2"selected>No</option>
+                                            <?php } ?>
+                                    </select>
+                                    <?= form_error('critical', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label for="made_in">Made In</label>
                                     <input type="text" name="made_in" required class="form-control" id="made_in" value="<?php echo $made_in; ?>">
                                     <?= form_error('made_in', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -457,16 +482,29 @@ foreach ($spareparts as $i) :
                                     <select id="supplier_id" name="supplier_id" required class="form-control" value="<?= set_value('supplier_id'); ?>">
                                         <option value="0">--Select--</option>
                                         <?php foreach ($suppliers as $row) {?>
-                                            <?php if ($row['id']==$supplier_id) {?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['supplierName'])); ?></option>
-                                            <?php }else{?>
+                                            <?php if ($row['id']==$supplier_id) { ?>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper(($row['supplierName'])); ?></option>
+                                            <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['supplierName'])); ?></option>
                                             <?php } ?>
-
                                         <?php } ?>
                                     </select>
                                     <?= form_error('supplier_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="packing_list">Packing List</label>
+                                    <input type="text" name="packing_list" required class="form-control" id="packing_list" value="<?php echo $packing_list; ?>">
+                                    <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="container_number">Container Number</label>
+                                    <input type="text" name="container_number" required class="form-control" id="container_number" value="<?php echo $container_number; ?>">
+                                    <?= form_error('container_number', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </div>
+
                             </div>
 
                             <div class="form-row">
@@ -476,11 +514,10 @@ foreach ($spareparts as $i) :
                                         <option value="0">--Select--</option>
                                         <?php foreach ($factory_location as $row) {?>
                                             <?php if ($row['id']==$factory_location_id) { ?>
-                                                <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
-                                            <?php }else{?>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper(($row['name'])); ?></option>
+                                            <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
-
                                         <?php } ?>
                                     </select>
                                     <?= form_error('factory_location_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -492,11 +529,10 @@ foreach ($spareparts as $i) :
                                         <option value="0">--Select--</option>
                                         <?php foreach ($zone_division as $row) {?>
                                             <?php if ($row['id']==$zone_division_id) { ?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
+                                                <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
-                                            
                                         <?php } ?>
                                     </select>
                                     <?= form_error('zone_division_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -509,9 +545,9 @@ foreach ($spareparts as $i) :
                                     <select id="area_zone_id" name="area_zone_id" required class="form-control" value="<?= set_value('area_zone_id'); ?>">
                                         <option value="0">--Select--</option>
                                         <?php foreach ($area_zone as $row) {?>
-                                            <?php if ($row['id']==$area_zone_id) {?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
-                                            <?php }else{?>
+                                            <?php if ($row['id']==$area_zone_id) { ?>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper(($row['name'])); ?></option>
+                                            <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
                                         <?php } ?>
@@ -525,7 +561,7 @@ foreach ($spareparts as $i) :
                                         <option value="0">--Select--</option>
                                         <?php foreach ($room_zone as $row) {?>
                                             <?php if ($row['id']==$room_area_id) { ?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
@@ -541,12 +577,11 @@ foreach ($spareparts as $i) :
                                     <select id="rack_location_id" name="rack_location_id" required class="form-control" value="<?= set_value('rack_location_id'); ?>">
                                         <option value="0">--Select--</option>
                                         <?php foreach ($rack_location as $row) {?>
-                                            <?php if ($row['id']==$rack_location_id) {?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
+                                            <?php if ($row['id']==$rack_location_id) { ?>
+                                                <option value="<?php echo $row['id']; ?>" selected><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php }else{ ?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
-
                                         <?php } ?>
                                     </select>
                                     <?= form_error('rack_location_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -557,9 +592,9 @@ foreach ($spareparts as $i) :
                                     <select id="rack_level_id" name="rack_level_id" required class="form-control" value="<?= set_value('rack_level_id'); ?>">
                                         <option value="0">--Select--</option>
                                         <?php foreach ($level_rack as $row) {?>
-                                            <?php if ($row['id']==$rack_level_id) { ?>
-                                            <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
-                                            <?php }else{ ?>
+                                            <?php if ($row['id']==$rack_level_id) {?>
+                                                <option value="<?php echo $row['id']; ?>"selected><?php echo strtoupper(($row['name'])); ?></option>
+                                            <?php }else{?>
                                                 <option value="<?php echo $row['id']; ?>"><?php echo strtoupper(($row['name'])); ?></option>
                                             <?php } ?>
                                         <?php } ?>
@@ -567,10 +602,10 @@ foreach ($spareparts as $i) :
                                     <?= form_error('rack_level_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
-                                <!-- <div class="form-group col-md-12">
+                                <div class="form-group col-md-12">
                                     <label for="dokumen">Documents</label>
                                     <input type="file" class="form-control" name="dokumen" id="dokumen">
-                                </div> -->
+                                </div>
                             </div>
 
                             <div class="form-row">
@@ -625,7 +660,7 @@ foreach ($spareparts as $i) :
                                 </div>
                             </div>
 
-                            <a role="button" href="<?php echo base_url(); ?>assets/spareparts_inbound.xlsx" class="btn bg-danger" title="Download Format Excel">Download Format Excel <i class="fa fa-download" aria-hidden="true"></i></a>
+                            <a role="button" href="<?php echo base_url(); ?>assets/spareparts.xlsx" class="btn bg-danger" title="Download Format Excel">Download Format Excel <i class="fa fa-download" aria-hidden="true"></i></a>
 
                     </div>
                 </div>

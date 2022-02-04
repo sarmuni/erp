@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <i class="fas fa-user-plus"></i>
             </a>
 
-            <a role="button" href="<?php base_url('permit_in_out'); ?>" class="btn bg-danger" title="Refresh">
+            <a role="button" href="<?php echo base_url('permit_in_out'); ?>" class="btn bg-danger" title="Refresh">
                 <i class="fas fa-sync-alt"></i>
             </a>
             <hr>
@@ -33,8 +33,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Employee Name</th>
                             <th>Permit Date</th>
                             <th>Necessity</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
+                            <th>Time</th>
+                            <th>Category</th>
                             <th>Status</th>
                             <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         </tr>
@@ -50,8 +50,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo strtoupper($row['person_name']); ?></td>
                             <td><?php echo $row['permit_date']; ?></td>
                             <td><?php echo $row['necessity']; ?></td>
-                            <td><?php echo $row['time_out']; ?></td>
-                            <td><?php echo $row['time_in']; ?></td>
+                            <td><?php echo $row['time']; ?></td>
+                            <td><?php if ($row['category']==1) {
+                                echo "Permit In";
+                            }else{
+                                echo "Permit Out";
+                            } ?></td>
                             <td>
                                 <?php if ($row['status'] == 0) { ?>
                                     <center><a role="button" href="<?php echo site_url(); ?>permit_in_out/aprov_depart_head/<?php echo $row['id']; ?>" id="aprov_depart_head" class="btn bg-danger aprov_depart_head" title="Aprov">
@@ -83,7 +87,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php }?>
 
                                  <?php if ($row['status'] == 3) { ?>
-                                 <a role="button" href="#" class="btn bg-danger" title="Print">
+                                 <a role="button" target="_blank" href="<?php echo site_url(); ?>cetak/permit_in_out/<?php echo $row['id']; ?>" class="btn bg-danger" title="Print">
                                   <i class="fas fa-print"></i>
                                 </a>
                                 <?php }?>
@@ -155,14 +159,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="time_in">Time In</label>
-                                    <input type="time" id="time_in" class="form-control" name="time_in" value="<?= set_value('time_in'); ?>">
-                                    <?= form_error('time_in', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="category">Category</label>
+                                    <select id="category" class="form-control" name="category" id="category">
+                                        <option value="0">--Select--</option>
+                                        <option value="1">Permit In</option>
+                                        <option value="2">Permit Out</option>
+                                    </select>
                                 </div>
+
                                 <div class="form-group col-md-6">
-                                    <label for="time_out">Time Out</label>
-                                    <input type="time" id="time_out" class="form-control" name="time_out" value="<?=set_value('time_out'); ?>">
-                                    <?= form_error('time_out', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="time">Time</label>
+                                    <input type="time" id="time" class="form-control" name="time" value="<?=set_value('time'); ?>">
+                                    <?= form_error('time', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
                     </div>
@@ -187,9 +195,9 @@ foreach ($permit_in_out as $i) :
     $employee_name              = $i['employee_name'];
     $permit_date                = $i['permit_date'];
     $necessity                  = $i['necessity'];
-    $necessity                  = $i['necessity'];
-    $time_out                   = $i['time_out'];
-    $time_in                    = $i['time_in'];
+    $category                   = $i['category'];
+    $time                       = $i['time'];
+    
     $date_create                = $i['date_create'];
     $aprov_depart_head          = $i['aprov_depart_head'];
     $date_depart_head           = $i['date_depart_head'];
@@ -239,7 +247,7 @@ foreach ($permit_in_out as $i) :
 
                                         <div class="form-group col-md-6">
                                         <label for="permit_date">Permite Date</label>
-                                        <input type="date" name="permit_date" class="form-control" id="permit_date" value="<?= set_value('permit_date'); ?>">
+                                        <input type="date" name="permit_date" class="form-control" id="permit_date" value="<?php echo $permit_date; ?>">
                                         <?= form_error('permit_date', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -247,25 +255,36 @@ foreach ($permit_in_out as $i) :
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="necessity">Necessity</label>
-                                        <textarea type="text" id="necessity" value="<?= set_value('necessity'); ?>" name="necessity" class="form-control"></textarea>
+                                        <textarea type="text" id="necessity" value="<?= set_value('necessity'); ?>" name="necessity" class="form-control"><?php echo $necessity; ?></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="time_in">Time In</label>
-                                        <input type="time" id="time_in" class="form-control" name="time_in" value="<?= set_value('time_in'); ?>">
-                                        <?= form_error('time_in', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                        <label for="category">Category</label>
+                                        <select id="category" class="form-control" name="category" id="category">
+                                            <option value="0">--Select--</option>
+                                            <?php if ($category==1) { ?>
+                                            <option value="1" selected>Permit In</option>
+                                            <option value="2">Permit Out</option>
+                                            <?php }else{?>
+                                            <option value="1">Permit In</option>
+                                            <option value="2" selected>Permit Out</option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
+
                                     <div class="form-group col-md-6">
-                                        <label for="time_out">Time Out</label>
-                                        <input type="time" id="time_out" class="form-control" name="time_out" value="<?=set_value('time_out'); ?>">
-                                        <?= form_error('time_out', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                        <label for="time">Time</label>
+                                        <input type="time" id="time" class="form-control" name="time" value="<?php echo $time; ?>">
+                                        <?= form_error('time', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+            
+            
 
                 </div>
                 <div class="modal-footer">
@@ -288,9 +307,9 @@ foreach ($permit_in_out as $i) :
     $person_id                  = $i['person_id'];
     $person_name                = $i['person_name'];
     $permit_date                = $i['permit_date'];
+    $category                   = $i['category'];
     $necessity                  = $i['necessity'];
-    $time_out                   = $i['time_out'];
-    $time_in                    = $i['time_in'];
+    $time                       = $i['time'];
     $date_create                = $i['date_create'];
     $aprov_depart_head          = $i['aprov_depart_head'];
     $date_depart_head           = $i['date_depart_head'];
@@ -346,13 +365,22 @@ foreach ($permit_in_out as $i) :
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="time_in">Time In</label>
-                                        <input type="text" name="time_in" <?php echo $publish; ?> value="<?php echo $time_in; ?>" class="form-control" id="time_in">
+                                <div class="form-group col-md-6">
+                                        <label for="category">Category</label>
+                                        <select id="category" <?php echo $publish; ?> class="form-control" name="category" id="category">
+                                            <option value="0">--Select--</option>
+                                            <?php if ($category==1) { ?>
+                                            <option value="1" selected>Permit In</option>
+                                            <option value="2">Permit Out</option>
+                                            <?php }else{?>
+                                            <option value="1">Permit In</option>
+                                            <option value="2" selected>Permit Out</option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="time_out">Time Out</label>
-                                        <input type="text" name="time_out" <?php echo $publish; ?> value="<?php echo $time_out; ?>" class="form-control" id="time_out">
+                                        <label for="time">Time</label>
+                                        <input type="text" name="time" <?php echo $publish; ?> value="<?php echo $time; ?>" class="form-control" id="time">
                                     </div>
                                 </div>
 

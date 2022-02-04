@@ -29,8 +29,8 @@ class Permit_in_out extends CI_Controller
         $this->form_validation->set_rules('employee_name', 'Employee Name', 'required|trim');
         $this->form_validation->set_rules('permit_date', 'Permit Date', 'required|trim');
         $this->form_validation->set_rules('necessity', 'Necessity', 'required|trim');
-        $this->form_validation->set_rules('time_out', 'Time Out', 'required|trim');
-        $this->form_validation->set_rules('time_in', 'Time In', 'required|trim');
+        $this->form_validation->set_rules('category', 'Category', 'required|trim');
+        $this->form_validation->set_rules('time', 'Time', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
@@ -44,17 +44,19 @@ class Permit_in_out extends CI_Controller
             $employee_name              = htmlspecialchars($this->input->post('employee_name'));
             $permit_date                = htmlspecialchars($this->input->post('permit_date'));
             $necessity                  = htmlspecialchars($this->input->post('necessity'));
-            $time_out                   = htmlspecialchars($this->input->post('time_out'));
-            $time_in                    = htmlspecialchars($this->input->post('time_in'));
+            $category                   = htmlspecialchars($this->input->post('category'));
+            $time                       = htmlspecialchars($this->input->post('time'));
 
 
             $data = array(
                 'employee_name'         => $employee_name,
                 'permit_date'           => $permit_date,
                 'necessity'             => $necessity,
-                'time_out'              => $time_out,
-                'time_in'               => $time_in
+                'category'              => $category,
+                'time'                  => $time
             );
+
+
 
             $insert = $this->permit_in_out_model->insert($data);
 
@@ -100,13 +102,11 @@ class Permit_in_out extends CI_Controller
         $this->form_validation->set_rules('employee_name', 'Employee Name', 'required|trim');
         $this->form_validation->set_rules('permit_date', 'Permit Date', 'required|trim');
         $this->form_validation->set_rules('necessity', 'Necessity', 'required|trim');
-        $this->form_validation->set_rules('time_out', 'Time Out', 'required|trim');
-        $this->form_validation->set_rules('time_in', 'Time In', 'required|trim');
-        $this->form_validation->set_rules('description', 'Description', 'required|trim');
-
+        $this->form_validation->set_rules('time', 'Time', 'required|trim');
+        $this->form_validation->set_rules('category', 'Category', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user']                   = $this->db->get_where('auth_user', ['time_in' => $this->session->userdata('time_in')])->row_array();
+            $data['user']                   = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
             $data['permit_in_out']           = $this->permit_in_out_model->get_all('id', 'desc');
 
@@ -118,18 +118,18 @@ class Permit_in_out extends CI_Controller
             $employee_name          = htmlspecialchars($this->input->post('employee_name'));
             $permit_date            = htmlspecialchars($this->input->post('permit_date'));
             $necessity              = htmlspecialchars($this->input->post('necessity'));
-            $time_out               = htmlspecialchars($this->input->post('time_out'));
-            $time_in                = htmlspecialchars($this->input->post('time_in'));
-            $description            = htmlspecialchars($this->input->post('description'));
+            $category               = htmlspecialchars($this->input->post('category'));
+            $time                   = htmlspecialchars($this->input->post('time'));
 
             $data = array(
                 'employee_name'     => $employee_name,
-                'permite_date'      => $permit_date,
+                'permit_date'       => $permit_date,
                 'necessity'         => $necessity,
-                'time_out'          => $time_out,
-                'time_in'           => $time_in,
-                'description'       => $description
+                'category'          => $category,
+                'time'              => $time
             );
+
+
 
             $update = $this->permit_in_out_model->update($id, $data);
 

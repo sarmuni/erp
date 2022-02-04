@@ -15,6 +15,23 @@
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
                                 <i class="fas fa-indent"></i>
+                                <span> PURCHASING </span>
+                            </a>
+                            <ul>
+                                <li>
+                                <a <?php echo $this->uri->segment(1) == 'pre_requisition' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('pre_requisition'); ?>">
+                                        <span>- Pre Requisition Form</span>
+                                    </a>
+                                </li>
+                            </ul>
+                    </li>
+                    <?php }?>
+
+                    <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
+                    <li class="submenu">
+                            <a href="#">
+                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <i class="fas fa-indent"></i>
                                 <span> MACHINERY </span>
                             </a>
                             <ul>
@@ -179,8 +196,8 @@
                             </a>
                             <ul>
                                 <li>
-                                    <a href="#">
-                                        <span>- List Material</span>
+                                    <a <?php echo $this->uri->segment(1) == 'materials' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('materials'); ?>">
+                                        <span>- List Materials</span>
                                     </a>
                                 </li>
                                 <!-- <li class="submenu">

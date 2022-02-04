@@ -135,7 +135,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <select id="role_id" class="form-control" name="role_id" id="role_id" value="<?= set_value('role_id'); ?>">
                                         <option selected="">Pilih</option>
                                         <?php foreach ($role_id as $role) { ?>
-                                            <option value="<?php echo $role['id'] ?>"><?php echo $role['role'] ?></option>
+                                            <option value="<?php echo $role['departments_id'] ?>"><?php echo $role['role'] ?></option>
                                         <?php } ?>
                                     </select>
                                     <?= form_error('role_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -226,10 +226,10 @@ foreach ($account_user as $i) :
                                         <select id="role_id" class="form-control" <?php echo $publish; ?> name="role_id" id="role_id">
                                             <option selected="">Pilih</option>
                                             <?php foreach ($role_id as $role1) { ?>
-                                                <?php if ($role1['id'] == $role) { ?>
-                                                    <option value="<?php echo $role1['id'] ?>" selected><?php echo $role1['role'] ?></option>
+                                                <?php if ($role1['departments_id'] == $role) { ?>
+                                                    <option value="<?php echo $role1['departments_id'] ?>" selected><?php echo $role1['role'] ?></option>
                                                 <?php } else { ?>
-                                                    <option value="<?php echo $role1['id'] ?>"><?php echo $role1['role'] ?></option>
+                                                    <option value="<?php echo $role1['departments_id'] ?>"><?php echo $role1['role'] ?></option>
                                                 <?php } ?>
 
                                             <?php } ?>

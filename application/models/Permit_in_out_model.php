@@ -33,12 +33,41 @@ class Permit_in_out_model extends MY_Model
 
     function get_all()
     {
+        $role_id = $this->session->userdata('role_id');
+        if ($role_id==12 OR $role_id==1) {
+            $sql = "SELECT
+            a.*,
+            b.person_id,
+            b.person_name
+            FROM permit_in_out a
+            LEFT JOIN ref_personnel b ON a.`employee_name`=b.`id`";
+        }else{
+            $sql = "SELECT
+            a.*,
+            b.person_id,
+            b.person_name
+            FROM permit_in_out a
+            LEFT JOIN ref_personnel b ON a.`employee_name`=b.`id`
+            WHERE b.departments_id='$role_id'";
+        }
+
+        return $this->db->query($sql)->result_array();
+    }
+
+    function get_all_id($id)
+    {
         $sql = "SELECT
         a.*,
         b.person_id,
-        b.person_name
+        b.person_name,
+        b.`part_departments_id`,
+        c.name AS part_departments_name,
+        d.name AS departments
         FROM permit_in_out a
-        LEFT JOIN ref_personnel b ON a.`employee_name`=b.`id`";
+        LEFT JOIN ref_personnel b ON a.`employee_name`=b.`id`
+        LEFT JOIN ref_departments d ON d.`id`=b.`departments_id`
+        LEFT JOIN ref_departments_detail c ON c.`id_def`=b.`departments_id`
+        WHERE a.id='$id' GROUP BY a.`id`";
         return $this->db->query($sql)->result_array();
     }
 

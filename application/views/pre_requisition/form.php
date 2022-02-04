@@ -11,94 +11,100 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
+        <form autocomplete="off" action="<?php echo base_url('pre_requisition/add'); ?>" method="POST" enctype="multipart/form-data">
+        
         <div class="card-body">
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="pre_code">Pre Code</label>
-                    <input type="text" class="form-control" id="pre_code" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="inputEmail4">Pre Date</label>
-                    <input type="date" class="form-control" id="inputEmail4" placeholder="Email" autocomplete="off">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="inputEmail4">Pre Deadline Date</label>
-                    <input type="date" class="form-control" id="inputEmail4" placeholder="Email" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="request_user_id">Request User</label>
-                    <input type="text" class="form-control" id="request_user_id" autocomplete="off">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="department_id">Department ID</label>
-                    <input type="text" class="form-control" id="department_id" autocomplete="off">
-                </div>
-            </div>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="request_user_id">Item Name</label>
-                    <input type="text" class="form-control" id="request_user_id" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="request_user_id">Notes</label>
-                    <input type="text" class="form-control" id="request_user_id" autocomplete="off">
-                </div>
-            </div>
-
-            <!-- <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
-            </a> -->
-            <!-- <a role="button" href="<?php base_url('pre_requisition'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
-            </a> -->
-            <hr>
             <div class="table-responsive">
-                <table id="#" class="table table-bordered table-hover display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Item Code</th>
-                            <th>Quantity</th>
-                            <th>MOQ</th>
-                            <th>Description</th>
-                            <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <?php
-                    $no = 1;
-                    foreach ($pre_requisition as $row) {
-                    ?>
-                        <tr>
-                            <td><?php echo $no; ?></td>
-                            <td><?php echo strtoupper($row['pre_code']); ?></td>
-                            <td><?php echo date('Y-m-d',strtotime($row['pre_date'])); ?></td>
-                            <td><?php echo date('Y-m-d',strtotime($row['pre_deadline_date'])); ?></td>
-                            <td><?php echo $row['request_user_id']; ?></td>
-                            <td>
-                                 <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
-                                 </a></center>
-                            </td>
-                        </tr>
-                    <?php
-                        $no++;
-                    }
-                    ?>
-
-                </table>
+                    <table class="table table-hover display" style="width:100%">
+                            <tr>
+                                <td style="width: 250px;">Pre Requisition Code</td>
+                                <td>:</td>
+                                <td><input type="text" name="pre_code" class="form-control" readonly="readonly" value="<?php echo $pre_code; ?>" id="pre_code" autocomplete="off"></td>
+                            </tr>
+                            <tr>
+                                <td>Pre Requisition Date</td>
+                                <td>:</td>
+                                <td><input type="date" class="form-control" name="pre_date" id="pre_date" placeholder="Pre Requisition Date" autocomplete="off"></td>
+                            </tr>
+                            <tr>
+                                <td>Pre Requisition Deadline Date</td>
+                                <td>:</td>
+                                <td><input type="date" name="pre_deadline_date" class="form-control" id="pre_deadline_date" placeholder="Pre Requisition Deadline Date" autocomplete="off"></td>
+                            </tr>
+                            <tr>
+                                <td>Request User</td>
+                                <td>:</td>
+                                <td><input type="text" name="request_user_id" class="form-control" id="request_user_id" readonly value="<?php echo $this->session->fullname; ?>" autocomplete="off"></td>
+                            </tr>
+                            <tr>
+                                <td>Request Departments</td>
+                                <td>:</td>
+                                <td><select id="departments_id" name="departments_id" required class="form-control" value="<?= set_value('departments_id'); ?>">
+                                        <option value="0">-- Select --</option>
+                                        <?php foreach ($option_departments as $row1) { ?>
+                                            <option value="<?php echo $row1['id']; ?>"><?php echo $row1['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <?= form_error('departments_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Request Status</td>
+                                <td>:</td>
+                                <td><select id="request_status" name="request_status" required class="form-control" value="<?= set_value('request_status'); ?>">
+                                        <option value="0">-- Select --</option>
+                                        <option value="1">Normal</option>
+                                        <option value="2">Urgent</option>
+                                    </select>
+                                    <?= form_error('request_status', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Notes</td>
+                                <td>:</td>
+                                <td><textarea class="form-control" name="notes"></textarea>
+                                </td>
+                            </tr>
+                    </table>
             </div>
-
         </div>
     </div>
 </div>
+
+
+<!--  -->
+<div class="col-12">
+    <div class="card mb-3">
+        <div class="card-header">
+            <h3><i class="fas fa-user-friends"></i> Detail Pre Requisition <button type="button" class="btn bg-info" id="btn-tambah-form">Add</button></h3>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                    <table class="table table-hover display" style="width:100%">
+                            <tr>
+                                <td style="width:80%">
+                                    <textarea class="form-control" name="item_name[]" placeholder="Description Detail"></textarea>
+                                </td>
+                                <td>
+                                    <input type="number" name="pre_qty[]" placeholder="Qty" class="form-control" id="request_user_id" autocomplete="off">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn bg-danger" id="btn-reset-form" data-dismiss="modal">Remove</button>
+                                </td>
+                            </tr>
+                    </table>
+            </div>
+            <div id="insert-form"></div>
+            <input type="hidden" id="jumlah-form" value="1">
+        </div>
+        <div class="modal-footer">
+                <button type="submit" class="btn bg-danger">Save</button>
+                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+            </div>
+
+    </div>
+</div>
+</form>
+<!--  -->
+

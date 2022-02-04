@@ -4,7 +4,7 @@
         <div class="card-header">
             <h3><i class="far fa-user"></i> <?php echo $title; ?></h3>
         </div>
-        <?php foreach ($machinery as $row) { ?>
+        <?php foreach ($spareparts as $row) { ?>
             <div class="card-body">
 
                 <table class="table table-responsive-xl table-striped">
@@ -12,27 +12,22 @@
                     <tr>
                         <td>Global Location Number (GLN)</td>
                         <td>:</td>
-                        <td><?php echo $row['gln_mc_in']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><?php echo $row['gln_spt_in']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     </tr>
                     <tr>
-                        <td>Machinery Name</td>
+                        <td>Parts Name</td>
                         <td>:</td>
-                        <td><?php echo $row['machinery_name']; ?></td>
+                        <td><?php echo $row['parts_name']; ?></td>
                     </tr>
                     <tr>
-                        <td>Serial Number</td>
+                        <td>Parts Number</td>
                         <td>:</td>
-                        <td><?php echo $row['serial_number']; ?></td>
+                        <td><?php echo $row['parts_number']; ?></td>
                     </tr>
                     <tr>
                         <td>Origin</td>
                         <td>:</td>
                         <td><?php echo $row['origin']; ?></td>
-                    </tr>
-                    <tr>
-                        <td>Net Weight</td>
-                        <td>:</td>
-                        <td><?php echo $row['net_weight']; ?></td>
                     </tr>
                     <tr>
                         <td>Unit Of Measurment</td>
@@ -43,6 +38,25 @@
                         <td>Qty</td>
                         <td>:</td>
                         <td><?php echo $row['qty']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Critical</td>
+                        <td>:</td>
+                        <td><?php if ($row['critical']==1) {
+                            echo "Yes";
+                        }else{
+                            echo "No";
+                        } ?></td>
+                    </tr>
+                    <tr>
+                        <td>Minimum Stock</td>
+                        <td>:</td>
+                        <td><?php echo $row['minimum_stock']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum Stock</td>
+                        <td>:</td>
+                        <td><?php echo $row['maximum_stock']; ?></td>
                     </tr>
                     <tr>
                         <td>Made In</td>
@@ -91,14 +105,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Global Location Number (GLN)</label>
-                                <input class="form-control" readonly name="gln_mc_in" type="text" required value="<?php echo $row['gln_mc_in']; ?>" />
+                                <input class="form-control" readonly name="gln_spt_in" type="text" required value="<?php echo $row['gln_spt_in']; ?>" />
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>Machinery Name</label>
-                                <input class="form-control" readonly name="machinery_name" type="text" value="<?php echo $row['machinery_name']; ?>" required />
+                                <label>spareparts Name</label>
+                                <input class="form-control" readonly name="parts_name" type="text" value="<?php echo $row['parts_name']; ?>" required />
                             </div>
                         </div>
                     </div>
@@ -107,7 +121,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>Serial Number</label>
-                                <input class="form-control" readonly name="serial_number" type="text" required value="<?php echo $row['serial_number']; ?>" />
+                                <input class="form-control" readonly name="parts_number" type="text" required value="<?php echo $row['parts_number']; ?>" />
                             </div>
                         </div>
 
@@ -218,11 +232,11 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" class="btn btn-danger btn-block mt-3"><?php echo $row['gln_mc_in']; ?></button>
+                        <button type="button" class="btn btn-danger btn-block mt-3"><?php echo $row['gln_spt_in']; ?></button>
                     </div>
 
                     <div class="col-lg-12">
-                        <button type="button" class="btn btn-info btn-block mt-3"><?php echo $row['serial_number']; ?></button>
+                        <button type="button" class="btn btn-info btn-block mt-3"><?php echo $row['parts_number']; ?></button>
                     </div>
                 </div>
 
@@ -240,7 +254,7 @@
         <div class="card-header">
             <h3><i class="far fa-user"></i> Identitas Supplier</h3>
         </div>
-        <?php foreach ($machinery as $row) { ?>
+        <?php foreach ($spareparts as $row) { ?>
             <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
@@ -331,7 +345,7 @@
         <div class="card-header">
             <h3><i class="far fa-user"></i> Identitas Driver</h3>
         </div>
-        <?php foreach ($machinery as $row) { ?>
+        <?php foreach ($spareparts as $row) { ?>
             <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">

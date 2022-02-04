@@ -134,20 +134,20 @@ class Spareparts extends CI_Controller
             $description              = htmlspecialchars($this->input->post('description'));
             // $dokumen                  = htmlspecialchars($this->input->post('dokumen'));
 
-            $config['upload_path']          = './uploads/';
-            $config['allowed_types']        = 'pdf';
-            $config['max_size']             = 1024;
-            $config['max_width']            = 1024;
-            $config['max_height']           = 1024;
+            // $config['upload_path']          = './uploads/';
+            // $config['allowed_types']        = 'pdf';
+            // $config['max_size']             = 1024;
+            // $config['max_width']            = 1024;
+            // $config['max_height']           = 1024;
 
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('dokumen')) {
-                $this->session->set_flashdata('upload', $this->upload->display_errors());
-                redirect('spareparts');
-            } else {
-                $image_data     = $this->upload->data();
-                $imgdata        = file_get_contents($image_data['full_path']);
-                $file_encode    = base64_encode($imgdata);
+            // $this->load->library('upload', $config);
+            // if (!$this->upload->do_upload('dokumen')) {
+            //     $this->session->set_flashdata('upload', $this->upload->display_errors());
+            //     redirect('spareparts');
+            // } else {
+            //     $image_data     = $this->upload->data();
+            //     $imgdata        = file_get_contents($image_data['full_path']);
+            //     $file_encode    = base64_encode($imgdata);
 
                 $data = array(
                     'gln_spt_in'             => $gln_spt_in,
@@ -172,16 +172,16 @@ class Spareparts extends CI_Controller
                     'container_number'       => $container_number,
                     'driver_id'              => $driver_id,
                     'description'            => $description,
-                    'created_by'             => $this->session->fullname,
-                    'tipe_dokumen'           => $this->upload->data('file_type'),
-                    'ukuran_dokumen'         => $this->upload->data('file_size'),
-                    'dokumen'                => $file_encode,
-                    'origin_dokumen'         => $this->upload->data('file_name')
+                    'created_by'             => $this->session->fullname
+                    // 'tipe_dokumen'           => $this->upload->data('file_type'),
+                    // 'ukuran_dokumen'         => $this->upload->data('file_size'),
+                    // 'dokumen'                => $file_encode,
+                    // 'origin_dokumen'         => $this->upload->data('file_name')
 
                 );
 
                 $insert = $this->spareparts_model->insert($data);
-                unlink($image_data['full_path']);
+                // unlink($image_data['full_path']);
 
                 if ($insert) {
                     $this->session->set_flashdata('message', 'Success');
@@ -190,7 +190,7 @@ class Spareparts extends CI_Controller
                     $this->session->set_flashdata('message', 'Failed');
                     redirect('spareparts');
                 }
-            }
+            // }
         }
     }
 
@@ -207,26 +207,29 @@ class Spareparts extends CI_Controller
 				{
 					$origin               = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
 					$supplier_id          = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-					$origin               = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-					$supplier_id          = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-					$net_weight           = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+					$parts_name           = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+					$parts_number         = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+					$machinery_name       = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
 					$unit_of_measurment   = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 					$qty                  = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-					$made_in              = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-					$factory_location_id  = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-					$zone_division_id     = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-					$area_zone_id         = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
-					$room_area_id         = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-					$rack_location_id     = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
-					$rack_level_id        = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-					$packing_list         = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-					$container_number     = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-					$driver_id            = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-					$description          = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$critical             = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+					$minimum_stock        = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+					$maximum_stock        = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+					$made_in              = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+					$factory_location_id  = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+					$zone_division_id     = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+					$area_zone_id         = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+					$room_area_id         = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+					$rack_location_id     = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+					$rack_level_id        = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+					$packing_list         = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+					$container_number     = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+					$driver_id            = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+					$description          = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
                     $date_created         = date('Y-m-d H:i:s');
 
                      //Global Location Number
-                    $kode = 'GLN-MC';
+                    $kode = 'GLN-SPT';
                     date_default_timezone_set('Asia/Jakarta');
                     $tanggal = date('Y-m-d H:i:s');
                     $d = date('d', strtotime($tanggal));
@@ -246,14 +249,17 @@ class Spareparts extends CI_Controller
                     //END NO
 
 					$temp_data[] = array(
-						'gln_spt_in'	            => $gln_spt_in,
-						'origin'	    => $origin,
-						'supplier_id'	        => $supplier_id,
+						'gln_spt_in'	        => $gln_spt_in,
 						'origin'	            => $origin,
 						'supplier_id'	        => $supplier_id,
-						'net_weight'	        => $net_weight,
+						'parts_name'	        => $parts_name,
+						'parts_number'	        => $parts_number,
+						'machinery_name'	    => $machinery_name,
 						'unit_of_measurment'    => $unit_of_measurment,
 						'qty'	                => $qty,
+						'critical'	            => $critical,
+						'minimum_stock'	        => $minimum_stock,
+						'maximum_stock'	        => $maximum_stock,
 						'made_in'	            => $made_in,
 						'factory_location_id'	=> $factory_location_id,
 						'zone_division_id'	    => $zone_division_id,
@@ -265,6 +271,7 @@ class Spareparts extends CI_Controller
 						'container_number'	    => $container_number,
 						'driver_id'	            => $driver_id,
 						'description'	        => $description,
+                        'created_by'            => $this->session->fullname,
 						'date_created'	        => $date_created
 					); 	
 				}
@@ -308,58 +315,83 @@ class Spareparts extends CI_Controller
 
     public function edit($id)
     {
-        $gln_spt_in                      = $this->input->post('gln_spt_in');
-        $origin                 = $this->input->post('origin');
-        $supplier_id                  = $this->input->post('supplier_id');
-        $origin                         = $this->input->post('origin');
-        $supplier_id                    = $this->input->post('supplier_id');
-        $net_weight                     = $this->input->post('net_weight');
-        $unit_of_measurment             = $this->input->post('unit_of_measurment');
-        $qty                            = $this->input->post('qty');
+        $gln_spt_in               = $this->input->post('gln_spt_in');
+        $origin                   = $this->input->post('origin');
+        $supplier_id              = $this->input->post('supplier_id');
+        $parts_name               = $this->input->post('parts_name');
+        $parts_number             = $this->input->post('parts_number');
+        $machinery_name           = $this->input->post('machinery_name');
+        $unit_of_measurment       = $this->input->post('unit_of_measurment');
+        $qty                      = $this->input->post('qty');
+        $critical                 = $this->input->post('critical');
+        $minimum_stock            = $this->input->post('minimum_stock');
+        $maximum_stock            = $this->input->post('maximum_stock');
+        $made_in                  = $this->input->post('made_in');
+        $factory_location_id      = $this->input->post('factory_location_id');
+        $zone_division_id         = $this->input->post('zone_division_id');
+        $area_zone_id             = $this->input->post('area_zone_id');
+        $room_area_id             = $this->input->post('room_area_id');
+        $rack_location_id         = $this->input->post('rack_location_id');
+        $rack_level_id            = $this->input->post('rack_level_id');
+        $packing_list             = $this->input->post('packing_list');
+        $container_number         = $this->input->post('container_number');
+        $driver_id                = $this->input->post('driver_id');
+        $description              = $this->input->post('description');
+        $date_update              = date('Y-m-d H:i:s');
 
-
-        $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'gif|jpg|png';
-        $config['max_size']             = 100;
-        $config['max_width']            = 1024;
-        $config['max_height']           = 768;
-        $this->load->library('upload', $config);
-        if (!$this->upload->do_upload('foto')) {
-            $this->session->set_flashdata('upload', $this->upload->display_errors());
-            redirect('agen');
-        } else {
-            $image_data = $this->upload->data();
-            $imgdata = file_get_contents($image_data['full_path']);
-            $file_encode = base64_encode($imgdata);
+        // $config['upload_path']          = './uploads/';
+        // $config['allowed_types']        = 'gif|jpg|png';
+        // $config['max_size']             = 100;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+        // $this->load->library('upload', $config);
+        // if (!$this->upload->do_upload('foto')) {
+        //     $this->session->set_flashdata('upload', $this->upload->display_errors());
+        //     redirect('agen');
+        // } else {
+        //     $image_data = $this->upload->data();
+        //     $imgdata = file_get_contents($image_data['full_path']);
+        //     $file_encode = base64_encode($imgdata);
 
             $data = array(
-                'gln_spt_in'                   => $gln_spt_in,
-                'origin'                  => $origin,
-                'supplier_id'          => $supplier_id,
-                'origin'         => $origin,
-                'supplier_id'         => $supplier_id,
-                'net_weight'                => $net_weight,
-                'unit_of_measurment'                => $unit_of_measurment,
-                'qty'                    => $qty,
-                'user_admin_update'     => $this->session->role_id,
-                'tipe_foto'             => $this->upload->data('file_type'),
-                'ukuran_foto'           => $this->upload->data('file_size'),
-                'foto'                  => $file_encode,
-                'origin_foto'             => $this->upload->data('file_name')
+                'gln_spt_in'	        => $gln_spt_in,
+                'origin'	            => $origin,
+                'supplier_id'	        => $supplier_id,
+                'parts_name'	        => $parts_name,
+                'parts_number'	        => $parts_number,
+                'machinery_name'	    => $machinery_name,
+                'unit_of_measurment'    => $unit_of_measurment,
+                'qty'	                => $qty,
+                'critical'	            => $critical,
+                'minimum_stock'	        => $minimum_stock,
+                'maximum_stock'	        => $maximum_stock,
+                'made_in'	            => $made_in,
+                'factory_location_id'	=> $factory_location_id,
+                'zone_division_id'	    => $zone_division_id,
+                'area_zone_id'	        => $area_zone_id,
+                'room_area_id'	        => $room_area_id,
+                'rack_location_id'	    => $rack_location_id,
+                'rack_level_id'	        => $rack_level_id,
+                'packing_list'	        => $packing_list,
+                'container_number'	    => $container_number,
+                'driver_id'	            => $driver_id,
+                'description'	        => $description,
+                'update_by'             => $this->session->fullname,
+                'date_update'	        => $date_update
 
             );
 
-            $update = $this->agen_model->update($id, $data);
-            unlink($image_data['full_path']);
+            $update = $this->spareparts_model->update($id, $data);
+            // unlink($image_data['full_path']);
 
             if ($update) {
-                $this->session->set_flashdata('message', 'Berhasil Update');
-                redirect('agen');
+                $this->session->set_flashdata('message', 'Success');
+                redirect('spareparts');
             } else {
-                $this->session->set_flashdata('message', 'Gagal Update');
-                redirect('agen');
+                $this->session->set_flashdata('message', 'Filed');
+                redirect('spareparts');
             }
-        }
+        // }
     }
 
 
@@ -370,11 +402,11 @@ class Spareparts extends CI_Controller
             'user_admin_update'    => $this->session->role_id
         );
 
-        $update = $this->agen_model->update($id, $data);
+        $update = $this->spareparts_model->update($id, $data);
         if ($update) {
-            redirect('agen');
+            redirect('spareparts');
         } else {
-            redirect('agen');
+            redirect('spareparts');
         }
     }
 
@@ -386,11 +418,11 @@ class Spareparts extends CI_Controller
             'user_admin_update'    => $this->session->role_id
         );
 
-        $update = $this->agen_model->update($id, $data);
+        $update = $this->spareparts_model->update($id, $data);
         if ($update) {
-            redirect('agen');
+            redirect('spareparts');
         } else {
-            redirect('agen');
+            redirect('spareparts');
         }
     }
 }

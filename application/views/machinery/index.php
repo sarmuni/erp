@@ -594,7 +594,7 @@ foreach ($machinery as $i) :
                                 </div>
                             </div>
 
-                            <a role="button" href="<?php echo base_url(); ?>assets/machinery_inbound.xlsx" class="btn bg-danger" title="Download Format Excel">Download Format Excel <i class="fa fa-download" aria-hidden="true"></i></a>
+                            <a role="button" href="<?php echo base_url(); ?>assets/machinery.xlsx" class="btn bg-danger" title="Download Format Excel">Download Format Excel <i class="fa fa-download" aria-hidden="true"></i></a>
 
                     </div>
                 </div>

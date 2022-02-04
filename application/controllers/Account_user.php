@@ -91,8 +91,8 @@ class Account_user extends CI_Controller
         $this->form_validation->set_rules('fullname', 'Fullname', 'required|trim');
         $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[8]|matches[confirmpassword]');
-        $this->form_validation->set_rules('confirmpassword', 'ConfirmPassword', 'required|trim|matches[password]');
+        // $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[8]|matches[confirmpassword]');
+        // $this->form_validation->set_rules('confirmpassword', 'ConfirmPassword', 'required|trim|matches[password]');
         $this->form_validation->set_rules('role_id', 'Level', 'required|trim');
 
         if ($this->form_validation->run() == false) {
@@ -111,14 +111,24 @@ class Account_user extends CI_Controller
             $phone                   = htmlspecialchars($this->input->post('phone'));
             $role_id                 = htmlspecialchars($this->input->post('role_id'));
 
-            $data = array(
-                'fullname'               => $fullname,
-                'email'                  => $email,
-                'password'               => password_hash($password, PASSWORD_DEFAULT),
-                'phone'                  => $phone,
-                'role_id'                => $role_id,
-                'is_active'              => 1
-            );
+            if ($password=='') {
+                $data = array(
+                    'fullname'               => $fullname,
+                    'email'                  => $email,
+                    'phone'                  => $phone,
+                    'role_id'                => $role_id,
+                    'is_active'              => 1
+                );
+            }else{
+                $data = array(
+                    'fullname'               => $fullname,
+                    'email'                  => $email,
+                    'password'               => password_hash($password, PASSWORD_DEFAULT),
+                    'phone'                  => $phone,
+                    'role_id'                => $role_id,
+                    'is_active'              => 1
+                );
+            }
 
             $update = $this->account_user_model->update($id, $data);
 

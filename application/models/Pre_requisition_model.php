@@ -5,7 +5,7 @@ class Pre_requisition_model extends MY_Model
 
     protected $table = 'pre_requisition';
     protected $primary_key = 'id';
-    protected $create_date = 'date_created';
+    protected $create_date = 'created_at';
     protected $update_date = 'date_update';
 
     function __construct()
@@ -19,17 +19,21 @@ class Pre_requisition_model extends MY_Model
         return $this->db->query($sql)->result_array();
     }
 
-    // function get_last_code_resi($day, $month, $year)
-    // {
-    //     $this->db->where('DAY(tanggal_dibuat)', $day);
-    //     $this->db->where('MONTH(tanggal_dibuat)', $month);
-    //     $this->db->where('YEAR(tanggal_dibuat)', $year);
+    function insert_batch($data){    
+        return $this->db->insert_batch('pre_requisition_item_detail', $data);  
+    }
 
-    //     $this->db->order_by('tanggal_dibuat', 'desc');
-    //     $this->db->limit(1);
+    function get_last_code($day, $month, $year)
+    {
+        $this->db->where('DAY(created_at)', $day);
+        $this->db->where('MONTH(created_at)', $month);
+        $this->db->where('YEAR(created_at)', $year);
 
-    //     return $this->db->get($this->table)->row_array();
-    // }
+        $this->db->order_by('created_at', 'desc');
+        $this->db->limit(1);
+
+        return $this->db->get($this->table)->row_array();
+    }
 
     // function get_all_join_pelanggan_penerima()
     // {
@@ -46,7 +50,7 @@ class Pre_requisition_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,
@@ -86,7 +90,7 @@ class Pre_requisition_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,

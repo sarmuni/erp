@@ -77,7 +77,7 @@ class Spareparts_model extends MY_Model
     }
     
     function insert_excel($temp_data){
-		$insert = $this->db->insert_batch('spareparts_inbound', $temp_data);
+		$insert = $this->db->insert_batch('sparepart_inbound', $temp_data);
 		if($insert){
 			return true;
 		}
