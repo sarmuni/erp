@@ -5,7 +5,7 @@
                 <ul>
                     <li class="submenu">
                         <a <?php echo $this->uri->segment(1) == 'dashboard' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('dashboard'); ?>">
-                            <i class="fas fa-bars"></i>
+                            <i class="fas fa-desktop"></i>
                             <span>DASHBOARD</span>
                         </a>
                     </li>
@@ -14,7 +14,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-shopping-cart"></i>
                                 <span> PURCHASING </span>
                             </a>
                             <ul>
@@ -31,7 +31,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-warehouse"></i>
                                 <span> MACHINERY </span>
                             </a>
                             <ul>
@@ -107,7 +107,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-warehouse"></i>
                                 <span> SPARE PART </span>
                             </a>
                             <ul>
@@ -191,7 +191,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-clipboard-list"></i>
                                 <span> MATERIAL </span>
                             </a>
                             <ul>
@@ -329,7 +329,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-shipping-fast"></i>
                                 <span> DELIVERY ORDER </span>
                             </a>
                             <ul>
@@ -351,7 +351,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-archive"></i>
                                 <span> STOCK </span>
                             </a>
                             <ul>
@@ -373,7 +373,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-truck-moving"></i>
                                 <span> DISPATCH </span>
                             </a>
                             <ul>
@@ -395,7 +395,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-walking"></i>
                                 <span> SALES ORDER </span>
                             </a>
                             <ul>
@@ -417,7 +417,7 @@
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-pallet"></i>
                                 <span> PRODUCTS </span>
                             </a>
                             <ul>
@@ -472,7 +472,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                                <i class="fas fa-indent"></i>
+                                <i class="fas fa-map-marker-alt"></i>
                                 <span> LOCATION </span>
                                 <span class="menu-arrow"></span>
                             </a>
@@ -503,7 +503,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-address-book"></i>
                             <span> SUPPLIERS </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -521,7 +521,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-wallet"></i>
                             <span> INVOICE </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -539,7 +539,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-credit-card"></i>
                             <span> PAYMENTS</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -557,7 +557,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8)  { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-receipt"></i>
                             <span> PERMIT IN OUT</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -575,7 +575,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-store-alt"></i>
                             <span> DEPARTMENTS</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -596,7 +596,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-server"></i>
                             <span> MASTER DATA </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -627,7 +627,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-print"></i>
                             <span> REPORTS </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -663,7 +663,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                         <a href="#">
-                            <i class="fas fa-indent"></i>
+                            <i class="fas fa-user-cog"></i>
                             <span> ACCOUNTS USERS</span>
                             <span class="menu-arrow"></span>
                         </a>

@@ -15,16 +15,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <!-- <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_pre_requisition">
                 <i class="fas fa-user-plus"></i>
             </a> -->
-            <a role="button" href="<?php base_url(); ?>pre_requisition/form" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="<?php base_url(); ?>pre_requisition/form" class="btn bg-danger btn-sm" title="Add New">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print PDF">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Export Excel">
+                <i class="fas fa-download"></i> Export Excel
             </a>
+            <a role="button" href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </a>
+
+
+            <span class="pull-right"><a href="#" id="" title="Sort" class="btn bg-info btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Sort</a></span>
+            <div class="col-sm-2 pull-right">
+                <select id="departments_id" name="departments_id" required class="form-control select2" value="<?= set_value('departments_id'); ?>">
+                    <option value="">-- All Departments--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="year" name="year" required class="form-control select2" value="<?= set_value('year'); ?>">
+                    <option value="">-- All Year--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="category" name="category" required class="form-control select2" value="<?= set_value('category'); ?>">
+                    <option value="">-- All Category--</option>
+                </select>
+            </div>
+
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">

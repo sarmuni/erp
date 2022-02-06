@@ -54,6 +54,19 @@ class Permit_in_out_model extends MY_Model
         return $this->db->query($sql)->result_array();
     }
 
+
+    function get_permit_id($id)
+    {
+        $sql = "SELECT
+        a.*,
+        b.person_id,
+        b.person_name
+        FROM permit_in_out a
+        LEFT JOIN ref_personnel b ON a.`employee_name`=b.`id`
+        WHERE a.id='$id'";
+        return $this->db->query($sql)->result_array();
+    }
+
     function get_all_id($id)
     {
         $sql = "SELECT

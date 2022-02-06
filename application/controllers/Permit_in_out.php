@@ -23,6 +23,26 @@ class Permit_in_out extends CI_Controller
         $this->template->load('template_neura/index', 'permit_in_out/index', $data);
     }
 
+    public function form()
+    {
+        $data['user']                = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['permit_in_out']       = $this->permit_in_out_model->get_all('id', 'desc');
+        $data['select_employee']     = $this->employee_model->get_all('id', 'desc');
+
+        $data['title'] = 'Permit In Out';
+        $this->template->load('template_neura/index', 'permit_in_out/form-add', $data);
+    }
+
+    public function form_edit($id)
+    {
+        $data['user']                = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['permit_in_out']       = $this->permit_in_out_model->get_permit_id($id, 'desc');
+        $data['select_employee']     = $this->employee_model->get_all('id', 'desc');
+
+        $data['title'] = 'Permit In Out';
+        $this->template->load('template_neura/index', 'permit_in_out/form-edit', $data);
+    }
+
     public function add()
     {
 
@@ -33,12 +53,13 @@ class Permit_in_out extends CI_Controller
         $this->form_validation->set_rules('time', 'Time', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-            $data['permit_in_out']          = $this->permit_in_out_model->get_all('id', 'desc');
+            $data['user']               = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+            $data['permit_in_out']      = $this->permit_in_out_model->get_all('id', 'desc');
+            $data['select_employee']    = $this->employee_model->get_all('id', 'desc');
 
             $data['title']              = 'Permit In Out';
             $this->session->set_flashdata('required', 'incomplete data');
-            $this->template->load('template_neura/index', 'permit_in_out/index', $data);
+            $this->template->load('template_neura/index', 'permit_in_out/form-add', $data);
         } else {
 
             $employee_name              = htmlspecialchars($this->input->post('employee_name'));
@@ -55,8 +76,6 @@ class Permit_in_out extends CI_Controller
                 'category'              => $category,
                 'time'                  => $time
             );
-
-
 
             $insert = $this->permit_in_out_model->insert($data);
 
@@ -112,7 +131,7 @@ class Permit_in_out extends CI_Controller
 
             $data['title'] = 'Master Permit In Out';
             $this->session->set_flashdata('required', 'incomplete data');
-            $this->template->load('template_neura/index', 'permit_in_out/index', $data);
+            $this->template->load('template_neura/index', 'permit_in_out/form-edit', $data);
         } else {
 
             $employee_name          = htmlspecialchars($this->input->post('employee_name'));

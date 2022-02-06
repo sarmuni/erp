@@ -112,12 +112,12 @@ class Materials extends CI_Controller
     public function add()
     {
 
-        $this->form_validation->set_rules('gln_mt_in', 'GLN', 'required|trim');
-        $this->form_validation->set_rules('materials_name', 'materials Name', 'required|trim');
-        $this->form_validation->set_rules('serial_number', 'Serial Number', 'required|trim');
+        $this->form_validation->set_rules('gln_mt_in', 'Global Location Number', 'required|trim');
+        $this->form_validation->set_rules('materials_name', 'Materials Name', 'required|trim');
+        $this->form_validation->set_rules('catgeory_type', 'Category Type', 'required|trim');
         $this->form_validation->set_rules('origin', 'Origin', 'required|trim');
         $this->form_validation->set_rules('supplier_id', 'Supplier', 'required|trim');
-        $this->form_validation->set_rules('net_weight', 'Net Weight', 'required|trim');
+        $this->form_validation->set_rules('materials_code', 'Materials Code', 'required|trim');
         $this->form_validation->set_rules('unit_of_measurment', 'Unit Of Measurment', 'required|trim');
         $this->form_validation->set_rules('qty', 'Qty', 'required|trim');
         $this->form_validation->set_rules('made_in', 'Made In', 'required|trim');
@@ -144,10 +144,10 @@ class Materials extends CI_Controller
 
             $gln_mt_in                = htmlspecialchars($this->input->post('gln_mt_in'));
             $materials_name           = htmlspecialchars($this->input->post('materials_name'));
-            $serial_number            = htmlspecialchars($this->input->post('serial_number'));
+            $catgeory_type            = htmlspecialchars($this->input->post('catgeory_type'));
             $origin                   = htmlspecialchars($this->input->post('origin'));
             $supplier_id              = htmlspecialchars($this->input->post('supplier_id'));
-            $net_weight               = htmlspecialchars($this->input->post('net_weight'));
+            $materials_code           = htmlspecialchars($this->input->post('materials_code'));
             $unit_of_measurment       = htmlspecialchars($this->input->post('unit_of_measurment'));
             $qty                      = htmlspecialchars($this->input->post('qty'));
             $made_in                  = htmlspecialchars($this->input->post('made_in'));
@@ -180,10 +180,10 @@ class Materials extends CI_Controller
                 $data = array(
                     'gln_mt_in'              => $gln_mt_in,
                     'materials_name'         => $materials_name,
-                    'serial_number'          => $serial_number,
+                    'catgeory_type'          => $catgeory_type,
                     'origin'                 => $origin,
                     'supplier_id'            => $supplier_id,
-                    'net_weight'             => $net_weight,
+                    'materials_code'         => $materials_code,
                     'unit_of_measurment'     => $unit_of_measurment,
                     'qty'                    => $qty,
                     'made_in'                => $made_in,
@@ -232,10 +232,10 @@ class Materials extends CI_Controller
 				for($row=2; $row<=$highestRow; $row++)
 				{
 					$materials_name       = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-					$serial_number        = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+					$catgeory_type        = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
 					$origin               = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
 					$supplier_id          = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-					$net_weight           = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+					$materials_code       = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
 					$unit_of_measurment   = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 					$qty                  = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
 					$made_in              = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
@@ -274,10 +274,10 @@ class Materials extends CI_Controller
 					$temp_data[] = array(
 						'gln_mt_in'	            => $gln_mt_in,
 						'materials_name'	    => $materials_name,
-						'serial_number'	        => $serial_number,
+						'catgeory_type'	        => $catgeory_type,
 						'origin'	            => $origin,
 						'supplier_id'	        => $supplier_id,
-						'net_weight'	        => $net_weight,
+						'materials_code'	    => $materials_code,
 						'unit_of_measurment'    => $unit_of_measurment,
 						'qty'	                => $qty,
 						'made_in'	            => $made_in,
@@ -334,58 +334,75 @@ class Materials extends CI_Controller
 
     public function edit($id)
     {
-        $gln_mt_in                      = $this->input->post('gln_mt_in');
-        $materials_name                 = $this->input->post('materials_name');
-        $serial_number                  = $this->input->post('serial_number');
-        $origin                         = $this->input->post('origin');
-        $supplier_id                    = $this->input->post('supplier_id');
-        $net_weight                     = $this->input->post('net_weight');
-        $unit_of_measurment             = $this->input->post('unit_of_measurment');
-        $qty                            = $this->input->post('qty');
+        $gln_mt_in                = $this->input->post('gln_mt_in');
+        $materials_name           = $this->input->post('materials_name');
+        $catgeory_type            = $this->input->post('catgeory_type');
+        $origin                   = $this->input->post('origin');
+        $supplier_id              = $this->input->post('supplier_id');
+        $materials_code           = $this->input->post('materials_code');
+        $unit_of_measurment       = $this->input->post('unit_of_measurment');
+        $qty                      = $this->input->post('qty');
+        $made_in                  = $this->input->post('made_in');
+        $factory_location_id      = $this->input->post('factory_location_id');
+        $zone_division_id         = $this->input->post('zone_division_id');
+        $area_zone_id             = $this->input->post('area_zone_id');
+        $room_area_id             = $this->input->post('room_area_id');
+        $rack_location_id         = $this->input->post('rack_location_id');
+        $rack_level_id            = $this->input->post('rack_level_id');
+        $packing_list             = $this->input->post('packing_list');
+        $container_number         = $this->input->post('container_number');
+        $driver_id                = $this->input->post('driver_id');
+        $description              = $this->input->post('description');
 
 
-        $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'gif|jpg|png';
-        $config['max_size']             = 100;
-        $config['max_width']            = 1024;
-        $config['max_height']           = 768;
-        $this->load->library('upload', $config);
-        if (!$this->upload->do_upload('foto')) {
-            $this->session->set_flashdata('upload', $this->upload->display_errors());
-            redirect('agen');
-        } else {
-            $image_data = $this->upload->data();
-            $imgdata = file_get_contents($image_data['full_path']);
-            $file_encode = base64_encode($imgdata);
+        // $config['upload_path']          = './uploads/';
+        // $config['allowed_types']        = 'gif|jpg|png';
+        // $config['max_size']             = 100;
+        // $config['max_width']            = 1024;
+        // $config['max_height']           = 768;
+        // $this->load->library('upload', $config);
+        // if (!$this->upload->do_upload('foto')) {
+        //     $this->session->set_flashdata('upload', $this->upload->display_errors());
+        //     redirect('agen');
+        // } else {
+        //     $image_data = $this->upload->data();
+        //     $imgdata = file_get_contents($image_data['full_path']);
+        //     $file_encode = base64_encode($imgdata);
 
             $data = array(
-                'gln_mt_in'                   => $gln_mt_in,
-                'materials_name'                  => $materials_name,
-                'serial_number'          => $serial_number,
-                'origin'         => $origin,
-                'supplier_id'         => $supplier_id,
-                'net_weight'                => $net_weight,
-                'unit_of_measurment'                => $unit_of_measurment,
-                'qty'                    => $qty,
-                'user_admin_update'     => $this->session->role_id,
-                'tipe_foto'             => $this->upload->data('file_type'),
-                'ukuran_foto'           => $this->upload->data('file_size'),
-                'foto'                  => $file_encode,
-                'materials_name_foto'             => $this->upload->data('file_name')
+                'gln_mt_in'              => $gln_mt_in,
+                    'materials_name'         => $materials_name,
+                    'catgeory_type'          => $catgeory_type,
+                    'origin'                 => $origin,
+                    'supplier_id'            => $supplier_id,
+                    'materials_code'         => $materials_code,
+                    'unit_of_measurment'     => $unit_of_measurment,
+                    'qty'                    => $qty,
+                    'made_in'                => $made_in,
+                    'factory_location_id'    => $factory_location_id,
+                    'zone_division_id'       => $zone_division_id,
+                    'area_zone_id'           => $area_zone_id,
+                    'room_area_id'           => $room_area_id,
+                    'rack_location_id'       => $rack_location_id,
+                    'rack_level_id'          => $rack_level_id,
+                    'packing_list'           => $packing_list,
+                    'container_number'       => $container_number,
+                    'driver_id'              => $driver_id,
+                    'description'            => $description
 
             );
 
-            $update = $this->agen_model->update($id, $data);
-            unlink($image_data['full_path']);
+            $update = $this->materials_model->update($id, $data);
+            // unlink($image_data['full_path']);
 
             if ($update) {
-                $this->session->set_flashdata('message', 'Berhasil Update');
-                redirect('agen');
+                $this->session->set_flashdata('message', 'Success');
+                redirect('materials');
             } else {
-                $this->session->set_flashdata('message', 'Gagal Update');
-                redirect('agen');
+                $this->session->set_flashdata('message', 'Field');
+                redirect('materials');
             }
-        }
+        // }
     }
 
 
