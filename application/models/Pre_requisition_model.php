@@ -6,7 +6,7 @@ class Pre_requisition_model extends MY_Model
     protected $table = 'pre_requisition';
     protected $primary_key = 'id';
     protected $create_date = 'created_at';
-    protected $update_date = 'date_update';
+    protected $update_date = 'updated_at';
 
     function __construct()
     {
@@ -15,12 +15,87 @@ class Pre_requisition_model extends MY_Model
 
     function get_all()
     {
-        $sql = "SELECT * FROM pre_requisition";
+        $role_id = $this->session->userdata('role_id');
+        if ($role_id==12 OR $role_id==1) {
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM pre_requisition a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            GROUP BY a.`id`";
+        }else{
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM pre_requisition a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`department_id`='$role_id'
+            GROUP BY a.`id`";
+        }
         return $this->db->query($sql)->result_array();
     }
 
-    function insert_batch($data){    
-        return $this->db->insert_batch('pre_requisition_item_detail', $data);  
+    function get_by_id($id)
+    {
+        $role_id = $this->session->userdata('role_id');
+        if ($role_id==12 OR $role_id==1) {
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM pre_requisition a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`id`='$id'
+            GROUP BY a.`id`";
+        }else{
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM pre_requisition a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`department_id`='$role_id' AND a.id='$id'
+            GROUP BY a.`id`";
+        }
+        return $this->db->query($sql)->result_array();
     }
 
     function get_last_code($day, $month, $year)
@@ -34,6 +109,26 @@ class Pre_requisition_model extends MY_Model
 
         return $this->db->get($this->table)->row_array();
     }
+
+    function call_function_procedure_head_of_dept($id)
+    {
+        $id = $this->session->userdata('id');
+
+        $sql = "CALL Proc_head_of_dept('$id')";
+
+        if($sql !== FALSE && $this->db->query($sql)->num_rows() == 1) 
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        } 
+
+        return $this->db->query($sql)->result_array();
+
+    }
+
 
     // function get_all_join_pelanggan_penerima()
     // {

@@ -15,8 +15,7 @@ class Menu extends CI_Controller
     public function index()
     {
         $data['user']             = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-
-        $data['menu']       = $this->menu_model->get_all('id', 'desc');
+        $data['menu']             = $this->menu_model->get_all('id', 'desc');
 
         $data['title'] = 'Module Menu';
         $this->template->load('template_neura/index', 'menu/index', $data);
@@ -158,11 +157,11 @@ class Menu extends CI_Controller
     public function unpublish($id)
     {
         $data = array(
-            'is_active'               => 0,
-            'user_admin_update'    => $this->session->role_id
+            'is_active'            => 0
+            // 'user_admin_update'    => $this->session->role_id
         );
 
-        $update = $this->account_user_model->update($id, $data);
+        $update = $this->menu_model->update($id, $data);
         if ($update) {
             redirect('account_user');
         } else {

@@ -10,7 +10,7 @@
                         </a>
                     </li>
                     
-                    <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
+
                     <li class="submenu">
                             <a href="#">
                                 <span class="label radius-circle bg-primary float-right">0</span>
@@ -25,7 +25,7 @@
                                 </li>
                             </ul>
                     </li>
-                    <?php }?>
+
 
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
                     <li class="submenu">
@@ -554,7 +554,6 @@
                     </li>
                     <?php }?>
 
-                    <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8)  { ?>
                     <li class="submenu">
                         <a id="tables" href="#">
                             <i class="fas fa-receipt"></i>
@@ -562,15 +561,11 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="list-unstyled">
-                            <!-- <li>
-                                <a <?php echo $this->uri->segment(1) == 'barang_masuk' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('barang_masuk'); ?>">- Add Payments</a>
-                            </li> -->
                             <li>
                                 <a <?php echo $this->uri->segment(1) == 'permit_in_out' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('permit_in_out'); ?>">- List Permit In Out</a>
                             </li>
                         </ul>
                     </li>
-                    <?php }?>
 
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
@@ -602,10 +597,10 @@
                         </a>
                         <ul class="list-unstyled">
                             <li>
-                                <a <?php echo $this->uri->segment(1) == 'barang_masuk' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('barang_masuk'); ?>">- Machinery</a>
+                                <a href="#">- Machinery</a>
                             </li>
                             <li>
-                                <a <?php echo $this->uri->segment(1) == 'barang_keluar' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('barang_keluar'); ?>">- Spare Part</a>
+                                <a href="#">- Spare Part</a>
                             </li>
                             <li>
                                 <a <?php echo $this->uri->segment(1) == 'ref_materials' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_materials'); ?>">- Materials</a>
@@ -668,9 +663,9 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="list-unstyled">
-                            <li>
+                            <!-- <li>
                                 <a href="#">- Users Departments</a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a <?php echo $this->uri->segment(1) == 'account_user' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('account_user'); ?>">- Users Accounts</a>
                             </li>

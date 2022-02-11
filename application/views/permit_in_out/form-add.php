@@ -14,7 +14,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <div class="card-body">
                 
-                    <div class="form-group row">
+            <?php if ($this->session->userdata('role_id') == 1) { ?>
+                <div class="form-group row">
                         <label for="employee_name" class="col-sm-2 col-form-label">Employee Name</label>
                         <div class="col-sm-5">
                         <select id="employee_name" class="form-control form-control-sm select2" name="employee_name" id="employee_name">
@@ -30,6 +31,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div>
                         <?= form_error('employee_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>
+            <?php }else{ ?>
+
+                <div class="form-group row">
+                        <label for="employee_name" class="col-sm-2 col-form-label">Employee Name</label>
+                        <div class="col-sm-2">
+                        <input type="text" id="employee_name" readonly class="form-control form-control-sm" value="<?php echo $this->session->fullname; ?>">
+
+                        <input type="hidden" name="employee_name" value="<?php echo $this->session->id; ?>">
+                        </div>
+                        <?= form_error('employee_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                    </div>
+
+            <?php } ?>
+                    
 
                     <div class="form-group row">
                         <label for="permit_date" class="col-sm-2 col-form-label">Permit Date</label>
@@ -68,7 +83,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="form-group row">
                         <label for="time" class="col-sm-2 col-form-label">Time</label>
                         <div class="col-sm-2">
-                        <input type="next" id="time" class="form-control form-control-sm" name="time" value="<?=set_value('time'); ?>">
+                        <input type="time" id="time" class="form-control form-control-sm" name="time" value="<?=set_value('time'); ?>">
                         </div>
                         <?= form_error('time', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>

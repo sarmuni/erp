@@ -61,16 +61,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_employee">
-                <i class="fas fa-user-plus"></i>
+            
+            <form action="<?php echo base_url('employee/filter'); ?>" method="POST" enctype="multipart/form-data">
+            <span class="pull-right"><button type="submit" class="btn bg-info btn-sm"> <i class="fas fa-search" aria-hidden="true"></i> Sort</button></span>
+            <div class="col-sm-2 pull-right">
+                <select id="status" name="status" required class="form-control select2">
+                    <option value="0">-- All Status--</option>
+                    <option value="1">Active</option>
+                    <option value="2">Not Active</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="year" name="year" required class="form-control select2">
+                    <option value="0">-- All Year--</option>
+                    <?php for($i = 2020 ; $i <= date('Y') ; $i++){?>
+                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="departments_id" name="departments_id" required class="form-control select2">
+                    <option value="0">-- All Departments--</option>
+                    <?php foreach ($option_departments as $row1) { ?>
+                    <option value="<?php echo $row1['id']; ?>"><?php echo $row1['name']; ?></option>
+                <?php } ?>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="gender" name="gender" required class="form-control select2">
+                    <option value="0">-- All Gender--</option>
+                    <option value="1">Female</option>
+                    <option value="2">Male</option>
+                </select>
+            </div>
+            </form> 
+
+            
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_employee">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('employee'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php echo base_url('employee'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
+
+            
+            
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
@@ -84,7 +123,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Email</th>
                             <th>Effective Time</th>
                             <th>Active</th>
-                            <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
@@ -107,20 +146,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo strtoupper($row['effective_time']); ?></td>
                             <td>
                                 <?php if ($row['is_active'] == 0) { ?>
-                                    <center><a role="button" href="<?php echo site_url(); ?>employee/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-danger publish" title="Aktif">
+                                    <center><a role="button" href="<?php echo site_url(); ?>employee/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-info btn-sm publish" title="Aktif">
                                             <i class="fas fa-eye-slash"></i>
                                         </a></center>
                                 <?php } else { ?>
-                                    <center><a role="button" href="<?php echo site_url(); ?>employee/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-danger unpublish" title="Non Aktif">
+                                    <center><a role="button" href="<?php echo site_url(); ?>employee/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-warning btn-sm unpublish" title="Non Aktif">
                                             <i class="fas fa-eye"></i>
                                         </a></center>
                                 <?php } ?>
                             </td>
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_employee<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_employee<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>employee/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>employee/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">

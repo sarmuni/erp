@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<!-- 
+<?php
+foreach ($head_employee as $row) {
+    echo $row['id_user'];
+}
+?> -->
 
 <div class="col-12">
     <div class="card mb-3">
@@ -19,9 +25,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print PDF">
+            <!-- <a role="button" href="#" class="btn bg-danger btn-sm" title="Print PDF">
                 <i class="fas fa-print"></i> Print PDF
-            </a>
+            </a> -->
             <a role="button" href="#" class="btn bg-danger btn-sm" title="Export Excel">
                 <i class="fas fa-download"></i> Export Excel
             </a>
@@ -32,17 +38,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <span class="pull-right"><a href="#" id="" title="Sort" class="btn bg-info btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Sort</a></span>
             <div class="col-sm-2 pull-right">
-                <select id="departments_id" name="departments_id" required class="form-control select2" value="<?= set_value('departments_id'); ?>">
+                <select id="departments_id" name="departments_id" required class="form-control select2">
                     <option value="">-- All Departments--</option>
                 </select>
             </div>
             <div class="col-sm-2 pull-right">
-                <select id="year" name="year" required class="form-control select2" value="<?= set_value('year'); ?>">
+                <select id="year" name="year" required class="form-control select2">
                     <option value="">-- All Year--</option>
                 </select>
             </div>
             <div class="col-sm-2 pull-right">
-                <select id="category" name="category" required class="form-control select2" value="<?= set_value('category'); ?>">
+                <select id="category" name="category" required class="form-control select2">
                     <option value="">-- All Category--</option>
                 </select>
             </div>
@@ -55,13 +61,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>No</th>
                             <th>Pre Code</th>
                             <th>Pre Date</th>
-                            <th>Pre Deadline Date</th>
+                            <th>Deadline Date</th>
                             <th>Request User</th>
-                            <th>Department Id</th>
-                            <th>Pre Category</th>
+                            <th>Departments</th>
+                            <th>Request Status</th>
                             <th>Total Item</th>
                             <th>Status</th>
-                            <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
@@ -70,30 +76,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     ?>
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><?php echo strtoupper($row['pre_code']); ?></td>
+                            <td><a href="<?php echo site_url(); ?>pre_requisition/view/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>"><?php echo strtoupper($row['pre_code']); ?></a></td>
                             <td><?php echo date('Y-m-d',strtotime($row['pre_date'])); ?></td>
                             <td><?php echo date('Y-m-d',strtotime($row['pre_deadline_date'])); ?></td>
-                            <td><?php echo $row['request_user_id']; ?></td>
-                            <td><?php echo $row['department_id']; ?></td>
-                            <td><?php echo strtoupper($row['pre_category']); ?></td>
-                            <td><?php echo strtoupper($row['total_item']); ?></td>
+                            <td><?php echo $row['fullname']; ?></td>
+                            <td><?php echo $row['department']; ?></td>
+                            <td><center><?php if ($row['request_status']==1) {
+                                echo"<p style='color:blue; font-size:15px;'>Normal</p>";
+                            }else{
+                                echo"<p style='color:red; font-size:15px;'>Urgent</p>";
+                            } ?></center></td>
+                            <td><center><?php echo strtoupper($row['total_item']); ?></center></td>
                             <td>
                                 <?php if ($row['status'] == 0) { ?>
-                                    <!-- <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-danger publish" title="Aktif">
-                                            <i class="fas fa-eye-slash"></i>
-                                        </a></center> -->
-                                        Waiting
+                                    <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/aprov_hod/<?php echo $row['id']; ?>" id="publish" class="btn bg-warning btn-sm publish" title="Aktif">
+                                    <i class="fas fa-check"></i> Approved HOD
+                                        </a></center>
                                 <?php } else { ?>
-                                    <!-- <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-danger unpublish" title="Non Aktif">
+                                    <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-success btn-sm unpublish" title="Non Aktif">
                                             <i class="fas fa-eye"></i>
-                                        </a></center> -->
+                                        </a></center>
                                 <?php } ?>
                             </td>
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 </a>
+
+
+                                 <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">

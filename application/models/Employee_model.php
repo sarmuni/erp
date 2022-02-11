@@ -25,6 +25,17 @@ class Employee_model extends MY_Model
         return $this->db->query($sql)->result_array();
     }
 
+    
+    function get_all_by_departements($departments_id, $year, $status,$gender)
+    {
+        if($departments_id > 0) $this->db->where('departments_id', $departments_id);
+        if($year > 0) $this->db->where('YEAR(effective_time)', $year);
+        if($gender > 0) $this->db->where('gender', $gender);
+        if($status > 0) $this->db->where('is_active', $status);
+        $this->db->order_by('id', 'desc');
+        return $this->db->get($this->table)->result_array();
+    }
+
     // function get_last_code_resi($day, $month, $year)
     // {
     //     $this->db->where('DAY(tanggal_dibuat)', $day);

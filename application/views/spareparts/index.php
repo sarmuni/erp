@@ -54,7 +54,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width='200px'>Global Location Number</th>
+                            <th>Global Location Number</th>
                             <th>Parts Number</th>
                             <th>Parts Name</th>
                             <th>Qty</th>
@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Number of Packing List</th>
                             <th>Number of Container</th>
                             <th>Area Zone Location</th>
-                            <th width='80px'>Action</th>
+                            <th width='70px'>Action</th>
                         </tr>
                     </thead>
                     <?php

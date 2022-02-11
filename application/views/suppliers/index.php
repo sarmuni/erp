@@ -11,16 +11,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_suppliers">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_suppliers">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('suppliers'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php base_url('suppliers'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
+
+            <span class="pull-right"><a href="#" id="" title="Sort" class="btn bg-info btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Sort</a></span>
+            <div class="col-sm-2 pull-right">
+                <select id="departments_id" name="departments_id" required class="form-control select2" value="<?= set_value('departments_id'); ?>">
+                    <option value="">-- All PIC --</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="year" name="year" required class="form-control select2" value="<?= set_value('year'); ?>">
+                    <option value="">-- All Year --</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="category" name="category" required class="form-control select2" value="<?= set_value('category'); ?>">
+                    <option value="">-- All Location --</option>
+                </select>
+            </div>
+
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
@@ -64,10 +82,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php } ?>
                             </td> -->
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_suppliers<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_suppliers<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>suppliers/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>suppliers/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -112,13 +130,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="supplierName">Supplier Name</label>
-                                    <input type="text" name="supplierName" class="form-control" id="supplierName" value="<?= set_value('supplierName'); ?>">
+                                    <input type="text" name="supplierName" class="form-control form-control-sm" id="supplierName" value="<?= set_value('supplierName'); ?>">
                                     <?= form_error('supplierName', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="address">Supplier Address</label>
-                                    <input type="text" name="address" class="form-control" id="address" value="<?= set_value('address'); ?>">
+                                    <input type="text" name="address" class="form-control form-control-sm" id="address" value="<?= set_value('address'); ?>">
                                     <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -126,12 +144,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="location">Supplier Premise</label>
-                                    <input type="text" name="location" class="form-control" id="location" value="<?= set_value('location'); ?>">
+                                    <input type="text" name="location" class="form-control form-control-sm" id="location" value="<?= set_value('location'); ?>">
                                     <?= form_error('location', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="website">Website</label>
-                                    <input type="text" id="website" class="form-control" name="website" value="<?= set_value('website'); ?>">
+                                    <input type="text" id="website" class="form-control form-control-sm" name="website" value="<?= set_value('website'); ?>">
                                     <?= form_error('website', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -139,13 +157,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" class="form-control" name="email" value="<?= set_value('email'); ?>">
+                                    <input type="email" id="email" class="form-control form-control-sm" name="email" value="<?= set_value('email'); ?>">
                                     <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                  <div class="form-group col-md-6">
                                     <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" value="<?= set_value('phone'); ?>">
+                                    <input type="text" name="phone" class="form-control form-control-sm" id="phone" value="<?= set_value('phone'); ?>">
                                     <?= form_error('phone', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -153,12 +171,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="remarks">Remarks</label>
-                                    <input type="text" id="remarks" class="form-control" name="remarks" value="<?= set_value('remarks'); ?>">
+                                    <input type="text" id="remarks" class="form-control form-control-sm" name="remarks" value="<?= set_value('remarks'); ?>">
                                     <?= form_error('remarks', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                  <div class="form-group col-md-6">
                                     <label for="supplierDiscount">Supplier Discount Percentage</label>
-                                    <input type="text" name="supplierDiscount" class="form-control" id="supplierDiscount" value="<?= set_value('supplierDiscount'); ?>">
+                                    <input type="text" name="supplierDiscount" class="form-control form-control-sm" id="supplierDiscount" value="<?= set_value('supplierDiscount'); ?>">
                                     <?= form_error('supplierDiscount', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -166,7 +184,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="picSupplier">PIC Supplier</label>
-                                    <input type="text" id="picSupplier" class="form-control" name="picSupplier" value="<?= set_value('picSupplier'); ?>">
+                                    <input type="text" id="picSupplier" class="form-control form-control-sm" name="picSupplier" value="<?= set_value('picSupplier'); ?>">
                                     <?= form_error('picSupplier', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -175,8 +193,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn bg-danger">Save</button>
-                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                <!-- <button type="submit" class="btn bg-danger">Save</button>
+                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
+                <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
             </div>
             </form>
         </div>
@@ -222,13 +242,13 @@ foreach ($suppliers as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="supplierName">Supplier Name</label>
-                                        <input type="text" name="supplierName" value="<?php echo $supplierName; ?>" class="form-control" id="supplierName">
+                                        <input type="text" name="supplierName" value="<?php echo $supplierName; ?>" class="form-control form-control-sm" id="supplierName">
                                         <?= form_error('supplierName', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="address"> Supplier Address </label>
-                                        <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" id="address">
+                                        <input type="text" name="address" value="<?php echo $address; ?>" class="form-control form-control-sm" id="address">
                                         <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -236,12 +256,12 @@ foreach ($suppliers as $i) :
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="location">Supplier Premise</label>
-                                        <input type="text" name="location" value="<?php echo $location; ?>" class="form-control" id="location">
+                                        <input type="text" name="location" value="<?php echo $location; ?>" class="form-control form-control-sm" id="location">
                                         <?= form_error('location', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="website">Website</label>
-                                        <input type="text" id="website" value="<?php echo $website; ?>" class="form-control" name="website" value="<?= set_value('website'); ?>">
+                                        <input type="text" id="website" value="<?php echo $website; ?>" class="form-control form-control-sm" name="website" value="<?= set_value('website'); ?>">
                                         <?= form_error('website', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -249,13 +269,13 @@ foreach ($suppliers as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control" id="email">
+                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control form-control-sm" id="email">
                                         <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="phone">Phone</label>
-                                        <input type="text" name="phone" value="<?php echo $phone; ?>" class="form-control" id="phone">
+                                        <input type="text" name="phone" value="<?php echo $phone; ?>" class="form-control form-control-sm" id="phone">
                                         <?= form_error('phone', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -263,20 +283,20 @@ foreach ($suppliers as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="remarks">Remarks</label>
-                                        <input type="text" name="remarks" value="<?php echo $remarks; ?>" class="form-control" id="remarks">
+                                        <input type="text" name="remarks" value="<?php echo $remarks; ?>" class="form-control form-control-sm" id="remarks">
                                         <?= form_error('remarks', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="supplierDiscount">Supplier Discount Percentage</label>
-                                        <input type="text" name="supplierDiscount" value="<?php echo $supplierDiscount; ?>" class="form-control" id="supplierDiscount">
+                                        <input type="text" name="supplierDiscount" value="<?php echo $supplierDiscount; ?>" class="form-control form-control-sm" id="supplierDiscount">
                                         <?= form_error('supplierDiscount', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="picSupplier">PIC Supplier</label>
-                                        <input type="text" name="picSupplier" value="<?php echo $picSupplier; ?>" class="form-control" id="picSupplier">
+                                        <input type="text" name="picSupplier" value="<?php echo $picSupplier; ?>" class="form-control form-control-sm" id="picSupplier">
                                         <?= form_error('picSupplier', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -286,8 +306,11 @@ foreach ($suppliers as $i) :
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-danger">Update</button>
-                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                    <!-- <button type="submit" class="btn bg-danger">Update</button>
+                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
+
+                    <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Update</button>
+                    <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
                 </div>
                 </form>
             </div>

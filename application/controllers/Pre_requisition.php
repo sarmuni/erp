@@ -9,6 +9,7 @@ class Pre_requisition extends CI_Controller
         is_logged_in();
 
         $this->load->model('pre_requisition_model');
+        $this->load->model('pre_requisition_detail_model');
         $this->load->model('departments_model');
         $this->load->model('employee_model');
         $this->load->library('form_validation');
@@ -16,11 +17,15 @@ class Pre_requisition extends CI_Controller
 
     public function index()
     {
+        
         $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
         $data['pre_requisition']               = $this->pre_requisition_model->get_all('id', 'desc');
         $data['option_departments']            = $this->pre_requisition_model->departments();
         $data['part_departments']              = $this->pre_requisition_model->part_departments();
         $data['employee']                      = $this->employee_model->get_all('id','desc');
+
+        $id                                    = $this->session->userdata('id');
+        $data['head_employee']                 = $this->pre_requisition_model->call_function_procedure_head_of_dept($id);
 
         $data['title'] = 'Pre Requisition';
         $this->template->load('template_neura/index', 'pre_requisition/index', $data);
@@ -59,6 +64,19 @@ class Pre_requisition extends CI_Controller
         $this->template->load('template_neura/index', 'pre_requisition/form', $data);
     }
 
+    public function view($id,$pre_code)
+    {
+        $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['pre_requisition']               = $this->pre_requisition_model->get_by_id($id);
+        $data['pre_requisition_detail']        = $this->pre_requisition_detail_model->get_all_item($pre_code);
+        $data['option_departments']            = $this->pre_requisition_model->departments();
+        $data['part_departments']              = $this->pre_requisition_model->part_departments();
+        $data['employee']                      = $this->employee_model->get_all('id','desc');
+
+        $data['title'] = 'View Pre Requisition';
+        $this->template->load('template_neura/index', 'pre_requisition/view', $data);
+    }
+
     public function add()
     {
 
@@ -69,12 +87,12 @@ class Pre_requisition extends CI_Controller
         $this->form_validation->set_rules('department_id', 'Departements ', 'required|trim');
         $this->form_validation->set_rules('request_status', 'Request Status', 'required|trim');
         $this->form_validation->set_rules('notes', 'Notes', 'required|trim');
-
         $this->form_validation->set_rules('item_name', 'Description Details', 'required|trim');
         $this->form_validation->set_rules('pre_qty', 'Qty', 'required|trim');
 
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == true) {
+
             $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
             $data['pre_requisition']            = $this->pre_requisition_model->get_all('id', 'desc');
             $data['option_departments']         = $this->pre_requisition_model->departments();
@@ -85,15 +103,14 @@ class Pre_requisition extends CI_Controller
         } else {
 
             $pre_code               = $this->input->post('pre_code');
-            $pre_date               = htmlspecialchars($this->input->post('pre_date'));
-            $pre_deadline_date      = htmlspecialchars($this->input->post('pre_deadline_date'));
-            $request_user_id        = htmlspecialchars($this->input->post('request_user_id'));
-            $department_id          = htmlspecialchars($this->input->post('department_id'));
-            $request_status         = htmlspecialchars($this->input->post('request_status'));
-            $notes                  = htmlspecialchars($this->input->post('notes'));
-            $item_name              = htmlspecialchars($this->input->post('item_name'));
-            $pre_qty                = htmlspecialchars($this->input->post('pre_qty'));
-            $data = array();
+            $pre_date               = $this->input->post('pre_date');
+            $pre_deadline_date      = $this->input->post('pre_deadline_date');
+            $request_user_id        = $this->input->post('request_user_id');
+            $department_id          = $this->input->post('department_id');
+            $request_status         = $this->input->post('request_status');
+            $notes                  = $this->input->post('notes');
+            $item_name              = $this->input->post('item_name');
+            $pre_qty                = $this->input->post('pre_qty');
 
             $data = array(
                 'pre_code'          => $pre_code,
@@ -102,22 +119,37 @@ class Pre_requisition extends CI_Controller
                 'request_user_id'   => $request_user_id,
                 'department_id'     => $department_id,
                 'request_status'    => $request_status,
-                'notes'             => $notes
+                'notes'             => $notes,
+                'input_by'          => $this->session->userdata('fullname'),
+                'input_date'        => date('Y-m-d H:i:s')
             );
 
             $insert = $this->pre_requisition_model->insert($data);
+
+            $measurement            = $this->input->post('measurement');
+            $estimated_price        = $this->input->post('estimated_price');
+            $item_name              = $this->input->post('item_name');
+            $pre_qty                = $this->input->post('pre_qty');
+            $status                 = $this->input->post('status');
+            $data1 = array();   
             
             $index = 0;
-            foreach($pre_code as $datapre_code){
-                    array_push($data, array(        
-                        'item_pre_code'=>$datapre_code,        
-                        'item_name'=>$item_name[$index],          
-                        'pre_qty'=>$pre_qty[$index],
-                    ));
-            $index++;    
+            foreach($item_name as $k){
+              array_push($data1, array(
+              'item_pre_code'       => $pre_code,  
+              'item_name'           => $k,  
+              'pre_qty'             => $pre_qty[$index],
+              'measurement'         => strtoupper($measurement[$index]),
+              'estimated_price'     => $estimated_price[$index],
+              'status'              => $status[$index],
+              'createdBy'           => $this->session->userdata('fullname'),
+              'created_at'          => date('Y-m-d H:i:s'),
+              ));
+              $index++;
             }
-            $insert = $this->pre_requisition_model->insert_batch($data);
 
+               
+            $insert = $this->db->insert_batch('pre_requisition_item_detail', $data1);
 
             if ($insert) {
                 $this->session->set_flashdata('message', 'Success');
@@ -148,10 +180,11 @@ class Pre_requisition extends CI_Controller
     }
 
 
-    public function delete($id)
+    public function delete($id,$pre_code)
     {
 
         $delete = $this->pre_requisition_model->delete($id);
+        $delete = $this->pre_requisition_detail_model->delete_item($pre_code);
 
         if ($delete) {
             redirect('pre_requisition');
@@ -176,7 +209,7 @@ class Pre_requisition extends CI_Controller
         $this->form_validation->set_rules('is_active', 'Active', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user']               = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+            $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
             $data['pre_requisition']           = $this->pre_requisition_model->get_all('id', 'desc');
 

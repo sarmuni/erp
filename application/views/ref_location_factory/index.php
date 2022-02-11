@@ -11,16 +11,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_ref_location_factory">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_location_factory">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('ref_location_factory'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php base_url('ref_location_factory'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
+
+
+            <span class="pull-right"><a href="#" id="" title="Sort" class="btn bg-info btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Sort</a></span>
+            <div class="col-sm-2 pull-right">
+                <select id="departments_id" name="departments_id" required class="form-control select2" value="<?= set_value('departments_id'); ?>">
+                    <option value="">-- All District--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="year" name="year" required class="form-control select2" value="<?= set_value('year'); ?>">
+                    <option value="">-- All Year--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="category" name="category" required class="form-control select2" value="<?= set_value('category'); ?>">
+                    <option value="">-- All Factory--</option>
+                </select>
+            </div>
+
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
@@ -53,10 +72,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_ref_location_factory<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_location_factory<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>ref_location_factory/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>ref_location_factory/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -105,7 +124,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="company_id">Company Name</label>
-                                    <select id="company_id" class="form-control" name="company_id" id="company_id">
+                                    <select id="company_id" class="form-control form-control-sm" name="company_id" id="company_id">
                                         <option selected="">--Select--</option>
                                         <option value="1">PT. Batavia Indo Global</option>
                                         <!-- <option value="2">PM (Packaging Material)</option> -->
@@ -114,7 +133,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="name">Factory Name</label>
-                                    <input type="text" name="name" class="form-control" id="name" value="<?= set_value('name'); ?>">
+                                    <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?= set_value('name'); ?>">
                                     <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -122,13 +141,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="country">Country/Region</label>
-                                    <input type="text" name="country" class="form-control" id="country" value="<?= set_value('country'); ?>">
+                                    <input type="text" name="country" class="form-control form-control-sm" id="country" value="<?= set_value('country'); ?>">
                                     <?= form_error('country', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="province">Province</label>
-                                    <input type="text" id="province" class="form-control" name="province" value="<?= set_value('province'); ?>">
+                                    <input type="text" id="province" class="form-control form-control-sm" name="province" value="<?= set_value('province'); ?>">
                                     <?= form_error('province', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -136,13 +155,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="district">District</label>
-                                    <input type="text" name="district" class="form-control" id="district" value="<?= set_value('district'); ?>">
+                                    <input type="text" name="district" class="form-control form-control-sm" id="district" value="<?= set_value('district'); ?>">
                                     <?= form_error('district', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="village">Village</label>
-                                    <input type="text" name="village" class="form-control" id="village" value="<?= set_value('village'); ?>">
+                                    <input type="text" name="village" class="form-control form-control-sm" id="village" value="<?= set_value('village'); ?>">
                                     <?= form_error('village', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -151,13 +170,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 
                             <div class="form-group col-md-6">
                                     <label for="contact">Phone Number</label>
-                                    <input type="text" id="contact" class="form-control" name="contact" value="<?= set_value('contact'); ?>">
+                                    <input type="text" id="contact" class="form-control form-control-sm" name="contact" value="<?= set_value('contact'); ?>">
                                     <?= form_error('contact', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="postal_code">Postal Code</label>
-                                    <input type="text" id="postal_code" class="form-control" name="postal_code" value="<?= set_value('postal_code'); ?>">
+                                    <input type="text" id="postal_code" class="form-control form-control-sm" name="postal_code" value="<?= set_value('postal_code'); ?>">
                                     <?= form_error('postal_code', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -165,7 +184,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="address">Address</label>
-                                    <textarea type="text" name="address" class="form-control" value="<?= set_value('address'); ?>"></textarea>
+                                    <textarea type="text" name="address" class="form-control form-control-sm" value="<?= set_value('address'); ?>"></textarea>
                                     <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -173,12 +192,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" class="form-control" name="email" value="<?=set_value('email'); ?>">
+                                    <input type="email" id="email" class="form-control form-control-sm" name="email" value="<?=set_value('email'); ?>">
                                     <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="description">Description</label>
-                                    <input type="description" id="description" class="form-control" name="description" value="<?=set_value('description'); ?>">
+                                    <input type="description" id="description" class="form-control form-control-sm" name="description" value="<?=set_value('description'); ?>">
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -187,8 +206,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn bg-danger">Save</button>
-                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
             </div>
             </form>
         </div>
@@ -236,7 +255,7 @@ foreach ($ref_location_factory as $i) :
 
                                 <div class="form-group col-md-6">
                                         <label for="company_id">Company ID</label>
-                                        <select id="company_id" class="form-control" name="company_id" id="company_id">
+                                        <select id="company_id" class="form-control form-control-sm" name="company_id" id="company_id">
                                             <option selected="">--Select--</option>
                                             <?php if ($company_id==1) {?>
                                                 <option value="1" selected>PT. Batavia Indo Global</option>
@@ -251,7 +270,7 @@ foreach ($ref_location_factory as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="name"> Factory Name </label>
-                                        <input type="text" name="name" value="<?php echo $name; ?>" class="form-control" id="name">
+                                        <input type="text" name="name" value="<?php echo $name; ?>" class="form-control form-control-sm" id="name">
                                         <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -259,13 +278,13 @@ foreach ($ref_location_factory as $i) :
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="country">Country/Region</label>
-                                        <input type="text" id="country" value="<?php echo $country; ?>" class="form-control" name="country" value="<?= set_value('country'); ?>">
+                                        <input type="text" id="country" value="<?php echo $country; ?>" class="form-control form-control-sm" name="country" value="<?= set_value('country'); ?>">
                                         <?= form_error('country', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="province">Province</label>
-                                        <input type="text" id="province" value="<?php echo $province; ?>" class="form-control" name="province" value="<?= set_value('province'); ?>">
+                                        <input type="text" id="province" value="<?php echo $province; ?>" class="form-control form-control-sm" name="province" value="<?= set_value('province'); ?>">
                                         <?= form_error('province', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -273,13 +292,13 @@ foreach ($ref_location_factory as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="district">District</label>
-                                        <input type="text" name="district" value="<?php echo $district; ?>" class="form-control" id="district">
+                                        <input type="text" name="district" value="<?php echo $district; ?>" class="form-control form-control-sm" id="district">
                                         <?= form_error('district', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="village">Village</label>
-                                        <input type="text" name="village" value="<?php echo $village; ?>" class="form-control" id="village">
+                                        <input type="text" name="village" value="<?php echo $village; ?>" class="form-control form-control-sm" id="village">
                                         <?= form_error('village', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -287,13 +306,13 @@ foreach ($ref_location_factory as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="contact">Phone Number</label>
-                                        <input type="text" name="contact" value="<?php echo $contact; ?>" class="form-control" id="contact">
+                                        <input type="text" name="contact" value="<?php echo $contact; ?>" class="form-control form-control-sm" id="contact">
                                         <?= form_error('contact', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="postal_code">Postal Code</label>
-                                        <input type="text" name="postal_code" value="<?php echo $postal_code; ?>" class="form-control" id="postal_code">
+                                        <input type="text" name="postal_code" value="<?php echo $postal_code; ?>" class="form-control form-control-sm" id="postal_code">
                                         <?= form_error('postal_code', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -301,7 +320,7 @@ foreach ($ref_location_factory as $i) :
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label for="address">Address</label>
-                                        <textarea type="text" name="address" class="form-control" value="<?= set_value('address'); ?>"><?php echo $address; ?></textarea>
+                                        <textarea type="text" name="address" class="form-control form-control-sm" value="<?= set_value('address'); ?>"><?php echo $address; ?></textarea>
                                         <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -309,13 +328,13 @@ foreach ($ref_location_factory as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control" id="email">
+                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control form-control-sm" id="email">
                                         <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="description">Description</label>
-                                        <input type="text" name="description" value="<?php echo $description; ?>" class="form-control" id="description">
+                                        <input type="text" name="description" value="<?php echo $description; ?>" class="form-control form-control-sm" id="description">
                                         <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -325,8 +344,10 @@ foreach ($ref_location_factory as $i) :
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-danger">Update</button>
-                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                    <!-- <button type="submit" class="btn bg-danger">Update</button>
+                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
+                    <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
                 </div>
                 </form>
             </div>

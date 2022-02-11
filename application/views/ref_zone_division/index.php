@@ -11,16 +11,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_ref_zone_division">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_zone_division">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('ref_zone_division'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php base_url('ref_zone_division'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
+
+            <span class="pull-right"><a href="#" id="" title="Sort" class="btn bg-info btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Sort</a></span>
+            <div class="col-sm-2 pull-right">
+                <select id="departments_id" name="departments_id" required class="form-control select2" value="<?= set_value('departments_id'); ?>">
+                    <option value="">-- All District--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="year" name="year" required class="form-control select2" value="<?= set_value('year'); ?>">
+                    <option value="">-- All Year--</option>
+                </select>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <select id="category" name="category" required class="form-control select2" value="<?= set_value('category'); ?>">
+                    <option value="">-- All Factory--</option>
+                </select>
+            </div>
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
@@ -31,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>GLN-ZD</th>
                             <th>Factory Name</th>
                             <th>Description</th>
-                            <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
@@ -45,10 +62,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo strtoupper($row['name_factory']); ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_ref_zone_division<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_zone_division<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>ref_zone_division/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>ref_zone_division/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -91,7 +108,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="id_loc_fac">Factory Name</label>
-                                    <select id="id_loc_fac" class="form-control" name="id_loc_fac" id="id_loc_fac" value="<?= set_value('id_loc_fac'); ?>">
+                                    <select id="id_loc_fac" class="form-control form-control-sm" name="id_loc_fac" id="id_loc_fac" value="<?= set_value('id_loc_fac'); ?>">
                                         <option selected="">Select</option>
                                         <?php foreach ($ref_location_factory as $select) { ?>
                                             <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>
@@ -102,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="name">Zone Name</label>
-                                    <input type="text" name="name" class="form-control" id="name" value="<?= set_value('name'); ?>">
+                                    <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?= set_value('name'); ?>">
                                     <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -110,7 +127,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="description">Description</label>
-                                    <textarea type="text" name="description" class="form-control" value="<?= set_value('description'); ?>"></textarea>
+                                    <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -119,8 +136,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn bg-danger">Save</button>
-                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
+
+                <!-- <button type="submit" class="btn bg-danger">Save</button>
+                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
             </div>
             </form>
         </div>
@@ -161,7 +181,7 @@ foreach ($ref_zone_division as $i) :
 
                                 <div class="form-group col-md-6">
                                         <label for="id_loc_fac">Factory Name</label>
-                                        <select id="id_loc_fac" class="form-control" name="id_loc_fac" id="id_loc_fac">
+                                        <select id="id_loc_fac" class="form-control form-control-sm" name="id_loc_fac" id="id_loc_fac">
                                             <option selected="">--Select--</option>
                                             <?php foreach ($ref_location_factory as $select) { ?>
                                                 
@@ -179,7 +199,7 @@ foreach ($ref_zone_division as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="name">Zone Name</label>
-                                        <input type="text" name="name" class="form-control" id="name" value="<?php echo $name; ?>">
+                                        <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?php echo $name; ?>">
                                         <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -187,7 +207,7 @@ foreach ($ref_zone_division as $i) :
                                 <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="description">Description</label>
-                                    <textarea type="text" name="description" class="form-control" value="<?= set_value('description'); ?>"><?php echo $description; ?></textarea>
+                                    <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"><?php echo $description; ?></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -197,8 +217,10 @@ foreach ($ref_zone_division as $i) :
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-danger">Update</button>
-                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Update</button>
+                    <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
+                    <!-- <button type="submit" class="btn bg-danger">Update</button>
+                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
                 </div>
                 </form>
             </div>

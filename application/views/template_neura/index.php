@@ -157,21 +157,21 @@
                         </div>
                     </li>
 
-
+                    <!-- 
                     <li class="list-inline-item dropdown notif">
                         <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
                             <i class="fas fa-cog"></i>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-arrow-success dropdown-sm">
-                            <!-- item-->
+                    
                             <div class="dropdown-item noti-title">
                                 <h5>
                                     <small>Settings</small>
                                 </h5>
                             </div>
 
-                            <!-- item-->
+                    
                             <a href="#" class="dropdown-item notify-item">
                                 <p class="notify-details ml-0">
                                     <i class="fas fa-cog"></i>
@@ -179,7 +179,7 @@
                                 </p>
                             </a>
 
-                            <!-- item-->
+                    
                             <a href="#" class="dropdown-item notify-item">
                                 <p class="notify-details ml-0">
                                     <i class="fas fa-cog"></i>
@@ -187,7 +187,7 @@
                                 </p>
                             </a>
 
-                            <!-- item-->
+                    
                             <a href="#" class="dropdown-item notify-item">
                                 <p class="notify-details ml-0">
                                     <i class="fas fa-cog"></i>
@@ -198,11 +198,12 @@
                         </div>
 
                     </li>
+                     -->
 
 
                     <li class="list-inline-item dropdown notif">
                         <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
-                            <img src="<?= base_url(); ?>assets/template_neura/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+                            <img src="<?= base_url(); ?>uploads/avatar/<?php echo $user['image']; ?>" alt="Profile image" class="avatar-rounded">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                             <!-- item-->
@@ -527,14 +528,23 @@ $(document).ready(function(){
         $("#insert-form").append('<div class="table-responsive">'+
                     '<table class="table table-hover display" style="width:100%">'+
                             '<tr>'+
-                                '<td style="width:75%">'+
-                                    '<textarea class="form-control form-control-sm" name="item_name[]" placeholder="Description Detail"></textarea>'+
+                                '<td style="width:40%">'+
+                                    '<textarea class="form-control form-control-sm" required name="item_name[]" placeholder="Description Detail"></textarea>'+
                                 '</td>'+
                                 '<td>'+
-                                    '<input type="number" name="pre_qty[]" placeholder="Qty" class="form-control form-control-sm" id="request_user_id" autocomplete="off">'+
+                                    '<input type="number" required name="pre_qty[]" placeholder="Qty" class="form-control form-control-sm" id="pre_qty" autocomplete="off">'+
                                 '</td>'+
                                 '<td>'+
-                                    
+                                    '<input type="text" required name="measurement[]" placeholder="Unit" class="form-control form-control-sm" id="measurement" autocomplete="off">'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input type="number" required name="estimated_price[]" placeholder="Estimated Price" class="form-control form-control-sm" id="estimated_price" autocomplete="off">'+
+                                '</td>'+
+                                '<td>'+
+                                    '<select id="status" name="status[]" required class="form-control form-control-sm">'+
+                                        '<option value="1">Normal</option>'+
+                                        '<option value="2">Urgent</option>'+
+                                    '</select>'+
                                 '</td>'+
                             '</tr>'+
                     '</table>'+

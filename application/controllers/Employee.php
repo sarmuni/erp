@@ -15,13 +15,59 @@ class Employee extends CI_Controller
 
     public function index()
     {
+        $departments_id = $this->uri->segment(3);
+        $year           = $this->uri->segment(4);
+        $status         = $this->uri->segment(5);
+        $gender         = $this->uri->segment(6);
+
+        date_default_timezone_set('Asia/Jakarta');
+        $yr = date('Y');
+
+        if (!isset($year) || $year == null) {$year = $yr;}
+
+
+        if (isset($departments_id))
+        {
+            $data['employee'] = $this->employee_model->get_all_by_departements($departments_id, $year, $status,$gender);
+        } else
+        {
+            $data['employee'] = $this->employee_model->get_all('id', 'desc');
+            $departments_id   = 0;
+            $year             = 0;
+            $status           = 0;
+            $gender           = 0;
+        }
+
+        $data['departments_id']  = $departments_id;
+        $data['year']            = $year;
+        $data['status']          = $status;
+        $data['gender']          = $gender;
+
+
         $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['employee']                      = $this->employee_model->get_all('id', 'desc');
         $data['option_departments']            = $this->employee_model->departments();
         $data['part_departments']              = $this->employee_model->part_departments();
 
         $data['title'] = 'Employee';
         $this->template->load('template_neura/index', 'employee/index', $data);
+    }
+
+    public function filter()
+    {    
+        $departments_id = $this->uri->segment(3);
+        if (isset($departments_id)){
+
+
+        }else{
+
+            $departments_id         = $this->input->post('departments_id');
+            $year                   = $this->input->post('year');
+            $status                 = $this->input->post('status');
+            $gender                 = $this->input->post('gender'); 
+
+            $data['title'] = 'Employee';
+            $this->template->load('template_neura/index', 'employee/index/'.$departments_id.'/'.$year.'/'.$status.'/'.$gender);
+        }
     }
 
     public function add()
@@ -226,5 +272,7 @@ class Employee extends CI_Controller
             redirect('employee');
         }
     }
+
+    
 
 }

@@ -11,18 +11,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_menu">
-                <i class="fas fa-user-plus"></i>
+
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_menu">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <!-- <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
-            </a> -->
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
+            </a>
 
-            <a role="button" href="<?php base_url('menu'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php echo base_url('menu'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
             <hr>
+
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
                     <thead>
@@ -33,7 +35,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Url</th>
                             <th>Icon</th>
                             <th>Active</th>
-                            <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
@@ -48,27 +50,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo $row['icon']; ?></td>
                             <td>
                                     <?php if ($row['is_active'] == 0) { ?>
-                                        <center><a role="button" href="<?php echo site_url(); ?>menu/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-danger publish" title="Aktif">
-                                                <i class="fas fa-eye-slash"></i>
+                                        <center><a role="button" href="<?php echo site_url(); ?>menu/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-danger btn-sm publish" title="Non Aktif">
+                                        <i class="fas fa-toggle-off"></i>
                                             </a></center>
                                     <?php } else { ?>
-                                        <center><a role="button" href="<?php echo site_url(); ?>menu/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-danger unpublish" title="Non Aktif">
-                                                <i class="fas fa-eye"></i>
+                                        <center><a role="button" href="<?php echo site_url(); ?>menu/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-info btn-sm unpublish" title="Aktif">
+                                        <i class="fas fa-toggle-on"></i>
                                             </a></center>
                                     <?php } ?>
                                 
                             </td>
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_menu<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-danger btn-sm" title="Edit" data-toggle="modal" 
+                                data-target="#edit_menu<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>menu/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>menu/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
                                     <i class="fab fa-searchengin"></i>
                                 </a> -->
-
+                                
                             </td>
                         </tr>
                     <?php
