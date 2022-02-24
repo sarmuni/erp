@@ -3,7 +3,7 @@
 
 <head>
     <title><?php echo $title; ?> - Dashboard</title>
-    <meta name="description" content="Warehouse Managemen System">
+    <meta name="description" content="Enterprise Resource Planning (ERP)">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Sarmuni, S.Kom | 085289008827">
@@ -285,8 +285,8 @@
 
                                 </h1>
                                 <ol class="breadcrumb float-right">
-                                    <li class="breadcrumb-item">Home</li>
-                                    <li class="breadcrumb-item active"><?php echo $title; ?></li>
+                                    <li class="breadcrumb-item">You are logged in as [ <a href="<?php echo base_url() ?>account_user/profile"><?php echo $user['fullname']; ?></a> ]</li>
+                                    <!-- <li class="breadcrumb-item active"><?php echo $title; ?></li> -->
                                 </ol>
                                 <div class="clearfix"></div>
                             </div>

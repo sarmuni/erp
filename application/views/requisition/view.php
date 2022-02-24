@@ -11,22 +11,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $notes              = $row['notes'];
             $request_status     = $row['request_status'];
 
-            // $approved_hod_date  = $row['approved_hod_date'];
-            // $approved_hod_by    = $row['approved_hod_by'];
-
-            // $verified_purchasing_date   = $row['verified_purchasing_date'];
-            // $verified_purchasing_by     = $row['verified_purchasing_by'];
-
-            // $approved_bod_by_date       = $row['approved_bod_by_date'];
-            // $approved_bod_by            = $row['approved_bod_by'];
-
-            // $approved_finance_date      = $row['approved_finance_date'];
-            // $approved_finance_by        = $row['approved_finance_by'];
-
-            // $paid_by                    = $row['paid_by'];
-            // $paid_date                  = $row['paid_date'];
-
-
             if ($request_status==1) {
                 $_request_status="Normal";
             }else{
@@ -192,18 +176,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="dataTable1" class="table table-bordered" style="width:100%">
-                          
                             <tr>
                                 <td style="width:30%">Pre Requisition Code</td>
                                 <td style="width:2%">:</td>
-                                <th></th>
+                                <th><?php echo $pre_code; ?></th>
                             </tr>
                             <tr>
                                 <td>Pre Requisition Date</td>
                                 <td>:</td>
-                                <td></td>
+                                <td><?php echo $pre_date; ?></td>
                             </tr>
-                          
                     </table>
                 </div>
             </div>

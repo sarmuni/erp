@@ -235,16 +235,18 @@ $('.kirim-gudang').on('click', function (e) {
 
 });
 
+// pre requisition
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-$('.in-kargo').on('click', function (e) {
+$('.pre_req_aprov_hod').on('click', function (e) {
 
     e.preventDefault();
     const href = $(this).attr('href');
 
     Swal({
         title: 'Are you sure',
-        text: "Goods will be sent to Indonesia, delivery of goods cannot be canceled.!",
-        type: 'warning',
+        text: "Will agree to the request.!",
+        type: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -256,3 +258,69 @@ $('.in-kargo').on('click', function (e) {
     })
 
 });
+
+$('.pre_req_aprov_purchasing').on('click', function (e) {
+
+    e.preventDefault();
+    const href = $(this).attr('href');
+
+    Swal({
+        title: 'Are you sure',
+        text: "Will agree to the request.!",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+    }).then((result) => {
+        if (result.value) {
+            document.location.href = href;
+        }
+    })
+
+});
+
+$('.pre_req_approved_bod').on('click', function (e) {
+
+    e.preventDefault();
+    const href = $(this).attr('href');
+
+    Swal({
+        title: 'Are you sure',
+        text: "Will agree to the request.!",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+    }).then((result) => {
+        if (result.value) {
+            document.location.href = href;
+        }
+    })
+
+});
+
+$('.pre_req_approved_finance').on('click', function (e) {
+
+    e.preventDefault();
+    const href = $(this).attr('href');
+
+    Swal({
+        title: 'Are you sure',
+        text: "Will agree to the request.!",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+    }).then((result) => {
+        if (result.value) {
+            document.location.href = href;
+        }
+    })
+
+});
+
+// end pre requisition
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -11,14 +11,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_room_zone">
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_floor_zone">
                 <i class="fas fa-user-plus"></i> Add New
             </a>
 
             <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
                 <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('ref_room_zone'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+            <a role="button" href="<?php echo base_url('ref_floor_zone'); ?>" class="btn bg-danger btn-sm" title="Refresh">
                 <i class="fas fa-sync-alt"></i> Refresh
             </a>
 
@@ -39,36 +39,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </select>
             </div>
 
+            
             <hr>
             <div class="table-responsive">
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Room Name</th>
-                            <th>GLN-RA</th>
-                            <th>Area Name</th>
                             <th>Floor Name</th>
+                            <th>GLN-AZ</th>
+                            <th>Zone Name</th>
                             <th>Description</th>
-                           <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <?php
                     $no = 1;
-                    foreach ($ref_room_zone as $row) {
+                    foreach ($ref_floor_zone as $row) {
                     ?>
                         <tr>
                             <td><?php echo $no; ?></td>
                             <td><?php echo strtoupper($row['name']); ?></td>
-                            <td><?php echo strtoupper($row['gln_ra']); ?></td>
-                            <td><?php echo strtoupper($row['name_room_zone']); ?></td>
-                            <td><?php echo strtoupper($row['name_floor']); ?></td>
+                            <td><?php echo strtoupper($row['gln_af']); ?></td>
+                            <td><?php echo strtoupper($row['name_zone']); ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td>
-                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_room_zone<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_floor_zone<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>ref_room_zone/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>ref_floor_zone/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -90,11 +89,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 <!-- Modal Add -->
-<div class="modal fade tambah_ref_room_zone" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade tambah_ref_floor_zone" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Form Add Master Room Zone</h5>
+                <h5 class="modal-title">Form Add Master Area Zone</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -107,38 +106,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <div class="card-body">
-                        <form autocomplete="off" action="<?php echo base_url('ref_room_zone/add'); ?>" method="POST" enctype="multipart/form-data">
+                        <form autocomplete="off" action="<?php echo base_url('ref_floor_zone/add'); ?>" method="POST" enctype="multipart/form-data">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="area_zone_id">Area Name</label>
-                                    <select id="area_zone_id" class="form-control form-control-sm" name="area_zone_id" id="area_zone_id" value="<?= set_value('area_zone_id'); ?>">
+                                    <label for="id_area_zone">Zone Name</label>
+                                    <select id="id_area_zone" class="form-control form-control-sm" name="id_area_zone" id="id_area_zone" value="<?= set_value('id_area_zone'); ?>">
                                         <option selected="">Select</option>
                                         <?php foreach ($ref_area_zone as $select) { ?>
                                             <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>
                                         <?php } ?>
                                     </select>
-                                    <?= form_error('area_zone_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <?= form_error('id_area_zone', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="name">Room Name</label>
+                                    <label for="name">Floor Name</label>
                                     <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?= set_value('name'); ?>">
                                     <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="id_floor">Floor Name</label>
-                                    <select id="id_floor" class="form-control form-control-sm" name="id_floor" id="id_floor" value="<?= set_value('id_floor'); ?>">
-                                        <option selected="">Select</option>
-                                        <?php foreach ($ref_floor_zone as $select) { ?>
-                                            <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <?= form_error('id_floor', '<p style="color:red; font-size:12px;">', '</p>'); ?>
-                                </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <label for="description">Description</label>
                                     <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -151,7 +140,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="modal-footer">
                 <!-- <button type="submit" class="btn bg-danger">Save</button>
                 <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button> -->
-
                 <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
                 <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
             </div>
@@ -164,18 +152,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Modal Edit -->
 <?php
-foreach ($ref_room_zone as $i) :
+foreach ($ref_floor_zone as $i) :
     $id                         = $i['id'];
-    $id_floor                   = $i['id_floor'];
-    $area_zone_id               = $i['area_zone_id'];
+    $id_area_zone               = $i['id_area_zone'];
     $name                       = $i['name'];
     $description                = $i['description'];
 ?>
-    <div class="modal fade edit_ref_room_zone" id="edit_ref_room_zone<?php echo $id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade edit_ref_floor_zone" id="edit_ref_floor_zone<?php echo $id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Form Edit Zone Area</h5>
+                    <h5 class="modal-title">Form Edit Zone Floor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -189,16 +176,16 @@ foreach ($ref_room_zone as $i) :
 
                         <div class="card-body">
 
-                            <form autocomplete="off" action="<?php echo base_url('ref_room_zone/edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
+                            <form autocomplete="off" action="<?php echo base_url('ref_floor_zone/edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
                                 <div class="form-row">
 
                                 <div class="form-group col-md-6">
-                                        <label for="area_zone_id">Area Name</label>
-                                        <select id="area_zone_id" class="form-control form-control-sm" name="area_zone_id" id="area_zone_id">
+                                        <label for="id_area_zone">Zone Name</label>
+                                        <select id="id_area_zone" class="form-control form-control-sm" name="id_area_zone" id="id_area_zone">
                                             <option selected="">--Select--</option>
                                             <?php foreach ($ref_area_zone as $select) { ?>
                                                 
-                                                <?php if ($select['id']==$area_zone_id) { ?>
+                                                <?php if ($select['id']==$id_area_zone) { ?>
                                                 <option value="<?php echo $select['id'] ?>" selected><?php echo $select['name'] ?></option>  
 
                                                 <?php }else{ ?>
@@ -211,32 +198,14 @@ foreach ($ref_room_zone as $i) :
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="name">Room Name</label>
+                                        <label for="name">Floor Name</label>
                                         <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?php echo $name; ?>">
                                         <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="id_floor">Floor Name</label>
-                                        <select id="id_floor" class="form-control form-control-sm" name="id_floor" id="id_floor">
-                                            <option selected="">--Select--</option>
-                                            <?php foreach ($ref_floor_zone as $select) { ?>
-                                                
-                                                <?php if ($select['id']==$id_floor) { ?>
-                                                <option value="<?php echo $select['id'] ?>" selected><?php echo $select['name'] ?></option>  
-
-                                                <?php }else{ ?>
-                                                    <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>  
-                                                    
-                                                <?php } ?>
-
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <label for="description">Description</label>
                                     <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"><?php echo $description; ?></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>

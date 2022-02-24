@@ -11,15 +11,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_ref_driver">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_driver">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('ref_driver'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php base_url('ref_driver'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
             <hr>
             <div class="table-responsive">
@@ -75,10 +75,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php } ?>
                             </td> -->
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_ref_driver<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_driver<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>ref_driver/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>ref_driver/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -121,7 +121,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="nik">NIK/KTP</label>
-                                    <input type="text" name="nik" class="form-control" id="nik" value="<?= set_value('nik'); ?>">
+                                    <input type="text" name="nik" class="form-control form-control-sm" id="nik" value="<?= set_value('nik'); ?>">
                                     <?= form_error('nik', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
@@ -136,7 +136,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" class="form-control" id="name" value="<?= set_value('name'); ?>">
+                                    <input type="text" name="name" class="form-control form-control-sm" id="name" value="<?= set_value('name'); ?>">
                                     <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div> -->
                                 <div class="form-group col-md-6">
                                     <label for="gender">Gender</label>
-                                    <select id="gender" class="form-control" name="gender" id="gender">
+                                    <select id="gender" class="form-control form-control-sm" name="gender" id="gender">
                                         <option selected="">--Select--</option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
@@ -157,7 +157,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="phone_number">Number Phone</label>
-                                    <input type="text" id="phone_number" class="form-control" name="phone_number" value="<?= set_value('phone_number'); ?>">
+                                    <input type="text" id="phone_number" class="form-control form-control-sm" name="phone_number" value="<?= set_value('phone_number'); ?>">
                                     <?= form_error('phone_number', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -165,13 +165,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="address">Adderss</label>
-                                    <input type="address" id="address" class="form-control" name="address" value="<?=set_value('address'); ?>">
+                                    <input type="address" id="address" class="form-control form-control-sm" name="address" value="<?=set_value('address'); ?>">
                                     <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="sim_card">Part Driver</label>
-                                    <select id="sim_card" class="form-control" name="sim_card" id="sim_card">
+                                    <select id="sim_card" class="form-control form-control-sm" name="sim_card" id="sim_card">
                                         <option selected="">--Select--</option>
                                         <option value="0">Internal</option>
                                         <option value="1">External</option>
@@ -182,12 +182,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="email">Email</label>
-                                    <input type="text" id="email" class="form-control" name="email" value="<?= set_value('email'); ?>">
+                                    <input type="text" id="email" class="form-control form-control-sm" name="email" value="<?= set_value('email'); ?>">
                                     <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                  <div class="form-group col-md-6">
                                     <label for="sim_card">SIM Number</label>
-                                    <input type="text" name="sim_card" class="form-control" id="sim_card" value="<?= set_value('sim_card'); ?>">
+                                    <input type="text" name="sim_card" class="form-control form-control-sm" id="sim_card" value="<?= set_value('sim_card'); ?>">
                                     <?= form_error('sim_card', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -196,8 +196,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn bg-danger">Save</button>
-                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
             </div>
             </form>
         </div>
@@ -242,13 +242,13 @@ foreach ($ref_driver as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="nik">NIK/KTP</label>
-                                        <input type="text" name="nik" value="<?php echo $nik; ?>" class="form-control" id="nik">
+                                        <input type="text" name="nik" value="<?php echo $nik; ?>" class="form-control form-control-sm" id="nik">
                                         <?= form_error('nik', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="name"> Name </label>
-                                        <input type="text" name="name" value="<?php echo $name; ?>" class="form-control" id="name">
+                                        <input type="text" name="name" value="<?php echo $name; ?>" class="form-control form-control-sm" id="name">
                                         <?= form_error('name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@ foreach ($ref_driver as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="gender">Gender</label>
-                                        <select id="gender" class="form-control" name="gender" id="gender">
+                                        <select id="gender" class="form-control form-control-sm" name="gender" id="gender">
                                             <option selected="">--Select--</option>
                                             <?php if ($gender==1) {?>
                                                 <option value="1" selected>Male</option>
@@ -273,7 +273,7 @@ foreach ($ref_driver as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="phone_number">Phone Number</label>
-                                        <input type="text" id="phone_number" value="<?php echo $phone_number; ?>" class="form-control" name="phone_number" value="<?= set_value('phone_number'); ?>">
+                                        <input type="text" id="phone_number" value="<?php echo $phone_number; ?>" class="form-control form-control-sm" name="phone_number" value="<?= set_value('phone_number'); ?>">
                                         <?= form_error('phone_number', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -281,13 +281,13 @@ foreach ($ref_driver as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control" id="email">
+                                        <input type="text" name="email" value="<?php echo $email; ?>" class="form-control form-control-sm" id="email">
                                         <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label for="sim_card">SIM Number</label>
-                                        <input type="text" name="sim_card" value="<?php echo $sim_card; ?>" class="form-control" id="sim_card">
+                                        <input type="text" name="sim_card" value="<?php echo $sim_card; ?>" class="form-control form-control-sm" id="sim_card">
                                         <?= form_error('sim_card', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@ foreach ($ref_driver as $i) :
                                 <div class="form-row">    
                                     <div class="form-group col-md-6">
                                         <label for="address">Address</label>
-                                        <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" id="address">
+                                        <input type="text" name="address" value="<?php echo $address; ?>" class="form-control form-control-sm" id="address">
                                         <?= form_error('address', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
@@ -307,7 +307,7 @@ foreach ($ref_driver as $i) :
 
                                     <div class="form-group col-md-6">
                                         <label for="part_driver">Part Driver</label>
-                                        <select id="part_driver" class="form-control" name="part_driver" id="part_driver">
+                                        <select id="part_driver" class="form-control form-control-sm" name="part_driver" id="part_driver">
                                             <option selected="">--Select--</option>
                                             <?php if ($part_driver==0) {?>
                                                 <option value="0" selected>Internal</option>
@@ -328,8 +328,8 @@ foreach ($ref_driver as $i) :
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-danger">Update</button>
-                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Update</button>
+                    <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
                 </div>
                 </form>
             </div>

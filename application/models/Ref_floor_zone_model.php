@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Ref_area_zone_model extends MY_Model
+class Ref_floor_zone_model extends MY_Model
 {
 
-    protected $table = 'ref_area_zone_detail';
+    protected $table = 'ref_floor_zone_detail';
     protected $primary_key = 'id';
     protected $create_date = 'date_created';
     protected $update_date = 'date_update';
@@ -17,11 +17,10 @@ class Ref_area_zone_model extends MY_Model
     {
         $sql = "SELECT 
         a.*,
-        b.name AS name_zone,
-        c.name as name_floor
-        FROM ref_area_zone_detail a
-        LEFT JOIN ref_zone_division b ON a.`id_zone_division`=b.`id`
-        left join ref_floor_zone_detail c on a.`id_floor`=c.`id`";
+        b.name AS name_zone
+        FROM ref_floor_zone_detail a
+        LEFT JOIN ref_zone_division b
+        ON a.`id_area_zone`=b.`id`";
         return $this->db->query($sql)->result_array();
     }
 

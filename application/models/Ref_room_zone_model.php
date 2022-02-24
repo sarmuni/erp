@@ -15,12 +15,14 @@ class Ref_room_zone_model extends MY_Model
 
     function get_all()
     {
-        $sql = "SELECT 
+        $sql = "SELECT
         a.*,
-        b.name AS name_room_zone
+        b.name AS name_room_zone,
+        c.name AS name_floor
         FROM ref_room_area_zone_detail a
-        LEFT JOIN ref_area_zone_detail b
-        ON a.`area_zone_id`=b.`id`";
+        LEFT JOIN ref_area_zone_detail b ON a.`area_zone_id`=b.`id`
+        LEFT JOIN ref_floor_zone_detail c ON a.`id_floor`=c.`id`
+        ";
         return $this->db->query($sql)->result_array();
     }
 

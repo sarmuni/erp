@@ -75,4 +75,16 @@ class Account_user_model extends MY_Model
         return $this->db->query($sql);
     }
 
+    function count_users()
+    {
+        $user = $this->session->userdata('id');
+        // if ($user == 1) {
+            $sql = "SELECT COUNT(id) AS total FROM auth_user";
+            return $this->db->query($sql)->result_array();
+        // } else {
+        //     $sql = "SELECT COUNT(id) AS total FROM auth_user WHERE user_admin_dibuat='$user'";
+        //     return $this->db->query($sql)->result_array();
+        // }
+    }
+
 }

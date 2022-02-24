@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pre_requisition_model extends MY_Model
+class Requisition_model extends MY_Model
 {
 
     protected $table = 'pre_requisition';
@@ -27,16 +27,6 @@ class Pre_requisition_model extends MY_Model
             a.request_status,
             a.status,
             a.notes,
-            a.approved_hod_date,
-            a.approved_hod_by,
-            a.verified_purchasing_date,
-            a.verified_purchasing_by,
-            a.approved_bod_by_date,
-            a.approved_bod_by,
-            a.approved_finance_date,
-            a.approved_finance_by,
-            a.paid_by,
-            a.paid_date,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
@@ -54,22 +44,12 @@ class Pre_requisition_model extends MY_Model
             a.request_status,
             a.status,
             a.notes,
-            a.approved_hod_date,
-            a.approved_hod_by,
-            a.verified_purchasing_date,
-            a.verified_purchasing_by,
-            a.approved_bod_by_date,
-            a.approved_bod_by,
-            a.approved_finance_date,
-            a.approved_finance_by,
-            a.paid_by,
-            a.paid_date,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
             LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
             LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
-            WHERE a.`department_id`='$role_id' and a.`status` !='2'
+            WHERE a.`department_id`='$role_id' and a.`status` = '2'
             GROUP BY a.`id`";
         }
         return $this->db->query($sql)->result_array();
@@ -288,6 +268,4 @@ class Pre_requisition_model extends MY_Model
         //     return $this->db->query($sql)->result_array();
         // }
     }
-
-
 }

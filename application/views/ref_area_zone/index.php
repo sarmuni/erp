@@ -49,6 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Area Name</th>
                             <th>GLN-AZ</th>
                             <th>Zone Name</th>
+                            <th>Floor Name</th>
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
@@ -62,6 +63,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo strtoupper($row['name']); ?></td>
                             <td><?php echo strtoupper($row['gln_az']); ?></td>
                             <td><?php echo strtoupper($row['name_zone']); ?></td>
+                            <td><?php echo strtoupper($row['name_floor']); ?></td>
                             <td><?php echo $row['description']; ?></td>
                             <td>
                                 <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_area_zone<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
@@ -127,7 +129,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label for="id_floor">Floor Name</label>
+                                    <select id="id_floor" class="form-control form-control-sm" name="id_floor" id="id_floor" value="<?= set_value('id_floor'); ?>">
+                                        <option selected="">Select</option>
+                                        <?php foreach ($ref_floor_zone as $select) { ?>
+                                            <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <?= form_error('id_floor', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                </div>
+
+                                <div class="form-group col-md-6">
                                     <label for="description">Description</label>
                                     <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -179,7 +192,7 @@ foreach ($ref_area_zone as $i) :
                             <form autocomplete="off" action="<?php echo base_url('ref_area_zone/edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
                                 <div class="form-row">
 
-                                <div class="form-group col-md-6">
+                                    <div class="form-group col-md-6">
                                         <label for="id_zone_division">Zone Name</label>
                                         <select id="id_zone_division" class="form-control form-control-sm" name="id_zone_division" id="id_zone_division">
                                             <option selected="">--Select--</option>
@@ -205,7 +218,25 @@ foreach ($ref_area_zone as $i) :
                                 </div>
 
                                 <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
+                                        <label for="id_floor">Zone Name</label>
+                                        <select id="id_floor" class="form-control form-control-sm" name="id_floor" id="id_floor">
+                                            <option selected="">--Select--</option>
+                                            <?php foreach ($ref_floor_zone as $select) { ?>
+                                                
+                                                <?php if ($select['id']==$id_floor) { ?>
+                                                <option value="<?php echo $select['id'] ?>" selected><?php echo $select['name'] ?></option>  
+
+                                                <?php }else{ ?>
+                                                    <option value="<?php echo $select['id'] ?>"><?php echo $select['name'] ?></option>  
+                                                    
+                                                <?php } ?>
+
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+
+                                <div class="form-group col-md-6">
                                     <label for="description">Description</label>
                                     <textarea type="text" name="description" class="form-control form-control-sm" value="<?= set_value('description'); ?>"><?php echo $description; ?></textarea>
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>

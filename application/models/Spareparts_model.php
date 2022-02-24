@@ -87,7 +87,7 @@ class Spareparts_model extends MY_Model
     {
         $user = $this->session->userdata('id');
         // if ($user == 1) {
-            $sql = "SELECT COUNT(id) AS total FROM spareparts";
+            $sql = "SELECT COUNT(id) AS total FROM sparepart_inbound";
             return $this->db->query($sql)->result_array();
         // } else {
         //     $sql = "SELECT COUNT(id) AS total FROM spareparts WHERE user_admin_dibuat='$user'";

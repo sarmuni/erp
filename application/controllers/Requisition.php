@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pre_requisition extends CI_Controller
+class Requisition extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         is_logged_in();
 
-        $this->load->model('pre_requisition_model');
-        $this->load->model('pre_requisition_detail_model');
+        $this->load->model('requisition_model');
+        $this->load->model('requisition_detail_model');
         $this->load->model('departments_model');
         $this->load->model('employee_model');
         $this->load->library('form_validation');
@@ -19,16 +19,16 @@ class Pre_requisition extends CI_Controller
     {
         
         $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['pre_requisition']               = $this->pre_requisition_model->get_all('id', 'desc');
-        $data['option_departments']            = $this->pre_requisition_model->departments();
-        $data['part_departments']              = $this->pre_requisition_model->part_departments();
+        $data['requisition']                   = $this->requisition_model->get_all('id', 'desc');
+        $data['option_departments']            = $this->requisition_model->departments();
+        $data['part_departments']              = $this->requisition_model->part_departments();
         $data['employee']                      = $this->employee_model->get_all('id','desc');
 
         $id                                    = $this->session->userdata('id');
-        $data['head_employee']                 = $this->pre_requisition_model->call_function_procedure_head_of_dept($id);
+        $data['head_employee']                 = $this->requisition_model->call_function_procedure_head_of_dept($id);
 
-        $data['title'] = 'Pre Requisition';
-        $this->template->load('template_neura/index', 'pre_requisition/index', $data);
+        $data['title'] = 'Requisition';
+        $this->template->load('template_neura/index', 'requisition/index', $data);
     }
 
     public function form()
@@ -209,7 +209,7 @@ class Pre_requisition extends CI_Controller
         $this->form_validation->set_rules('is_active', 'Active', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['user']                      = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+            $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
             $data['pre_requisition']           = $this->pre_requisition_model->get_all('id', 'desc');
 
@@ -243,7 +243,7 @@ class Pre_requisition extends CI_Controller
                 'room_no'        => $room_no,
                 'floor_no'       => $floor_no,
                 'is_active'      => $is_active,
-                'company_id'     => 1
+                'company_id'      => 1
             );
 
             $update = $this->pre_requisition_model->update($id, $data);

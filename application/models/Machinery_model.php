@@ -76,11 +76,24 @@ class Machinery_model extends MY_Model
         return $this->db->query($sql)->result_array();
     }
     
-    function insert_excel($temp_data){
+    function insert_excel($temp_data)
+    {
 		$insert = $this->db->insert_batch('machinery_inbound', $temp_data);
 		if($insert){
 			return true;
 		}
 	}
+
+    function count_machinery()
+    {
+        $user = $this->session->userdata('id');
+        // if ($user == 1) {
+            $sql = "SELECT COUNT(id) AS total FROM machinery_inbound";
+            return $this->db->query($sql)->result_array();
+        // } else {
+        //     $sql = "SELECT COUNT(id) AS total FROM auth_user WHERE user_admin_dibuat='$user'";
+        //     return $this->db->query($sql)->result_array();
+        // }
+    }
 
 }

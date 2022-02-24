@@ -10,6 +10,7 @@ class Ref_room_zone extends CI_Controller
 
         $this->load->model('ref_room_zone_model');
         $this->load->model('ref_area_zone_model');
+        $this->load->model('ref_floor_zone_model');
         $this->load->library('form_validation');
     }
 
@@ -17,7 +18,8 @@ class Ref_room_zone extends CI_Controller
     {
         $data['user']                    = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
         $data['ref_room_zone']           = $this->ref_room_zone_model->get_all('id', 'desc');
-        $data['ref_area_zone']     = $this->ref_area_zone_model->get_all('id', 'desc');
+        $data['ref_area_zone']           = $this->ref_area_zone_model->get_all('id', 'desc');
+        $data['ref_floor_zone']          = $this->ref_floor_zone_model->get_all('id', 'desc');
 
         $data['title'] = 'Master Room Zone';
         $this->template->load('template_neura/index', 'ref_room_zone/index', $data);
@@ -26,6 +28,7 @@ class Ref_room_zone extends CI_Controller
     public function add()
     {
 
+        $this->form_validation->set_rules('id_floor', 'Floor Name', 'required|trim');
         $this->form_validation->set_rules('area_zone_id', 'Name Area Zone', 'required|trim');
         $this->form_validation->set_rules('name', 'Name Room Zone', 'required|trim');
         $this->form_validation->set_rules('description', 'Description', 'required|trim');
@@ -33,12 +36,14 @@ class Ref_room_zone extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['user']               = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
             $data['ref_room_zone']      = $this->ref_room_zone_model->get_all('id', 'desc');
+            $data['ref_floor_zone']     = $this->ref_floor_zone_model->get_all('id', 'desc');
 
             $data['title']              = 'Master Room Zone';
             $this->session->set_flashdata('required', 'incomplete data');
             $this->template->load('template_neura/index', 'ref_room_zone/index', $data);
         } else {
 
+            $id_floor                    = htmlspecialchars($this->input->post('id_floor'));
             $area_zone_id                = htmlspecialchars($this->input->post('area_zone_id'));
             $name                        = htmlspecialchars($this->input->post('name'));
             $description                 = htmlspecialchars($this->input->post('description'));
@@ -66,6 +71,7 @@ class Ref_room_zone extends CI_Controller
              //END NO
 
             $data = array(
+                'id_floor'               => $id_floor,
                 'area_zone_id'           => $area_zone_id,
                 'gln_ra'                 => $gln_ra,
                 'name'                   => $name,
@@ -101,6 +107,7 @@ class Ref_room_zone extends CI_Controller
     public function edit($id)
     {
 
+        $this->form_validation->set_rules('id_floor', 'Floor Name', 'required|trim');
         $this->form_validation->set_rules('area_zone_id', 'Zone Name', 'required|trim');
         $this->form_validation->set_rules('name', 'Room Name', 'required|trim');
         $this->form_validation->set_rules('description', 'Description', 'required|trim');
@@ -110,18 +117,21 @@ class Ref_room_zone extends CI_Controller
             $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
             $data['ref_room_zone']          = $this->ref_room_zone_model->get_all('id', 'desc');
+            $data['ref_floor_zone']          = $this->ref_floor_zone_model->get_all('id', 'desc');
 
             $data['title'] = 'Master Room Zone';
             $this->session->set_flashdata('required', 'incomplete data');
             $this->template->load('template_neura/index', 'ref_room_zone/index', $data);
         } else {
 
+            $id_floor                    = htmlspecialchars($this->input->post('id_floor'));
             $area_zone_id                = htmlspecialchars($this->input->post('area_zone_id'));
             $name                        = htmlspecialchars($this->input->post('name'));
             $description                 = htmlspecialchars($this->input->post('description'));
 
 
             $data = array(
+                'id_floor'               => $id_floor,
                 'area_zone_id'           => $area_zone_id,
                 'name'                   => $name,
                 'description'            => $description

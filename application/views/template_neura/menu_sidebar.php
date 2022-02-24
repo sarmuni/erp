@@ -13,7 +13,7 @@
 
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-shopping-cart"></i>
                                 <span> PURCHASING </span>
                             </a>
@@ -23,6 +23,12 @@
                                         <span>- Pre Requisition Form</span>
                                     </a>
                                 </li>
+                            
+                                <li>
+                                <a <?php echo $this->uri->segment(1) == 'requisition' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('requisition'); ?>">
+                                        <span>- Requisition Form</span>
+                                    </a>
+                                </li>
                             </ul>
                     </li>
 
@@ -30,7 +36,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-warehouse"></i>
                                 <span> MACHINERY </span>
                             </a>
@@ -106,7 +112,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-warehouse"></i>
                                 <span> SPARE PART </span>
                             </a>
@@ -190,7 +196,7 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12 || $user['role_id'] == 8) { ?>       
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-clipboard-list"></i>
                                 <span> MATERIAL </span>
                             </a>
@@ -281,7 +287,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-indent"></i>
                                 <span> PURCHASE REQUEST</span>
                             </a>
@@ -306,7 +313,9 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span>
+                             -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-indent"></i>
                                 <span> PURCHASE ORDER </span>
                             </a>
@@ -328,7 +337,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-shipping-fast"></i>
                                 <span> DELIVERY ORDER </span>
                             </a>
@@ -350,7 +360,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-archive"></i>
                                 <span> STOCK </span>
                             </a>
@@ -372,7 +383,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12)  { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-truck-moving"></i>
                                 <span> DISPATCH </span>
                             </a>
@@ -394,7 +406,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-walking"></i>
                                 <span> SALES ORDER </span>
                             </a>
@@ -416,7 +429,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-pallet"></i>
                                 <span> PRODUCTS </span>
                             </a>
@@ -444,7 +458,8 @@
                     <?php if ($user['role_id'] == 1 || $user['role_id'] == 12) { ?>
                     <li class="submenu">
                             <a href="#">
-                                <span class="label radius-circle bg-primary float-right">0</span>
+                                <!-- <span class="label radius-circle bg-primary float-right">0</span> -->
+                                <span class="menu-arrow"></span>
                                 <i class="fas fa-indent"></i>
                                 <span> PRODUCT CATEGORY</span>
                             </a>
@@ -484,8 +499,12 @@
                                 <a <?php echo $this->uri->segment(1) == 'ref_zone_division' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_zone_division'); ?>">- Zone</a>
                             </li>                          
                             <li>
+                                <a <?php echo $this->uri->segment(1) == 'ref_floor_zone' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_floor_zone'); ?>">- Floor</a>
+                            </li>
+                            <li>
                                 <a <?php echo $this->uri->segment(1) == 'ref_area_zone' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_area_zone'); ?>">- Area</a>
                             </li>
+                            
                             <li>
                                 <a <?php echo $this->uri->segment(1) == 'ref_room_zone' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_room_zone'); ?>">- Room</a>
                             </li>

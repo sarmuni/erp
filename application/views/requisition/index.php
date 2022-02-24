@@ -21,9 +21,9 @@ foreach ($head_employee as $row) {
             <!-- <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_pre_requisition">
                 <i class="fas fa-user-plus"></i>
             </a> -->
-            <a role="button" href="<?php base_url(); ?>pre_requisition/form" class="btn bg-danger btn-sm" title="Add New">
+            <!-- <a role="button" href="<?php base_url(); ?>pre_requisition/form" class="btn bg-danger btn-sm" title="Add New">
                 <i class="fas fa-user-plus"></i> Add New
-            </a>
+            </a> -->
 
             <!-- <a role="button" href="#" class="btn bg-danger btn-sm" title="Print PDF">
                 <i class="fas fa-print"></i> Print PDF
@@ -31,7 +31,7 @@ foreach ($head_employee as $row) {
             <a role="button" href="#" class="btn bg-danger btn-sm" title="Export Excel">
                 <i class="fas fa-download"></i> Export Excel
             </a>
-            <a role="button" href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+            <a role="button" href="<?php echo base_url('requisition'); ?>" class="btn bg-danger btn-sm" title="Refresh">
                 <i class="fas fa-sync-alt"></i> Refresh
             </a>
 
@@ -72,7 +72,7 @@ foreach ($head_employee as $row) {
                     </thead>
                     <?php
                     $no = 1;
-                    foreach ($pre_requisition as $row) {
+                    foreach ($requisition as $row) {
                     ?>
                         <tr>
                             <td><?php echo $no; ?></td>
@@ -99,11 +99,11 @@ foreach ($head_employee as $row) {
                                 <?php } ?>
                             </td>
                             <td>
-                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
-                                </a>
+                                <!-- <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                </a> -->
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
-                                 </a>
+                                 <!-- <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 </a> -->
 
 
                                  <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>

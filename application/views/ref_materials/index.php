@@ -11,15 +11,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
         <div class="card-body">
-            <a role="button" href="#" class="btn bg-danger" title="Add" data-toggle="modal" data-target=".tambah_ref_materials">
-                <i class="fas fa-user-plus"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_ref_materials">
+                <i class="fas fa-user-plus"></i> Add New
             </a>
 
-            <a role="button" href="#" class="btn bg-danger" title="Print">
-                <i class="fas fa-print"></i>
+            <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
+                <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('ref_materials'); ?>" class="btn bg-danger" title="Refresh">
-                <i class="fas fa-sync-alt"></i>
+            <a role="button" href="<?php base_url('ref_materials'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
             </a>
             <hr>
             <div class="table-responsive">
@@ -64,10 +64,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php } ?>
                             </td> -->
                             <td>
-                                <a role="button" href="#" class="btn bg-danger" title="Edit" data-toggle="modal" data-target="#edit_ref_materials<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_ref_materials<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>ref_materials/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>ref_materials/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
@@ -116,7 +116,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="material_category">Material Category</label>
-                                    <select id="material_category" class="form-control" name="material_category" id="material_category">
+                                    <select id="material_category" class="form-control form-control-sm" name="material_category" id="material_category">
                                         <option selected="">--Select--</option>
                                         <option value="1">RM (Row Material)</option>
                                         <option value="2">PM (Packaging Material)</option>
@@ -125,7 +125,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 <div class="form-group col-md-6">
                                     <label for="material_code">Material Code</label>
-                                    <input type="text" name="material_code" class="form-control" id="material_code" value="<?= set_value('material_code'); ?>">
+                                    <input type="text" name="material_code" class="form-control form-control-sm" id="material_code" value="<?= set_value('material_code'); ?>">
                                     <?= form_error('material_code', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -133,12 +133,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="material_name">Material Name</label>
-                                    <input type="text" name="material_name" class="form-control" id="material_name" value="<?= set_value('material_name'); ?>">
+                                    <input type="text" name="material_name" class="form-control form-control-sm" id="material_name" value="<?= set_value('material_name'); ?>">
                                     <?= form_error('material_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="material_brand">Material Brand</label>
-                                    <input type="text" id="material_brand" class="form-control" name="material_brand" value="<?= set_value('material_brand'); ?>">
+                                    <input type="text" id="material_brand" class="form-control form-control-sm" name="material_brand" value="<?= set_value('material_brand'); ?>">
                                     <?= form_error('material_brand', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>
@@ -146,13 +146,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="companyId">Company Id</label>
-                                    <input type="companyId" id="companyId" class="form-control" name="companyId" value="PT. Batavia Indo Global">
+                                    <input type="companyId" id="companyId" class="form-control form-control-sm" name="companyId" value="PT. Batavia Indo Global">
                                     <?= form_error('companyId', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="status">Status</label>
-                                    <select id="status" class="form-control" name="status" id="status">
+                                    <select id="status" class="form-control form-control-sm" name="status" id="status">
                                         <option selected="">--Select--</option>
                                         <option value="0">Active</option>
                                         <option value="1">Not Active</option>
@@ -185,8 +185,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn bg-danger">Save</button>
-                <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i>Save</button>
+                <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"> <i class="fas fa-window-close"></i> Close</button>
             </div>
             </form>
         </div>
@@ -293,8 +293,12 @@ foreach ($ref_materials as $i) :
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn bg-danger">Update</button>
-                    <button type="button" class="btn bg-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn bg-success btn-sm"><i class="fas fa-save"></i> Update</button>
+                    <button type="button" class="btn bg-danger btn-sm" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
+
+                    <!-- <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
+                <a href="<?php echo base_url('permit_in_out'); ?>" class="btn bg-danger btn-sm"> <i class="fas fa-window-close"></i> Close</a> -->
+
                 </div>
                 </form>
             </div>
