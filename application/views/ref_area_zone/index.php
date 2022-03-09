@@ -219,7 +219,7 @@ foreach ($ref_area_zone as $i) :
 
                                 <div class="form-row">
                                 <div class="form-group col-md-6">
-                                        <label for="id_floor">Zone Name</label>
+                                        <label for="id_floor">Floor Name</label>
                                         <select id="id_floor" class="form-control form-control-sm" name="id_floor" id="id_floor">
                                             <option selected="">--Select--</option>
                                             <?php foreach ($ref_floor_zone as $select) { ?>

@@ -33,6 +33,7 @@ class Suppliers extends CI_Controller
         $this->form_validation->set_rules('remarks', 'Remarks', 'required|trim');
         $this->form_validation->set_rules('supplierDiscount', 'Supplier Discount Percentage', 'required|trim');
         $this->form_validation->set_rules('picSupplier', 'PIC Supplier', 'required|trim');
+        $this->form_validation->set_rules('category', 'Category Supplier', 'required|trim');
 
 
         if ($this->form_validation->run() == false) {
@@ -53,6 +54,7 @@ class Suppliers extends CI_Controller
             $remarks            = htmlspecialchars($this->input->post('remarks'));
             $supplierDiscount   = htmlspecialchars($this->input->post('supplierDiscount'));
             $picSupplier        = htmlspecialchars($this->input->post('picSupplier'));
+            $category           = htmlspecialchars($this->input->post('category'));
 
 
             $data = array(
@@ -65,7 +67,8 @@ class Suppliers extends CI_Controller
                 'remarks'           => $remarks,
                 'supplierDiscount'  => $supplierDiscount,
                 'picSupplier'       => $picSupplier,
-                'companyId'         => 1
+                'companyId'         => 1,
+                'category'          => $category
             );
 
             $insert = $this->suppliers_model->insert($data);
@@ -106,6 +109,7 @@ class Suppliers extends CI_Controller
         $this->form_validation->set_rules('remarks', 'Remarks', 'required|trim');
         $this->form_validation->set_rules('supplierDiscount', 'Supplier Discount Percentage', 'required|trim');
         $this->form_validation->set_rules('picSupplier', 'PIC Supplier', 'required|trim');
+        $this->form_validation->set_rules('category', 'Category Supplier', 'required|trim');
 
         if ($this->form_validation->run() == false) {
             $data['user']                   = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
@@ -126,6 +130,7 @@ class Suppliers extends CI_Controller
             $remarks            = htmlspecialchars($this->input->post('remarks'));
             $supplierDiscount   = htmlspecialchars($this->input->post('supplierDiscount'));
             $picSupplier        = htmlspecialchars($this->input->post('picSupplier'));
+            $category           = htmlspecialchars($this->input->post('category'));
 
             $data = array(
                 'supplierName'      => $supplierName,
@@ -137,7 +142,8 @@ class Suppliers extends CI_Controller
                 'remarks'           => $remarks,
                 'supplierDiscount'  => $supplierDiscount,
                 'picSupplier'       => $picSupplier,
-                'companyId'         => 1
+                'companyId'         => 1,
+                'category'          => $category
             );
 
             $update = $this->suppliers_model->update($id, $data);

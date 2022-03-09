@@ -197,11 +197,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <!-- <div class="form-group col-md-6">
                                     <label for="packing_list">Packing List</label>
                                     <input type="text" name="packing_list" required class="form-control form-control-sm" id="packing_list" value="<?= set_value('packing_list'); ?>">
                                     <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
-                                </div>
+                                </div> -->
                                 <div class="form-group col-md-6">
                                     <label for="critical">Critical</label>
                                     <select id="critical" name="critical" required class="form-control select2" style="width: 500px !important" value="<?= set_value('critical'); ?>">
@@ -472,11 +472,11 @@ foreach ($spareparts as $i) :
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <!-- <div class="form-group col-md-6">
                                     <label for="packing_list">Packing List</label>
                                     <input type="text" name="packing_list" required class="form-control form-control-sm" id="packing_list" value="<?php echo $packing_list; ?>">
                                     <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
-                                </div>
+                                </div> -->
                                 <div class="form-group col-md-6">
                                     <label for="critical">Critical</label>
                                     <select id="critical" name="critical" required class="form-control form-control-sm" value="<?= set_value('critical'); ?>">

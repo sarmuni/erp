@@ -164,7 +164,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
         <div class="card mb-3">
             <div class="card-header">
-                <h3><i class="fas fa-chart-bar"></i> Delivery Goods In-Out</h3>
+                <h3><i class="fas fa-chart-bar"></i> Raw Material Usage Vs Received</h3>
                 <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus.
                                     Vivamus fermentum ultricies orci sit amet sollicitudin. -->
             </div>
@@ -179,13 +179,14 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
         <div class="card mb-3">
             <div class="card-header">
-                <h3><i class="fas fa-chart-bar"></i> Spare Part General</h3>
+                <h3><i class="fas fa-chart-bar"></i> Packaging Material Usage</h3>
                 <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus.
                                     Vivamus fermentum ultricies orci sit amet sollicitudin. -->
             </div>
 
             <div class="card-body">
-                <canvas id="barChart"></canvas>
+                <!-- <canvas id="barChart"></canvas> -->
+                <canvas id="comboBarLineChart2"></canvas>
             </div>
             <div class="card-footer small text-muted">Updated <?php echo date('d-m-Y H:i:s'); ?></div>
         </div>
@@ -219,3 +220,16 @@
 </div> -->
 
 
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3><i class="fas fa-chart-bar"></i> Delivery Goods, IN-OUT</h3>
+                <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non luctus metus.
+                                    Vivamus fermentum ultricies orci sit amet sollicitudin. -->
+            </div>
+
+            <div class="card-body">
+                <!-- <canvas id="barChart"></canvas> -->
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="card-footer small text-muted">Updated <?php echo date('d-m-Y H:i:s'); ?></div>
+        </div>

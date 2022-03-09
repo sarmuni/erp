@@ -37,6 +37,7 @@ class Cetak extends CI_Controller
         foreach($permit as $row){
             $id = $row['id'];
             $person_id = $row['person_id'];
+            $qrcode_id = $row['qrcode_id'];
             $permit_date = $row['permit_date'];
             $person_name = $row['person_name'];
             $necessity = $row['necessity'];
@@ -56,8 +57,8 @@ class Cetak extends CI_Controller
         if (!file_exists($tempdir))
             mkdir($tempdir);
 
-        $isi_teks1 = $id;
-        $namafile1 = $id.".png";
+        $isi_teks1 = $qrcode_id;
+        $namafile1 = $qrcode_id.".png";
         $quality1 = 'H'; 
         $ukuran1 = 8; 
         $padding1 = 0; 
@@ -69,7 +70,7 @@ class Cetak extends CI_Controller
         $pdf->image(base_url().'assets/img/logo.jpg',10,10,10,10);
         $pdf->image(base_url().'assets/img/logo_print.png',20,26,30,23);
         
-        $pdf->Image('uploads/qr/'.$id.".png", 160, 30, 20, 20, "png");
+        $pdf->Image('uploads/qr/'.$qrcode_id.".png", 160, 30, 20, 20, "png");
 
         $pdf->cell(10);
         $pdf->cell(0,3,$this->_nama,0,1);

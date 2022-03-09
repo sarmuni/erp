@@ -412,14 +412,15 @@
                                 <span> SALES ORDER </span>
                             </a>
                             <ul>
-                                <!-- <li>
-                                    <a href="#">
-                                        <span>- Add Sales Order</span>
-                                    </a>
-                                </li> -->
+                                <li>
+                                    <a <?php echo $this->uri->segment(1) == 'ref_customers' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('ref_customers'); ?>">- Customers </a>
+                                </li>
+                                <li>
+                                    <a <?php echo $this->uri->segment(1) == 'sales_orders' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?> href="<?php echo base_url('sales_orders'); ?>">- Sales Orders </a>
+                                </li>
                                 <li>
                                     <a href="#">
-                                        <span>- List Sales Order</span>
+                                        <span>- Agreement</span>
                                     </a>
                                 </li>
                             </ul>

@@ -68,8 +68,28 @@ class Permit_in_out extends CI_Controller
             $category                   = htmlspecialchars($this->input->post('category'));
             $time                       = htmlspecialchars($this->input->post('time'));
 
+            //Global Location Number
+            $kode = 'PERMIT';
+            date_default_timezone_set('Asia/Jakarta');
+            $tanggal = date('Y-m-d H:i:s');
+            $d = date('d', strtotime($tanggal));
+            $m = date('m', strtotime($tanggal));
+            $y = date('y', strtotime($tanggal));
+            $yx = date('Y', strtotime($tanggal));
+
+            $last_code = $this->permit_in_out_model->get_last_code($d, $m, $yx);
+            if (count($last_code) > 0) {
+                $l_code = substr($last_code['qrcode_id'], -4);
+                $count = (int)$l_code + 1;
+            } else {
+                $count = 1;
+            }
+            $count = str_pad($count, 4, '0', STR_PAD_LEFT);
+            $qrcode_id = $kode . $d . $m . $y . '-' . $count;
+            //END NO
 
             $data = array(
+                'qrcode_id'             => $qrcode_id,
                 'employee_name'         => $employee_name,
                 'permit_date'           => $permit_date,
                 'necessity'             => $necessity,
@@ -167,7 +187,7 @@ class Permit_in_out extends CI_Controller
     {
         $data = array(
             'status'              => 1,
-            'aprov_depart_head'   => $this->session->role_id,
+            'aprov_depart_head'   => $this->session->fullname,
             'date_depart_head'    => date('Y-m-d H:i:s')
         );
 
@@ -185,7 +205,7 @@ class Permit_in_out extends CI_Controller
     {
         $data = array(
             'status'              => 2,
-            'aprov_security_pos'   => $this->session->role_id,
+            'aprov_security_pos'   => $this->session->fullname,
             'date_security_pos'    => date('Y-m-d H:i:s')
         );
 
@@ -201,7 +221,7 @@ class Permit_in_out extends CI_Controller
     {
         $data = array(
             'status'              => 3,
-            'aprov_hrd_manager'   => $this->session->role_id,
+            'aprov_hrd_manager'   => $this->session->fullname,
             'date_hrd_manager'    => date('Y-m-d H:i:s')
         );
 

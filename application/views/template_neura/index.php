@@ -377,7 +377,14 @@
     <script>
         $(document).on('ready', function() {
             // data-tables
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable(
+                {
+                "lengthMenu": [
+                    [10, 25, 50, -1], 
+                    [10, 25, 50, "All"]
+                    ]
+                }
+            );
 
             // counter-up
             $('.counter').counterUp({
@@ -556,7 +563,132 @@ $(document).ready(function(){
             $("#jumlah-form").val("1"); 
         });  
 });  
+
+
+var base_url = "<?php echo base_url(); ?>";
+  $(document).ready(function() {
+    $(".select_group").select2();
+ 
+    // Add new row in the table 
+    $("#add_row").unbind('click').bind('click', function() {
+      var table = $("#product_info_table");
+      var count_table_tbody_tr = $("#product_info_table tbody tr").length;
+      var row_id = count_table_tbody_tr + 1;
+
+      $.ajax({
+          url: base_url + '/sales_orders/getTableProductRow/',
+          type: 'post',
+          dataType: 'json',
+          success:function(response) {
+            
+              // console.log(reponse.x);
+               var html = '<tr id="row_'+row_id+'">'+
+                   '<td>'+ 
+                   '<div class="col-sm-15">'+
+                    '<select class="form-control" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product_name[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
+                        '<option value=""></option>';
+                        $.each(response, function(index, value) {
+                          html += '<option value="'+value.id+'">'+value.product_name+'</option>';             
+                        });
+                        
+                      html += '</select>'+
+                    '</div>'+
+
+                    '</td>'+ 
+                    '<td><input type="number" name="quantity[]" id="quantity_'+row_id+'" class="form-control form-control-sm" onkeyup="getTotal('+row_id+')"></td>'+
+
+                    '<td><input type="text" name="selling_price[]" id="selling_price_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="selling_price_value[]" id="selling_price_value_'+row_id+'" class="form-control form-control-sm"></td>'+
+
+                    '<td>'+
+                        '<select class="form-control form-control-sm" id="taxable" name="taxable[]" style="width:100%;" required>'+
+                            '<option value=""></option>'+
+                            '<option value="1">Yes</option>'+
+                            '<option value="2">No</option>'+
+                          '</select>'+
+                        '</td>'+
+
+                    '<td><input type="text" name="discount[]" id="discount_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="discount_value[]" id="discount_value_'+row_id+'" class="form-control form-control-sm"></td>'+
+
+                    '<td><input type="text" name="tax[]" id="tax_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="tax_value[]" id="tax_value_'+row_id+'" class="form-control form-control-sm"></td>'+
+
+                    '<td><input type="text" name="total[]" id="total_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="total_value[]" id="total_value_'+row_id+'" class="form-control form-control-sm"></td>'+
+
+                    '<td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(\''+row_id+'\')"><i class="fas fa-window-close"></i></button></td>'+
+                    '</tr>';
+
+                if(count_table_tbody_tr >= 1) {
+                    $("#product_info_table tbody tr:last").after(html);  
+                }
+                else {
+                    $("#product_info_table tbody").html(html);
+                }
+
+              $(".select_group").select2();
+
+          }
+        });
+
+      return false;
+    });
+
+  }); // /document
+
+  function getTotal(row = null) {
+    if(row) {
+      var total = Number($("#selling_price_value_"+row).val()) * Number($("#quantity_"+row).val());
+      total = total.toFixed(2);
+      $("#total"+row).val(total);
+      $("#total_value_"+row).val(total);
+      
+      subAmount();
+
+    } else {
+      alert('no row !! please refresh the page');
+    }
+  }
+
+
+  // get the product information from the server
+  function getProductData(row_id)
+  {
+    var product_id = $("#product_"+row_id).val();    
+    if(product_id == "") {
+      $("#selling_price_"+row_id).val("");
+      $("#selling_price_value_"+row_id).val("");
+
+      $("#quantity_"+row_id).val("");           
+
+      $("#total_"+row_id).val("");
+      $("#total_value_"+row_id).val("");
+
+    } else {
+      $.ajax({
+        url: base_url + '/sales_orders/getProductValueById',
+        type: 'post',
+        data: {product_id : product_id},
+        dataType: 'json',
+        success:function(response) {
+          // setting the rate value into the rate input field
+          
+          $("#selling_price_"+row_id).val(response.price);
+          $("#selling_price_value_"+row_id).val(response.price);
+
+          $("#quantity_"+row_id).val(1);
+          $("#quantity_value_"+row_id).val(1);
+
+          var total = Number(response.price) * 1;
+          total = total.toFixed(2);
+          $("#total_"+row_id).val(total);
+          $("#total_value_"+row_id).val(total);
+          
+          subAmount();
+        } // /success
+      }); // /ajax function to fetch the product data 
+    }
+  }
+
 </script>
+
 
 </body>
 </html>

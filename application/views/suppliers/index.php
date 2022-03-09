@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <a role="button" href="#" class="btn bg-danger btn-sm" title="Print">
                 <i class="fas fa-print"></i> Print PDF
             </a>
-            <a role="button" href="<?php base_url('suppliers'); ?>" class="btn bg-danger btn-sm" title="Refresh">
+            <a role="button" href="<?php echo base_url('suppliers'); ?>" class="btn bg-danger btn-sm" title="Refresh">
                 <i class="fas fa-sync-alt"></i> Refresh
             </a>
 
@@ -51,6 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Phone</th>
                             <th>Email</th>
                             <th>PIC Supplier</th>
+                            <th>Category Supplier</th>
                             <th>Status</th>
                             <th>&nbsp;&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         </tr>
@@ -67,6 +68,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo $row['phone']; ?></td>
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo strtoupper($row['picSupplier']); ?></td>
+                            <td><?php if ($row['category']==1) {
+                                echo "Local";
+                            }else if($row['category']==2){
+                                echo "Import";
+                            }else{
+                                echo "";
+                            } ?></td>
+                            </td>
                             <td></td>
                             <!-- <td>
                                 <?php if ($row['role'] != 'Root' && $row['role'] != 'Administrator') { ?>
@@ -187,6 +196,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <input type="text" id="picSupplier" class="form-control form-control-sm" name="picSupplier" value="<?= set_value('picSupplier'); ?>">
                                     <?= form_error('picSupplier', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="category">Category Supplier</label>
+                                    <select id="category" class="form-control form-control-sm" name="category" id="category">
+                                        <option selected="">-- Select --</option>
+                                        <option value="1">Local</option>
+                                        <option value="2">Import</option>
+                                    </select>
+                                </div>
                             </div>
                     </div>
                 </div>
@@ -218,6 +235,7 @@ foreach ($suppliers as $i) :
     $remarks                = $i['remarks'];
     $supplierDiscount       = $i['supplierDiscount'];
     $picSupplier            = $i['picSupplier'];
+    $category               = $i['category'];
 ?>
     <div class="modal fade edit_suppliers" id="edit_suppliers<?php echo $id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -299,8 +317,21 @@ foreach ($suppliers as $i) :
                                         <input type="text" name="picSupplier" value="<?php echo $picSupplier; ?>" class="form-control form-control-sm" id="picSupplier">
                                         <?= form_error('picSupplier', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="category">Category Supplier</label>
+                                        <select id="category" class="form-control form-control-sm" name="category" id="category" value="<?php echo $category; ?>">
+                                            <option selected="">-- Select --</option>
+                                            <?php if ($category == '1') { ?>
+                                                <option value="1" selected>Local</option>
+                                                <option value="2">Import</option>
+                                            <?php }else{ ?>
+                                                <option value="1">Local</option>
+                                                <option value="2" selected>Import</option>
+                                            <?php } ?>
 
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
                     </div>
 

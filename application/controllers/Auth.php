@@ -43,7 +43,8 @@ class Auth extends CI_Controller
                         'email'         => $user['email'],
                         'role_id'       => $user['role_id'],
                         'id'            => $user['id'],
-                        'fullname'      => $user['fullname']
+                        'fullname'      => $user['fullname'],
+                        'person_id'      => $user['person_id']
                     ];
                     
                     // 1.Board of Director

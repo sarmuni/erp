@@ -179,7 +179,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <label for="catgeory_type">Materials Type</label>
                                     <select id="catgeory_type" name="catgeory_type" required class="form-control select2" style="width: 500px !important" value="<?= set_value('catgeory_type'); ?>">
                                         <option value="">--Select--</option>
-                                        <option value="1">RM (Row Material)</option>
+                                        <option value="1">RM (Raw Material)</option>
                                         <option value="2">PM (Packaging Material)</option>
                                     </select>
                                     <?= form_error('catgeory_type', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -402,7 +402,7 @@ foreach ($materials as $i) :
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="materials_name">materials Name</label>
+                                    <label for="materials_name">Materials Name</label>
                                     <input type="text" name="materials_name" required class="form-control form-control-sm" id="materials_name" value="<?php echo $materials_name; ?>">
                                     <?= form_error('materials_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
@@ -421,8 +421,19 @@ foreach ($materials as $i) :
                                     <?= form_error('packing_list', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="catgeory_type">Net Weight</label>
-                                    <input type="text" name="catgeory_type" required class="form-control form-control-sm" id="catgeory_type" value="<?php echo $catgeory_type; ?>">
+                                    <label for="catgeory_type">Material Type</label>
+                                    <select id="catgeory_type" name="catgeory_type" required class="form-control select2" style="width: 500px !important">
+                                    <?php if (set_value('catgeory_type')==1) { ?>
+                                        <option value="">--Select--</option>
+                                        <option value="1" selected>RM (Raw Material)</option>
+                                        <option value="2">PM (Packaging Material)</option>
+                                    <?php }else{ ?>
+                                        <option value="">--Select--</option>
+                                        <option value="1">RM (Raw Material)</option>
+                                        <option value="2" selected>PM (Packaging Material)</option>
+                                    <?php } ?>
+                                        
+                                    </select>
                                     <?= form_error('catgeory_type', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
                             </div>

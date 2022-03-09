@@ -21,10 +21,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <select id="employee_name" class="form-control form-control-sm select2" name="employee_name" id="employee_name">
                             <option value="">--Select--</option>
                             <?php foreach ($select_employee as $row) {?>
-                                <?php if (set_value('employee_name')==$row['id']) {?>
-                                   <option value="<?php echo $row['id']; ?>" selected><?php echo $row['person_name']; ?></option>
+                                <?php if (set_value('employee_name')==$row['person_id']) {?>
+                                   <option value="<?php echo $row['person_id']; ?>" selected><?php echo $row['person_name']; ?></option>
                                 <?php }else{ ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['person_name']; ?></option>
+                                    <option value="<?php echo $row['person_id']; ?>"><?php echo $row['person_name']; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
@@ -38,7 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="col-sm-2">
                         <input type="text" id="employee_name" readonly class="form-control form-control-sm" value="<?php echo $this->session->fullname; ?>">
 
-                        <input type="hidden" name="employee_name" value="<?php echo $this->session->id; ?>">
+                        <input type="hidden" name="employee_name" value="<?php echo $this->session->person_id; ?>">
                         </div>
                         <?= form_error('employee_name', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>
