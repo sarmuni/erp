@@ -370,6 +370,7 @@
     <script src="<?= base_url(); ?>assets/template_neura/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="<?= base_url(); ?>assets/js/sweetalert2.all.min.js"></script>
     <script src="<?= base_url(); ?>assets/js/myscript.js"></script>
+    <script src="<?= base_url(); ?>assets/js/jquery-ui.js"></script>
     <!-- BEGIN Java Script for this page -->
     <script src="<?= base_url(); ?>assets/template_neura/plugins/select2/js/select2.min.js"></script>
 
@@ -585,7 +586,7 @@ var base_url = "<?php echo base_url(); ?>";
                var html = '<tr id="row_'+row_id+'">'+
                    '<td>'+ 
                    '<div class="col-sm-15">'+
-                    '<select class="form-control" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product_name[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
+                    '<select class="form-control form-control-sm" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product_name[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
                         '<option value=""></option>';
                         $.each(response, function(index, value) {
                           html += '<option value="'+value.id+'">'+value.product_name+'</option>';             
@@ -601,13 +602,13 @@ var base_url = "<?php echo base_url(); ?>";
 
                     '<td>'+
                         '<select class="form-control form-control-sm" id="taxable" name="taxable[]" style="width:100%;" required>'+
-                            '<option value=""></option>'+
-                            '<option value="1">Yes</option>'+
+                            '<option value="1"selected>Yes</option>'+
                             '<option value="2">No</option>'+
                           '</select>'+
                         '</td>'+
 
-                    '<td><input type="text" name="discount[]" id="discount_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="discount_value[]" id="discount_value_'+row_id+'" class="form-control form-control-sm"></td>'+
+                    '<input type="hidden" id="product_tax_rate_value_'+row_id+'" class="form-control form-control-sm" autocomplete="off">'+
+                    '<td><input type="text" name="discount[]" id="discount_'+row_id+'" class="form-control form-control-sm"><input type="hidden" name="discount_value[]" id="discount_value_'+row_id+'" class="form-control form-control-sm"></td>'+
 
                     '<td><input type="text" name="tax[]" id="tax_'+row_id+'" class="form-control form-control-sm" disabled><input type="hidden" name="tax_value[]" id="tax_value_'+row_id+'" class="form-control form-control-sm"></td>'+
 
@@ -623,7 +624,7 @@ var base_url = "<?php echo base_url(); ?>";
                     $("#product_info_table tbody").html(html);
                 }
 
-              $(".select_group").select2();
+              $(".product").select2();
 
           }
         });
@@ -635,10 +636,18 @@ var base_url = "<?php echo base_url(); ?>";
 
   function getTotal(row = null) {
     if(row) {
-      var total = Number($("#selling_price_value_"+row).val()) * Number($("#quantity_"+row).val());
+
+      var tax = (Number($("#selling_price_value_"+row).val()) * Number($("#product_tax_rate_value_"+row).val()) / 100) * Number($("#quantity_"+row).val());
+      tax = tax.toFixed(2);
+      $("#tax_"+row).val(tax);
+      $("#tax_value_"+row).val(tax);
+
+
+      var total = Number(tax) + Number($("#selling_price_value_"+row).val()) * Number($("#quantity_"+row).val());
       total = total.toFixed(2);
-      $("#total"+row).val(total);
+      $("#total_"+row).val(total);
       $("#total_value_"+row).val(total);
+
       
       subAmount();
 
@@ -656,30 +665,49 @@ var base_url = "<?php echo base_url(); ?>";
       $("#selling_price_"+row_id).val("");
       $("#selling_price_value_"+row_id).val("");
 
-      $("#quantity_"+row_id).val("");           
+      $("#quantity_"+row_id).val("");         
+      $("#quantity_value_"+row_id).val("");         
+
+      $("#tax_"+row_id).val("");
+      $("#tax_value_"+row_id).val("");
+
+      $("#product_tax_rate_"+row_id).val("");
+      $("#product_tax_rate_value_"+row_id).val("");
 
       $("#total_"+row_id).val("");
       $("#total_value_"+row_id).val("");
 
     } else {
       $.ajax({
-        url: base_url + '/sales_orders/getProductValueById',
+        url: base_url + 'sales_orders/getProductValueById',
         type: 'post',
         data: {product_id : product_id},
         dataType: 'json',
         success:function(response) {
           // setting the rate value into the rate input field
           
-          $("#selling_price_"+row_id).val(response.price);
-          $("#selling_price_value_"+row_id).val(response.price);
+          $("#selling_price_"+row_id).val(response.selling_price);
+          $("#selling_price_value_"+row_id).val(response.selling_price);
 
           $("#quantity_"+row_id).val(1);
           $("#quantity_value_"+row_id).val(1);
+          
+          $("#discount_"+row_id).val(0);
+          $("#discount_value_"+row_id).val(0);
 
-          var total = Number(response.price) * 1;
-          total = total.toFixed(2);
-          $("#total_"+row_id).val(total);
-          $("#total_value_"+row_id).val(total);
+          $("#product_tax_rate_"+row_id).val(response.product_tax_rate);
+          $("#product_tax_rate_value_"+row_id).val(response.product_tax_rate);
+
+          var tax_data = Number(response.selling_price * response.product_tax_rate/100);
+          tax_data = tax_data.toFixed(2);
+          $("#tax_"+row_id).val(tax_data);
+          $("#tax_value_"+row_id).val(tax_data);
+
+
+          var total = (Number(response.selling_price) + Number(tax_data)) * 1;
+            total = total.toFixed(2);
+            $("#total_"+row_id).val(total);
+            $("#total_value_"+row_id).val(total);
           
           subAmount();
         } // /success
@@ -687,8 +715,89 @@ var base_url = "<?php echo base_url(); ?>";
     }
   }
 
+
+  // calculate the total amount of the order
+  function subAmount() {
+    var service_charge = 0;
+    var vat_charge = 0;
+
+    var tableProductLength = $("#product_info_table tbody tr").length;
+    var totalSubAmount = 0;
+    for(x = 0; x < tableProductLength; x++) {
+      var tr = $("#product_info_table tbody tr")[x];
+      var count = $(tr).attr('id');
+      count = count.substring(4);
+
+      totalSubAmount = Number(totalSubAmount) + Number($("#selling_price_"+count).val());
+    //   total_tax = Number($("#selling_price_"+count).val()) * Number($("#tax_"+count).val()/100);
+    //   total_total = Number(totalSubAmount) + Number($("#total_value_"+count).val());
+
+    } // /for
+
+    total_price = totalSubAmount.toFixed(2);
+    // total_tax = total_tax.toFixed(2);
+    // total_total = total_total.toFixed(2);
+
+    // sub total
+    $("#subtotal_value").val(total_price);
+    // $("#subtotal_tax_value").val(total_tax);
+    // $("#subtotal_total_value").val(total_total);
+
+
+  } // /sub total amount
+
+
+
+  // remove the selected table row
+  function removeRow(tr_id)
+  {
+    $("#product_info_table tbody tr#row_"+tr_id).remove();
+    subAmount();
+  }
+
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#customer_id').change(function(){
+            var id=$(this).val();
+            $.ajax({
+                url : "<?php echo base_url();?>sales_orders/get_customers_by_id",
+                method : "POST",
+                data : {id: id},
+                async : false,
+                dataType : 'json',
+                success: function(data){
+                    var html = '';
+                    var i;
+                    for(i=0; i<data.length; i++){
+
+                        html +='<div class="card mb-3"><div class="card-header"><h3><i class="fas fa-user-friends"></i> Identitas Customer</h3></div><div class="card-body">';
+
+                        html += '<div class="form-group row"><label for="company_name" class="col-sm-4 col-form-label">Company Name</label><div class="col-sm-7"><input type="text" value="'+data[i].company_name+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="brand" class="col-sm-4 col-form-label">Brand</label><div class="col-sm-7"><input type="text" value="'+data[i].brand+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="sku" class="col-sm-4 col-form-label">SKU</label><div class="col-sm-7"><input type="text" value="'+data[i].sku+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="sku" class="col-sm-4 col-form-label">Country</label><div class="col-sm-7"><input type="text" value="'+data[i].country+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="sku" class="col-sm-4 col-form-label">Email</label><div class="col-sm-7"><input type="text" value="'+data[i].email+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="sku" class="col-sm-4 col-form-label">Telpon</label><div class="col-sm-7"><input type="text" value="'+data[i].telpon+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html += '<div class="form-group row"><label for="sku" class="col-sm-4 col-form-label">Address</label><div class="col-sm-7"><input type="text" value="'+data[i].address+'" class="form-control form-control-sm" readonly="readonly" autocomplete="off"></div></div>';
+
+                        html +='</div></div></div>';
+                        
+                    }
+                    $('.identitas_customers').html(html);
+                     
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

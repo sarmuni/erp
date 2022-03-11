@@ -40,6 +40,12 @@ class Sales_orders_model extends MY_Model
 		return $query->result_array();
 	}
 
+    function get_customers_id($id){
+        $hasil=$this->db->query("SELECT * FROM ref_customers WHERE id='$id'");
+        return $hasil->result();
+    }
+
+
     function get_by_id($id)
     {
         $role_id = $this->session->userdata('role_id');

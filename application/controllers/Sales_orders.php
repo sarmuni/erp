@@ -38,6 +38,15 @@ class Sales_orders extends CI_Controller
 		}
 	}
 
+
+    function get_customers_by_id(){
+        $id=$this->input->post('id');
+        $data=$this->sales_orders_model->get_customers_id($id);
+        echo json_encode($data);
+    }
+
+
+
     public function form()
     {
         //Global Location Number
