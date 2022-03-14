@@ -129,8 +129,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <tbody>
                      <tr id="row_1">
                        <td>
-                       <div class="col-sm-15">
-                        <select class="form-control form-control-sm" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
+                       <div class="col-sm-15" style="width:100%;">
+                        <select class="form-control form-control-sm select2" data-row-id="row_1" id="product_1" name="product[]" onchange="getProductData(1)" required>
                             <option value=""></option>
                             <?php foreach ($products as $k => $v): ?>
                               <option value="<?php echo $v['id']; ?>"> <?php echo $v['product_name']; ?>
@@ -169,7 +169,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                           <input type="hidden" name="total_value[]" id="total_value_1" class="form-control form-control-sm" autocomplete="off">
                         </td>
 
-                        <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow('1')"><i class="fas fa-window-close"></i></button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow1('1')"><i class="fas fa-window-close"></i></button></td>
                      </tr>
                    </tbody>
 
@@ -182,15 +182,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Total -->
         <table class="table table-bordered">
             <tr>
-                <th style="width:60%"> <p class="float-right">Subtotal</p></right></th>
+                <th style="width:60%"> <p class="float-right">Total Price</p></right></th>
                 <th style="width:10%"><input type="text"  id="subtotal_value" class="form-control form-control-sm" disabled autocomplete="off"></th>
             </tr>
             <tr>
-                <th style="width:60%"><p class="float-right">Tax</p></th>
+                <th style="width:60%"><p class="float-right">Total Tax</p></th>
                 <th style="width:10%"><input type="text" id="subtotal_tax_value" class="form-control form-control-sm" disabled autocomplete="off"></th>
             </tr>
             <tr>
-                <th style="width:60%"><p class="float-right">Total</p></th>
+                <th style="width:60%"><p class="float-right">Grand Total</p></th>
                 <th style="width:10%"><input type="text" id="subtotal_total_value" class="form-control form-control-sm" disabled autocomplete="off"></th>
             </tr>
         </table>

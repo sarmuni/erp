@@ -127,7 +127,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                     <!-- <div class="form-group row"> -->
                         <!-- <div class="col-sm-10"> -->
-                            <!-- <button type="button" id="btn-tambah-form" class="btn btn-primary btn-sm pull-right"> <i class="fas fa-plus" aria-hidden="true"></i> Add New List</button> -->
+                            <button type="button" id="btn-tambah-form" class="btn btn-primary btn-sm pull-right"> <i class="fas fa-plus" aria-hidden="true"></i> Add New List</button>
                         <!-- </div> -->
                     <!-- </div> -->
                 
@@ -146,64 +146,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <div class="card-body">
             <div class="table-responsive">
-            <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%"> 
-                <thead>
-                    <tr>
-                      <th style="width:3%">No</th>
-                      <th style="width:45%">Description Detail</th>
-                      <th style="width:10%">Qty</th>
-                      <th style="width:10%">Unit</th>
-                      <th style="width:10%">Estimated Price</th>
-                      <th style="width:10%">Request Status</th>
-                      <th style="width:8%"><center><button type="button" id="btn-tambah-form" class="btn bg-success btn-sm"><i class="fa fa-plus"></i> Add Item</button></center></th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                            <input type="text" required name="item_name[]" class="form-control form-control-sm" id="item_name" autocomplete="off">
-                            </td>
-                            <td>
-                                <input type="number" required name="pre_qty[]"  class="form-control form-control-sm" id="pre_qty" autocomplete="off">
-                            </td>
-                            <td>
-                                <input type="text" required name="measurement[]" class="form-control form-control-sm" id="measurement" autocomplete="off">
-                            </td>
-                            <td>
-                                <input type="number" required name="estimated_price[]"  class="form-control form-control-sm" id="estimated_price" autocomplete="off">
-                            </td>
-                            <td>
-                                <select id="status" name="status[]" required class="form-control form-control-sm">
-                                    <option value="1">Normal</option>
-                                    <option value="2">Urgent</option>
-                                </select>
-                            </td>
-                        <td><center><button type="button" class="btn bg-danger btn-sm" onclick="removeRow('1')"><i class="fas fa-window-close"></i> Remove</button></center></td>
-                        </tr>
-                    <tbody>
-                        
-                </table>
-                <div id="insert-form"></div>
-                <input type="hidden" id="jumlah-form" value="1">
+                    <table class="table table-hover display" style="width:100%">
+                            <tr>
+                                <td style="width:40%">
+                                    <textarea class="form-control form-control-sm" required name="item_name[]" placeholder="Description Detail"></textarea>
+                                </td>
+                                <td>
+                                    <input type="number" required name="pre_qty[]" placeholder="Qty" class="form-control form-control-sm" id="pre_qty" autocomplete="off">
+                                </td>
+                                <td>
+                                    <input type="text" required name="measurement[]" placeholder="Unit Ex: BOX" class="form-control form-control-sm" id="measurement" autocomplete="off">
+                                </td>
+                                <td>
+                                    <input type="number" required name="estimated_price[]" placeholder="Estimated Price" class="form-control form-control-sm" id="estimated_price" autocomplete="off">
+                                </td>
+                                <td>
+                                    <select id="status" name="status[]" required class="form-control form-control-sm">
+                                        <option value="1">Normal</option>
+                                        <option value="2">Urgent</option>
+                                    </select>
+                                </td>
+                                <td>
+                                <span class="pull-right"><button type="button" class="btn bg-warning btn-sm" id="btn-reset-form" data-dismiss="modal"> <i class="fas fa-window-close"></i> Remove All</button></span>
+                                </td>
+                            </tr>
+                    </table>
             </div>
-       
-
-            <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%"> 
-                <thead>
-                        <tr>
-                        <th colspan="2" style="width:48%; text-align: center;">Total</th>
-                        <th style="width:10%; text-align: center;">0</th>
-                        <th style="width:10%"></th>
-                        <th style="width:10%; text-align: center;">0</th>
-                        <th style="width:10%"></th>
-                        <th style="width:8%"></th>
-                        </tr>
-                </thead>
-            </table>
-
+            <div id="insert-form"></div>
+            <input type="hidden" id="jumlah-form" value="1">
         </div>
-
         <div class="modal-footer">
                 <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Save</button>
                 <a href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger btn-sm"> <i class="fas fa-window-close"></i> Close</a>

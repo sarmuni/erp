@@ -171,7 +171,7 @@ class Auth extends CI_Controller
         ];
 
         $this->email->initialize($config);
-        $this->email->from('autoreplay88@gmail.com', 'Auto Replay');
+        $this->email->from('autoreplay88@gmail.com', 'Auto Replay - Enterprise Resource Planning (ERP)');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'activated') {

@@ -76,7 +76,7 @@ foreach ($head_employee as $row) {
                     ?>
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><a href="<?php echo site_url(); ?>pre_requisition/view/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>"><?php echo strtoupper($row['pre_code']); ?></a></td>
+                            <td><center><a href="<?php echo site_url(); ?>pre_requisition/view/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>"><?php echo strtoupper($row['pre_code']); ?></a></center></td>
                             <td><?php echo date('Y-m-d',strtotime($row['pre_date'])); ?></td>
                             <td><?php echo date('Y-m-d',strtotime($row['pre_deadline_date'])); ?></td>
                             <td><?php echo $row['fullname']; ?></td>
@@ -99,12 +99,14 @@ foreach ($head_employee as $row) {
                                 <?php } ?>
                             </td>
                             <td>
-                                <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
-                                </a>
+                                <!-- <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
+                                </a> -->
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/form_edit/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="edit" class="btn bg-warning btn-sm" title="Edit"><i class="fas fa-user-edit"></i>
                                  </a>
 
+                                 <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 </a>
 
                                  <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>
                                  </a>

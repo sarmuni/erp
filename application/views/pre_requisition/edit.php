@@ -1,8 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+<?php foreach ($pre_requisition as $key => $row) {
+    $id = $row['id'];
+    $pre_code = $row['pre_code'];
+    $pre_date = $row['pre_date'];
+    $pre_deadline_date = $row['pre_deadline_date'];
+    $department_id = $row['department_id'];
+    $notes = $row['notes'];
 
-<form autocomplete="off" action="<?php echo base_url('pre_requisition/add'); ?>" method="POST">
+} ?>
+
+<form autocomplete="off" action="<?php echo base_url('pre_requisition/edit'); ?>/<?php echo $id; ?>" method="POST">
 <div class="col-12">
     <div class="card mb-3">
         <div class="card-header">
@@ -24,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="form-group row">
                         <label for="pre_date" class="col-sm-2 col-form-label">Pre Requisition Date</label>
                         <div class="col-sm-2">
-                            <input type="date" class="form-control form-control-sm" id="pre_date" required name="pre_date" value="<?= set_value('pre_date'); ?>" placeholder="Pre Requisition Date" autocomplete="off">
+                            <input type="date" class="form-control form-control-sm" id="pre_date" required name="pre_date" value="<?php echo $pre_date; ?>" placeholder="Pre Requisition Date" autocomplete="off">
                         </div>
                         <?= form_error('pre_date', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>
@@ -32,7 +41,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="form-group row">
                         <label for="pre_deadline_date" class="col-sm-2 col-form-label">Pre Requisition Deadline Date</label>
                         <div class="col-sm-2">
-                            <input type="date" class="form-control form-control-sm" id="pre_deadline_date" required name="pre_deadline_date" value="<?= set_value('pre_deadline_date'); ?>" placeholder="Pre Requisition Deadline Date" autocomplete="off">
+                            <input type="date" class="form-control form-control-sm" id="pre_deadline_date" required name="pre_deadline_date" value="<?= $pre_deadline_date; ?>" placeholder="Pre Requisition Deadline Date" autocomplete="off">
                         </div>
                         <?= form_error('pre_deadline_date', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>
@@ -53,7 +62,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <select id="department_id" name="department_id" required class="form-control select2 form-control-sm" value="<?= set_value('department_id'); ?>">
                                 <option value="">-- Select --</option>
                                 <?php foreach ($option_departments as $row1) { ?>
-                                    <option value="<?php echo $row1['id']; ?>"><?php echo $row1['name']; ?></option>
+                                    <?php if ($department_id==$row1['id']) { ?>
+                                        <option value="<?php echo $row1['id']; ?>"selected><?php echo $row1['name']; ?></option>
+                                    <?php }else{ ?>
+                                        <option value="<?php echo $row1['id']; ?>"><?php echo $row1['name']; ?></option>
+                                    <?php } ?>
                                 <?php } ?>
                             </select>
                             <?= form_error('department_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -118,7 +131,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <div class="form-group row">
                         <label for="notes" class="col-sm-2 col-form-label">Notes</label>
                         <div class="col-sm-5">
-                        <textarea class="form-control form-control-sm" required name="notes" value="<?= set_value('notes'); ?>"></textarea>
+                        <textarea class="form-control form-control-sm" required name="notes"><?php echo $notes; ?></textarea>
                         </div>
                         <?= form_error('notes', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                     </div>
@@ -141,7 +154,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <div class="col-12">
     <div class="card mb-3">
         <div class="card-header">
-            <h3><i class="fas fa-user-friends"></i> Detail Pre Requisition</h3>
+            <h3><i class="fas fa-user-friends"></i> <?php echo $title_items; ?></h3>
         </div>
 
         <div class="card-body">
@@ -160,18 +173,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
+                        <?php if(isset($pre_requisition_detail)): ?>
+                        <?php $nextform = 1; ?>
+                        <?php foreach ($pre_requisition_detail as $key => $row2) {?>   
+
+                            <td><?php echo $nextform; ?></td>
                             <td>
-                            <input type="text" required name="item_name[]" class="form-control form-control-sm" id="item_name" autocomplete="off">
+                            <input type="text" required name="item_name[]" value="<?php echo $row2['item_name']; ?>" class="form-control form-control-sm" id="item_name" autocomplete="off">
                             </td>
                             <td>
-                                <input type="number" required name="pre_qty[]"  class="form-control form-control-sm" id="pre_qty" autocomplete="off">
+                                <input type="number" required name="pre_qty[]"  value="<?php echo $row2['pre_qty']; ?>" class="form-control form-control-sm" id="pre_qty" autocomplete="off">
                             </td>
                             <td>
-                                <input type="text" required name="measurement[]" class="form-control form-control-sm" id="measurement" autocomplete="off">
+                                <input type="text" required name="measurement[]" value="<?php echo $row2['measurement']; ?>" class="form-control form-control-sm" id="measurement" autocomplete="off">
                             </td>
                             <td>
-                                <input type="number" required name="estimated_price[]"  class="form-control form-control-sm" id="estimated_price" autocomplete="off">
+                                <input type="number" required name="estimated_price[]"  value="<?php echo $row2['estimated_price']; ?>" class="form-control form-control-sm" id="estimated_price" autocomplete="off">
                             </td>
                             <td>
                                 <select id="status" name="status[]" required class="form-control form-control-sm">
@@ -179,8 +196,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <option value="2">Urgent</option>
                                 </select>
                             </td>
-                        <td><center><button type="button" class="btn bg-danger btn-sm" onclick="removeRow('1')"><i class="fas fa-window-close"></i> Remove</button></center></td>
+                        <td><center>
+                        <?php if ($row2['id']) { ?>
+                            <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete_items/<?php echo $row['id']; ?>/<?php echo $row2['item_pre_code']; ?>/<?php echo $row2['id']; ?>" class="btn bg-danger btn-sm">
+                                    <i class="fas fa-window-close"></i> Remove</a>
+                        <?php }else{ ?>
+                                    <button type="button" class="btn bg-danger btn-sm" onclick="removeRow()"><i class="fas fa-window-close"></i> Remove</button>
+                        <?php } ?>
+                        
+                        </center></td>
                         </tr>
+                    <?php $nextform++; ?>
+                    <?php } ?>
+                    <?php endif; ?>
                     <tbody>
                         
                 </table>
