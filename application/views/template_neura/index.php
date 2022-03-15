@@ -258,28 +258,30 @@
                             <div class="breadcrumb-holder">
                                 <h1 class="main-title float-left">
                                 <?php if ($user['role_id'] == 1) { 
-                                    echo "Departments Board of Director";
+                                    echo "Administrator";
                                 }elseif ($user['role_id'] == 2) {
-                                    echo "Departments Factory Management";
+                                    echo "Departments Board of Director";    
                                 }elseif ($user['role_id'] == 3) {
-                                    echo "Departments Quality Assurance";
+                                    echo "Departments Factory Management";
                                 }elseif ($user['role_id'] == 4) {
-                                    echo "Departments Production";
+                                    echo "Departments Quality Assurance";
                                 }elseif ($user['role_id'] == 5) {
-                                    echo "Departments Engineer";
+                                    echo "Departments Production";
                                 }elseif ($user['role_id'] == 6) {
-                                    echo "Departments HR & GA";
+                                    echo "Departments Engineer";
                                 }elseif ($user['role_id'] == 7) {
-                                    echo "Departments Finance";
+                                    echo "Departments HR & GA";
                                 }elseif ($user['role_id'] == 8) {
-                                    echo "Departments Warehouse";
+                                    echo "Departments Finance";
                                 }elseif ($user['role_id'] == 9) {
-                                    echo "Departments Building Management";
+                                    echo "Departments Warehouse";
                                 }elseif ($user['role_id'] == 10) {
-                                    echo "Departments Internal Securit";
+                                    echo "Departments Building Management";
                                 }elseif ($user['role_id'] == 11) {
-                                    echo "Departments Supply Chain";
+                                    echo "Departments Internal Securit";
                                 }elseif ($user['role_id'] == 12) {
+                                    echo "Departments Supply Chain";
+                                }elseif ($user['role_id'] == 13) {
                                     echo "Departments Information Technology";
                                 } ?>
 

@@ -46,46 +46,27 @@ class Auth extends CI_Controller
                         'fullname'      => $user['fullname'],
                         'person_id'      => $user['person_id']
                     ];
-                    
-                    // 1.Board of Director
-                    // 2.Factory Management
-                    // 3.Quality Assurance
-                    // 4.Production
-                    // 5.Engineer
-                    // 6.HR & GA
-                    // 7.Finance
-                    // 8.Warehouse
-                    // 9.Building Management
-                    // 10.Internal Security
-                    // 11.Supply Chain
-                    // 12.Information Technology
+                    // 1.Administrator
+                    // 2.Board of Director
+                    // 3.Factory Management
+                    // 4.Quality Assurance
+                    // 5.Production
+                    // 6.Engineer
+                    // 7.HR & GA
+                    // 8.Finance
+                    // 9.Warehouse
+                    // 10.Building Management
+                    // 11.Internal Security
+                    // 12.Supply Chain
+                    // 13.Information Technology
 
                     $this->session->set_userdata($data);
                     if ($user['role_id'] == 1) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 2) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 3) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 4) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 5) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 6) {
-                        redirect('dashboard');
-                    } else if ($user['role_id'] == 7) {
-                        redirect('dashboard');
-                    }else if ($user['role_id'] == 8) {
-                        redirect('dashboard');
-                    }else if ($user['role_id'] == 9) {
-                        redirect('dashboard');
-                    }else if ($user['role_id'] == 10) {
-                        redirect('dashboard');
-                    }else if ($user['role_id'] == 11) {
-                        redirect('dashboard');
-                    }else if ($user['role_id'] == 12) {
-                        redirect('dashboard');
+                        redirect('administrator');
+                    } else {
+                        redirect('user');
                     }
+
                 } else {
 
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">

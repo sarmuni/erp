@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <div class="card-body">
 
-            <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_menu">
+            <!-- <a role="button" href="#" class="btn bg-danger btn-sm" title="Add" data-toggle="modal" data-target=".tambah_menu">
                 <i class="fas fa-user-plus"></i> Add New
             </a>
 
@@ -23,42 +23,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <a role="button" href="<?php echo base_url('menu'); ?>" class="btn bg-danger btn-sm" title="Refresh">
                 <i class="fas fa-sync-alt"></i> Refresh
             </a>
-            <hr>
+            <hr> -->
 
             <div class="table-responsive">
-                <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
+                <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Icon</th>
-                            <th>Active</th>
-                            <th>Action</th>
+                            <th>Departments</th>
+                            <th>Access</th>
                         </tr>
                     </thead>
                     <?php
                     $no = 1;
-                    foreach ($menu as $row) {
+                    foreach ($role as $row) {
                     ?>
                         <tr>
-                            <td><?php echo $no; ?></td>
-                            <td><?php echo strtoupper($row['menu']); ?></td>
-                            <td><?php echo $row['description']; ?></td>
-                            <td><?php echo $row['icon']; ?></td>
-                            <td>
-                                    <?php if ($row['is_active'] == 0) { ?>
-                                        <center><a role="button" href="<?php echo site_url(); ?>menu/publish/<?php echo $row['id']; ?>" id="publish" class="btn bg-danger btn-sm publish" title="Non Aktif">
-                                        <i class="fas fa-toggle-off"></i>
-                                            </a></center>
-                                    <?php } else { ?>
-                                        <center><a role="button" href="<?php echo site_url(); ?>menu/unpublish/<?php echo $row['id']; ?>" id="unpublish" class="btn bg-info btn-sm unpublish" title="Aktif">
-                                        <i class="fas fa-toggle-on"></i>
-                                            </a></center>
-                                    <?php } ?>
-                                
-                            </td>
-                            <td>
+                            <td><center><?php echo $no; ?></center></td>
+                            <td><?php echo strtoupper($row['role']); ?></td>
+                            <td><a href="<?= base_url('administrator/roleaccess/') . $row['id']; ?>" class="badge badge-warning">access</a></td>
+                            <!-- <td>
                                 <a role="button" href="#" class="btn bg-danger btn-sm" title="Edit" data-toggle="modal" 
                                 data-target="#edit_menu<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
@@ -66,11 +50,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                  <a role="button" href="<?php echo site_url(); ?>menu/delete/<?php echo $row['id']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
-                                <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
+                                <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">
                                     <i class="fab fa-searchengin"></i>
-                                </a> -->
-                                
-                            </td>
+                                </a>
+                            </td> -->
                         </tr>
                     <?php
                         $no++;
@@ -84,7 +67,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
 </div>
 
-<!-- Modal Add -->
+<!-- Modal Add -
 <div class="modal fade tambah_menu" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -153,16 +136,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<!-- End Modal Add -->
+End Modal Add -->
 
 
-<!-- Modal Edit -->
+<!-- Modal Edit 
 <?php
 foreach ($menu as $i) :
     $id               = $i['id'];
-    $menu             = $i['menu'];
-    $description      = $i['description'];
-    $menu             = $i['menu'];
     $icon             = $i['icon'];
     $is_active        = $i['is_active'];
 ?>
@@ -243,7 +223,7 @@ foreach ($menu as $i) :
     </div>
 
 <?php endforeach; ?>
- <!--End Modal Edit -->
+ End Modal Edit -->
 
 
 

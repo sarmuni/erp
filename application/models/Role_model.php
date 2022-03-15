@@ -16,7 +16,6 @@ class Role_model extends MY_Model
     function get_all_by_id()
     {
         $this->db->where('id !=', 1);
-        $this->db->where('id !=', 2);
         $query = $this->db->get($this->table);
 
         if ($query->num_rows() > 0) return $query->result_array();

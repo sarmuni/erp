@@ -25,7 +25,7 @@ class Pre_requisition extends CI_Controller
         $data['employee']                      = $this->employee_model->get_all('id','desc');
 
         $id                                    = $this->session->userdata('id');
-        $data['head_employee']                 = $this->pre_requisition_model->call_function_procedure_head_of_dept($id);
+        // $data['head_employee']                 = $this->pre_requisition_model->call_function_procedure_head_of_dept($id);
 
         $data['title'] = 'Pre Requisition';
         $this->template->load('template_neura/index', 'pre_requisition/index', $data);

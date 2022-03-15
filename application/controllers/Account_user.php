@@ -278,11 +278,6 @@ class Account_user extends CI_Controller
 
         $update = $this->account_user_model->update($id, $data);
 
-        if ($id != 1 OR $role_id != 12) {
-            $update = $this->account_user_model->call_function_procedure($role_id,$data);
-        }
-
-
         if ($update) {
             redirect('account_user');
         } else {
@@ -300,9 +295,6 @@ class Account_user extends CI_Controller
 
         $update = $this->account_user_model->update($id, $data);
 
-        if ($id != 1 OR $role_id != 12 ) {
-            $update = $this->account_user_model->delete_role_id($role_id,$data);
-        }
 
         if ($update) {
             redirect('account_user');

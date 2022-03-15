@@ -49,7 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Level</th>
-                            <th>Status/Menu</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,7 +65,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <td><?php echo $row['phone']; ?></td>
                             <td><?php echo $row['role']; ?></td>
                             <td>
-                                <?php if ($row['role'] != 'Root' && $row['role'] != 'Administrator') { ?>
                                     <?php if ($row['is_active'] == 0) { ?>
                                         <center><a role="button" href="<?php echo site_url(); ?>account_user/publish/<?php echo $row['id']; ?>/<?php echo $row['role_id']; ?>" id="publish" class="btn bg-info btn-sm publish" title="Aktif">
                                                 <i class="fas fa-eye-slash"></i>
@@ -74,11 +73,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <center><a role="button" href="<?php echo site_url(); ?>account_user/unpublish/<?php echo $row['id']; ?>/<?php echo $row['role_id']; ?>" id="unpublish" class="btn bg-success btn-sm unpublish" title="Non Aktif">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a role="button" href="<?php echo site_url(); ?>account_user/module/<?php echo $row['id']; ?>" id="hapus" class="btn bg-primary btn-sm" title="Menu">
-                                                <i class="fas fa-list"></i> Module
-                                            </a>
                                         </center>
-                                    <?php } ?>
                                 <?php } ?>
                             </td>
                             <td>
@@ -199,13 +194,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <!-- Modal Edit -->
 <?php
-foreach ($account_user as $i) :
+foreach ($account_user as $i) {
     $id = $i['id'];
+    $personid = $i['person_id'];
     $fullname = $i['fullname'];
     $email = $i['email'];
     $phone = $i['phone'];
     $password = $i['password'];
-    $role = $i['role_id'];
+    $roleID = $i['role_id'];
     $is_active = $i['is_active'];
 ?>
     <?php if ($is_active == 1) {
@@ -238,7 +234,12 @@ foreach ($account_user as $i) :
                                         <select id="person_id" class="form-control form-control-sm" name="person_id" id="person_id" value="<?= set_value('person_id'); ?>">
                                             <option selected="">Pilih</option>
                                             <?php foreach ($person_id as $role) { ?>
-                                                <option value="<?php echo $role['person_id'] ?>"><?php echo $role['person_id'] ?> - <?php echo $role['person_name'] ?></option>
+                                                <?php if ($role['person_id']==$personid) { ?>
+                                                    <option value="<?php echo $role['person_id'] ?>" selected><?php echo $role['person_id'] ?> - <?php echo $role['person_name'] ?></option>
+                                                <?php }else{?>
+                                                    <option value="<?php echo $role['person_id'] ?>"><?php echo $role['person_id'] ?> - <?php echo $role['person_name'] ?></option>
+                                                <?php } ?>
+
                                             <?php } ?>
                                         </select>
                                         <?= form_error('person_id', '<p style="color:red; font-size:12px;">', '</p>'); ?>
@@ -254,6 +255,7 @@ foreach ($account_user as $i) :
                                         <?= form_error('email', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="password">Password</label>
@@ -266,16 +268,18 @@ foreach ($account_user as $i) :
                                         <?= form_error('confirmpassword', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="role_id">Level</label>
                                         <select id="role_id" class="form-control form-control-sm" <?php echo $publish; ?> name="role_id" id="role_id">
                                             <option selected="">Pilih</option>
                                             <?php foreach ($role_id as $role1) { ?>
-                                                <?php if ($role1['departments_id'] == $role) { ?>
-                                                    <option value="<?php echo $role1['departments_id'] ?>" selected><?php echo $role1['role'] ?></option>
+
+                                                <?php if ($role1['id'] == $roleID) { ?>
+                                                    <option value="<?php echo $role1['id'] ?>" selected><?php echo $role1['role'] ?></option>
                                                 <?php } else { ?>
-                                                    <option value="<?php echo $role1['departments_id'] ?>"><?php echo $role1['role'] ?></option>
+                                                    <option value="<?php echo $role1['id'] ?>"><?php echo $role1['role'] ?></option>
                                                 <?php } ?>
 
                                             <?php } ?>
@@ -305,7 +309,7 @@ foreach ($account_user as $i) :
         </div>
     </div>
 
-<?php endforeach; ?>
+<?php } ?>
 <!-- End Modal Edit -->
 
 
@@ -318,7 +322,7 @@ foreach ($account_user as $i) :
     $email = $i['email'];
     $phone = $i['phone'];
     $password = $i['password'];
-    $role_id = $i['role_id'];
+    $roleID = $i['role_id'];
     $is_active = $i['is_active'];
 ?>
     <?php if ($is_active == 0) {
@@ -372,10 +376,10 @@ foreach ($account_user as $i) :
                                         <select id="role_id" class="form-control form-control-sm" <?php echo $publish; ?> name="role_id" id="role_id">
                                             <option selected="">Pilih</option>
                                             <?php foreach ($role_id as $role1) { ?>
-                                                <?php if ($role1['departments_id'] == $role_id) { ?>
-                                                    <option value="<?php echo $role1['departments_id'] ?>" selected><?php echo $role1['role'] ?></option>
+                                                <?php if ($role1['id'] == $roleID) { ?>
+                                                    <option value="<?php echo $role1['id'] ?>" selected><?php echo $role1['role'] ?></option>
                                                 <?php } else { ?>
-                                                    <option value="<?php echo $role1['departments_id'] ?>"><?php echo $role1['role'] ?></option>
+                                                    <option value="<?php echo $role1['id'] ?>"><?php echo $role1['role'] ?></option>
                                                 <?php } ?>
 
                                             <?php } ?>
