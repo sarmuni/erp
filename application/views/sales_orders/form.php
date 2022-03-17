@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
             <div class="card-body">
                     <div class="form-group row">
-                        <label for="pre_code" class="col-sm-4 col-form-label">Orders Number</label>
+                        <label for="orders_number" class="col-sm-4 col-form-label">Orders Number</label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control form-control-sm" id="orders_number" name="orders_number" readonly="readonly" value="<?php echo $orders_number; ?>" placeholder="Orders Number" autocomplete="off">
                         </div>
@@ -152,7 +152,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                           </select>
                         </td>
                         
-                        <input type="hidden" id="product_tax_rate_value_1" class="form-control form-control-sm" autocomplete="off">
+                        <input type="hidden" id="product_tax_rate_value_1" name="product_tax_rate_value[]" class="form-control form-control-sm" autocomplete="off">
 
                         <td>
                           <input type="text" name="discount[]" id="discount_1" class="form-control form-control-sm" autocomplete="off">

@@ -45,7 +45,7 @@ class Account_user_model extends MY_Model
         b.role
         FROM auth_user a
         LEFT JOIN auth_role b
-        ON a.`role_id`=b.`departments_id`
+        ON a.`role_id`=b.`id`
         WHERE a.email='$email'";
         return $this->db->query($sql)->result_array();
     }

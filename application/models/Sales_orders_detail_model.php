@@ -1,12 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Employee_model extends MY_Model
+class Sales_orders_detail_model extends MY_Model
 {
 
-    protected $table = 'ref_personnel';
+    protected $table = 'sales_order_items';
     protected $primary_key = 'id';
-    protected $create_date = 'date_created';
-    protected $update_date = 'date_update';
+    protected $create_date = 'created_date';
+    protected $update_date = 'updated_date';
 
     function __construct()
     {
@@ -15,38 +15,111 @@ class Employee_model extends MY_Model
 
     function get_all()
     {
-        $sql = "SELECT 
-        a.*,
-        b.name AS name_departments
-        FROM ref_personnel a
-        LEFT JOIN ref_departments b
-        ON a.`departments_id`=b.`id`
-        ";
+            $sql = "SELECT * FROM {$this->table}";
+     
         return $this->db->query($sql)->result_array();
     }
 
-    
-    function get_all_by_departements($departments_id, $year, $status,$gender)
-    {
-        if($departments_id > 0) $this->db->where('departments_id', $departments_id);
-        if($year > 0) $this->db->where('YEAR(effective_time)', $year);
-        if($gender > 0) $this->db->where('gender', $gender);
-        if($status > 0) $this->db->where('is_active', $status);
-        $this->db->order_by('id', 'desc');
-        return $this->db->get($this->table)->result_array();
+    public function getActiveProductData()
+	{
+		$sql = "SELECT * FROM products";
+		$query = $this->db->query($sql, array(1));
+		return $query->result_array();
+	}
+
+	public function getProductData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM products where id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM products ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+    function get_customers_id($id){
+        $hasil=$this->db->query("SELECT * FROM ref_customers WHERE id='$id'");
+        return $hasil->result();
     }
 
-    // function get_last_code_resi($day, $month, $year)
-    // {
-    //     $this->db->where('DAY(tanggal_dibuat)', $day);
-    //     $this->db->where('MONTH(tanggal_dibuat)', $month);
-    //     $this->db->where('YEAR(tanggal_dibuat)', $year);
 
-    //     $this->db->order_by('tanggal_dibuat', 'desc');
-    //     $this->db->limit(1);
+    function get_by_id($id)
+    {
+        $role_id = $this->session->userdata('role_id');
+        if ($role_id==12 OR $role_id==1) {
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM sales_orders a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN sales_orders_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`id`='$id'
+            GROUP BY a.`id`";
+        }else{
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM sales_orders a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN sales_orders_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`department_id`='$role_id' AND a.id='$id'
+            GROUP BY a.`id`";
+        }
+        return $this->db->query($sql)->result_array();
+    }
 
-    //     return $this->db->get($this->table)->row_array();
-    // }
+    function get_last_code($day, $month, $year)
+    {
+        $this->db->where('DAY(created_date)', $day);
+        $this->db->where('MONTH(created_date)', $month);
+        $this->db->where('YEAR(created_date)', $year);
+
+        $this->db->order_by('created_date', 'desc');
+        $this->db->limit(1);
+
+        return $this->db->get($this->table)->row_array();
+    }
+
+    function call_function_procedure_head_of_dept($id)
+    {
+        $id = $this->session->userdata('id');
+
+        $sql = "CALL Proc_head_of_dept('$id')";
+
+        if($sql !== FALSE && $this->db->query($sql)->num_rows() == 1) 
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        } 
+
+        return $this->db->query($sql)->result_array();
+
+    }
+
 
     // function get_all_join_pelanggan_penerima()
     // {
@@ -63,7 +136,7 @@ class Employee_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,
@@ -103,7 +176,7 @@ class Employee_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,
@@ -130,13 +203,14 @@ class Employee_model extends MY_Model
 
     function departments()
     {
-        $this->db->where('id !=',1);
+        $this->db->order_by('name', 'ASC');
         $result = $this->db->get('ref_departments');
         return $result->result_array();
     }
 
     function part_departments()
     {
+        $this->db->order_by('name', 'ASC');
         $result = $this->db->get('ref_departments_detail');
         return $result->result_array();
     }
@@ -185,4 +259,6 @@ class Employee_model extends MY_Model
         //     return $this->db->query($sql)->result_array();
         // }
     }
+
+
 }

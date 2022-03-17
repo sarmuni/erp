@@ -58,50 +58,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             <th>Date Orders</th>
                             <th>Customers</th>
                             <th>Sales Person</th>
-                            <th>Currency Type</th>
                             <th>Payment Method</th>
+                            <th>Qty</th>
                             <th>Total</th>
-                            <th>Invoice</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <?php
                     $no = 1;
                     foreach ($sales_orders as $row) {
+                        if ($row['payment_method']==1) {
+                           $payment_method = 'Cash';
+                        }else if($row['payment_method']==2) {
+                            $payment_method = 'Credit Cards';
+                        } elseif($row['payment_method']==3){
+                            $payment_method = 'Debit Cards';
+                        } elseif($row['payment_method']==3){
+                            $payment_method = 'Mobile Payment';
+                        } elseif($row['payment_method']==3){
+                            $payment_method = 'Internet Banking';
+                        }
                     ?>
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><a href="<?php echo site_url(); ?>sales_orders/view/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>"><?php echo strtoupper($row['pre_code']); ?></a></td>
-                            <td><?php echo date('Y-m-d',strtotime($row['pre_date'])); ?></td>
-                            <td><?php echo date('Y-m-d',strtotime($row['pre_deadline_date'])); ?></td>
-                            <td><?php echo $row['fullname']; ?></td>
-                            <td><?php echo $row['department']; ?></td>
-                            <td><center><?php if ($row['request_status']==1) {
-                                echo"<p style='color:blue; font-size:15px;'>Normal</p>";
-                            }else{
-                                echo"<p style='color:red; font-size:15px;'>Urgent</p>";
-                            } ?></center></td>
-                            <td><center><?php echo strtoupper($row['total_item']); ?></center></td>
-                            <td>
-                                <?php if ($row['status'] == 0) { ?>
-                                    <center><a role="button" href="<?php echo site_url(); ?>sales_orders/pre_req_aprov_hod/<?php echo $row['id']; ?>" id="pre_req_aprov_hod" class="btn bg-warning btn-sm pre_req_aprov_hod" title="Aktif">
-                                    <i class="fas fa-check"></i> Approved HOD
-                                        </a></center>
-                                <?php } else if($row['status']==1) { ?>
-                                    <center><a role="button" href="<?php echo site_url(); ?>sales_orders/pre_req_aprov_purchasing/<?php echo $row['id']; ?>" id="pre_req_aprov_purchasing" class="btn bg-success btn-sm pre_req_aprov_purchasing" title="Aktif">
-                                            <i class="fas fa-check"></i> Approved Purchasing
-                                        </a></center>
-                                <?php } ?>
-                            </td>
+                            <td><a href="<?php echo site_url(); ?>sales_orders/view/<?php echo $row['id']; ?>/<?php echo $row['orders_number']; ?>"><?php echo strtoupper($row['orders_number']); ?></a></td>
+                            <td><?php echo date('Y-m-d',strtotime($row['created_date'])); ?></td>
+                            <td><?php echo $row['company_name']; ?></td>
+                            <td><?php echo $row['sales_person_text']; ?></td>
+                            <td><?php echo $payment_method; ?></td>
+                            <td><center><?php echo $row['qty']; ?></center></td>
+                            <td><?php echo number_format($row['total'],2); ?></td>
                             <td>
                                 <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_sales_orders<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a>
                                 
-                                 <a role="button" href="<?php echo site_url(); ?>sales_orders/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>sales_orders/delete/<?php echo $row['id']; ?>/<?php echo $row['orders_number']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
 
-
-                                 <a role="button" href="<?php echo site_url(); ?>cetak/sales_orders/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>
+                                 <a role="button" href="<?php echo site_url(); ?>cetak/sales_orders/<?php echo $row['id']; ?>/<?php echo $row['orders_number']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>
                                  </a>
 
                                 <!-- <a role="button" href="#" class="btn bg-danger" title="More..." data-toggle="modal" data-target="#view_account_user<?php echo $row['id']; ?>">

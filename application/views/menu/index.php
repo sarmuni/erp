@@ -29,11 +29,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th><center>No</center></th>
+                            <th>Url</th>
                             <th>Title</th>
-                            <th>Description</th>
                             <th>Icon</th>
                             <th>Active</th>
+                            <th>Order</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -42,9 +43,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     foreach ($menu as $row) {
                     ?>
                         <tr>
-                            <td><?php echo $no; ?></td>
-                            <td><?php echo strtoupper($row['menu']); ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td><center><?php echo $no; ?></center></td>
+                            <td><?php echo $row['menu']; ?></td>
+                            <td><?php echo strtoupper($row['description']); ?></td>
                             <td><?php echo $row['icon']; ?></td>
                             <td>
                                     <?php if ($row['is_active'] == 0) { ?>
@@ -58,6 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <?php } ?>
                                 
                             </td>
+                            <td><center><?php echo $row['urutan']; ?></center></td>
                             <td>
                                 <a role="button" href="#" class="btn bg-danger btn-sm" title="Edit" data-toggle="modal" 
                                 data-target="#edit_menu<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
@@ -105,13 +107,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <form autocomplete="off" action="<?php echo base_url('menu/add'); ?>" method="POST" enctype="multipart/form-data">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="judul_menu">Title Menu</label>
-                                    <input type="text" name="judul_menu" class="form-control" id="judul_menu" value="<?= set_value('judul_menu'); ?>">
-                                    <?= form_error('judul_menu', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                    <label for="menu">Url</label>
+                                    <input type="text" name="menu" class="form-control" id="menu" value="<?= set_value('menu'); ?>">
+                                    <?= form_error('menu', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="description">Description</label>
+                                    <label for="description">Title</label>
                                     <input type="text" name="description" class="form-control" id="description" value="<?= set_value('description'); ?>">
                                     <?= form_error('description', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
@@ -119,25 +121,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="url">Url</label>
-                                    <input type="text" name="url" class="form-control" id="url" value="<?= set_value('url'); ?>">
-                                    <?= form_error('url', '<p style="color:red; font-size:12px;">', '</p>'); ?>
-                                </div>
-
-                                <div class="form-group col-md-6">
                                     <label for="icon">Icon</label>
                                     <input type="text" id="icon" class="form-control" name="icon" value="<?= set_value('icon'); ?>">
                                     <?= form_error('icon', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                 </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
+                        
+                                <div class="form-group col-md-3">
                                     <label for="is_active">Active</label>
                                     <select id="is_active" class="form-control" name="is_active" id="is_active">
                                         <option selected="">--Select--</option>
                                         <option value="1">Active</option>
                                         <option value="0">Not Active</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="urutan">Order</label>
+                                    <select id="urutan" class="form-control" name="urutan" id="urutan">
+                                    <?php for ($i=1; $i < count($menu); $i++) { ?>
+                                        <option value="<?php echo $i;?>"><?php echo $i;?></option>
+                                    <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -160,11 +162,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <?php
 foreach ($menu as $i) :
     $id               = $i['id'];
-    $menu             = $i['menu'];
+    $Menu             = $i['menu'];
     $description      = $i['description'];
-    $menu             = $i['menu'];
     $icon             = $i['icon'];
     $is_active        = $i['is_active'];
+    $urutan           = $i['urutan'];
 ?>
     <div class="modal fade edit_menu" id="edit_menu<?php echo $id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -188,9 +190,9 @@ foreach ($menu as $i) :
                                 <div class="form-row">
 
                                     <div class="form-group col-md-6">
-                                        <label for="judul_menu">Title Menu</label>
-                                        <input type="text" name="judul_menu" value="<?php echo $judul_menu; ?>" class="form-control" id="judul_menu">
-                                        <?= form_error('judul_menu', '<p style="color:red; font-size:12px;">', '</p>'); ?>
+                                        <label for="menu">Url</label>
+                                        <input type="text" name="menu" value="<?php echo $Menu; ?>" class="form-control" id="menu">
+                                        <?= form_error('menu', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -202,19 +204,12 @@ foreach ($menu as $i) :
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="url">Url</label>
-                                        <input type="text" id="url" value="<?php echo $url; ?>" class="form-control" name="url" value="<?= set_value('url'); ?>">
-                                        <?= form_error('url', '<p style="color:red; font-size:12px;">', '</p>'); ?>
-                                    </div>
-                                    <div class="form-group col-md-6">
                                         <label for="icon">Icon</label>
                                         <input type="text" id="icon" value="<?php echo $icon; ?>" class="form-control" name="icon" value="<?= set_value('icon'); ?>">
                                         <?= form_error('icon', '<p style="color:red; font-size:12px;">', '</p>'); ?>
                                     </div>
-                                </div>
-
-                                <div class="form-row">    
-                                    <div class="form-group col-md-6">
+                                  
+                                    <div class="form-group col-md-3">
                                         <label for="is_active">Active</label>
                                         <select id="is_active" class="form-control" name="is_active" id="is_active">
                                             <option selected="">--Select--</option>
@@ -227,6 +222,20 @@ foreach ($menu as $i) :
                                             <?php } ?>
                                         </select>
                                     </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="urutan">Order</label>
+                                        <select id="urutan" class="form-control" name="urutan" id="urutan">
+                                        <?php for ($i=1; $i < count($menu); $i++) { ?>
+                                            <?php if ($i == $urutan) { ?>
+                                                <option value="<?php echo $i;?>"selected><?php echo $i;?></option>
+                                            <?php }else{ ?>
+                                                <option value="<?php echo $i;?>"><?php echo $i;?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+
                                 </div>
                                 
                         </div>

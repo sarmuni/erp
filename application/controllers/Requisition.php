@@ -25,7 +25,6 @@ class Requisition extends CI_Controller
         $data['employee']                      = $this->employee_model->get_all('id','desc');
 
         $id                                    = $this->session->userdata('id');
-        $data['head_employee']                 = $this->requisition_model->call_function_procedure_head_of_dept($id);
 
         $data['title'] = 'Requisition';
         $this->template->load('template_neura/index', 'requisition/index', $data);

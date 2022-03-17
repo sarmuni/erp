@@ -41,7 +41,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <tr>
                             <td><center><?php echo $no; ?></center></td>
                             <td><?php echo strtoupper($row['role']); ?></td>
-                            <td><a href="<?= base_url('administrator/roleaccess/') . $row['id']; ?>" class="badge badge-warning">access</a></td>
+                            <td>
+                            <a role="button" href="<?php echo site_url(); ?>administrator/roleaccess/<?php echo $row['id']; ?>" id="role_id" class="btn bg-warning btn-sm" title="Role Access"><i class="fas fa-cogs"></i>
+                                 </a>    
+                            <!-- <a href="<?= base_url('administrator/roleaccess/') . $row['id']; ?>" class="badge badge-warning">access</a> -->
+                            </td>
                             <!-- <td>
                                 <a role="button" href="#" class="btn bg-danger btn-sm" title="Edit" data-toggle="modal" 
                                 data-target="#edit_menu<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>

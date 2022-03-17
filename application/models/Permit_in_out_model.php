@@ -32,7 +32,7 @@ class Permit_in_out_model extends MY_Model
     function get_all()
     {
         $role_id = $this->session->userdata('role_id');
-        if ($role_id==12 OR $role_id==1) {
+        if ($role_id==1) {
             $sql = "SELECT
             a.*,
             b.person_id,

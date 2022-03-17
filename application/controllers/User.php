@@ -29,18 +29,50 @@ class User extends CI_Controller
         $data['count_materials'] = $this->materials_model->count_materials();
         $data['count_machinery'] = $this->machinery_model->count_machinery();
 
-        $this->template->load('template_neura/index', 'dashboard/index', $data);
+        if ($this->session->userdata('role_id') == 1) {
+            # Administartor
+            $this->template->load('template_neura/index', 'dashboard/index_1', $data);
+        }elseif ($this->session->userdata('role_id') == 2) {
+            # Board of Director
+            $this->template->load('template_neura/index', 'dashboard/index_2', $data);
+        }elseif ($this->session->userdata('role_id') == 3) {
+            # Factory Management
+            $this->template->load('template_neura/index', 'dashboard/index_3', $data);
+        }elseif ($this->session->userdata('role_id') == 4) {
+            # Quality Assurance
+            $this->template->load('template_neura/index', 'dashboard/index_4', $data);
+        }elseif ($this->session->userdata('role_id') == 5) {
+            # Production
+            $this->template->load('template_neura/index', 'dashboard/index_5', $data);
+        }elseif ($this->session->userdata('role_id') == 6) {
+            # Engineer
+            $this->template->load('template_neura/index', 'dashboard/index_6', $data);
+        }elseif ($this->session->userdata('role_id') == 7) {
+            # HR & GA
+            $this->template->load('template_neura/index', 'dashboard/index_7', $data);
+        }elseif ($this->session->userdata('role_id') == 8) {
+            # Finance
+            $this->template->load('template_neura/index', 'dashboard/index_8', $data);
+        }elseif ($this->session->userdata('role_id') == 9) {
+            # Warehouse
+            $this->template->load('template_neura/index', 'dashboard/index_9', $data);
+        }elseif ($this->session->userdata('role_id') == 10) {
+            # Building Management
+            $this->template->load('template_neura/index', 'dashboard/index_10', $data);
+        }elseif ($this->session->userdata('role_id') == 11) {
+            # Internal Security
+            $this->template->load('template_neura/index', 'dashboard/index_11', $data);
+        }elseif ($this->session->userdata('role_id') == 12) {
+            # Supply Chain
+            $this->template->load('template_neura/index', 'dashboard/index_12', $data);
+        }elseif ($this->session->userdata('role_id') == 13) {
+            # Information Technology
+            $this->template->load('template_neura/index', 'dashboard/index_13', $data);
+        }else{
+            $this->template->load('template_neura/index', 'dashboard/404', $data);
+        }
+       
     }
 
-    // public function index()
-    // {
-    //     $data['user'] = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
-    //     $data['title'] = 'Users';
-    //     $this->load->view('templates/auth_header', $data);
-    //     $this->load->view('templates/auth_sidebar', $data);
-    //     $this->load->view('user/index', $data);
-    //     $this->load->view('templates/auth_menu_footer', $data);
-    //     $this->load->view('templates/auth_footer', $data);
-    // }
 }

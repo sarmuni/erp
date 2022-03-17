@@ -20,6 +20,24 @@ class Sales_orders_model extends MY_Model
         return $this->db->query($sql)->result_array();
     }
 
+    function get_all_join()
+    {
+            $sql = "SELECT
+            a.id,
+            a.orders_number,
+            a.created_date,
+            b.company_name,
+            a.sales_person_text,
+            a.payment_method,
+            COUNT(c.quantity)AS qty,
+            SUM(c.total) AS total
+            FROM sales_orders a
+            LEFT JOIN ref_customers b ON a.`customer_id`=b.`id`
+            LEFT JOIN sales_order_items c ON a.`orders_number`=c.`sales_orders_id`";
+     
+        return $this->db->query($sql)->result_array();
+    }
+
     public function getActiveProductData()
 	{
 		$sql = "SELECT * FROM products";

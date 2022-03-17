@@ -9,6 +9,7 @@ class Sales_orders extends CI_Controller
         is_logged_in();
 
         $this->load->model('sales_orders_model');
+        $this->load->model('sales_orders_detail_model');
         $this->load->model('ref_customers_model');
         $this->load->library('form_validation');
     }
@@ -16,8 +17,8 @@ class Sales_orders extends CI_Controller
     public function index()
     {
         
-        $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['sales_orders']                  = $this->sales_orders_model->get_all('id', 'desc');
+        $data['user']              = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sales_orders']      = $this->sales_orders_model->get_all_join('id', 'desc');
 
         $data['title'] = 'Sales Orders';
         $this->template->load('template_neura/index', 'sales_orders/index', $data);
@@ -96,84 +97,115 @@ class Sales_orders extends CI_Controller
     public function add()
     {
 
-        $this->form_validation->set_rules('pre_code', 'Pre Requisition Code', 'required|trim');
-        $this->form_validation->set_rules('pre_date', 'Pre Requisition Date', 'required|trim');
-        $this->form_validation->set_rules('pre_deadline_date', 'Pre Requisition Deadline Date', 'required|trim');
-        $this->form_validation->set_rules('request_user_id', 'Request User', 'required|trim');
-        $this->form_validation->set_rules('department_id', 'Departements ', 'required|trim');
-        $this->form_validation->set_rules('request_status', 'Request Status', 'required|trim');
-        $this->form_validation->set_rules('notes', 'Notes', 'required|trim');
-        $this->form_validation->set_rules('item_name', 'Description Details', 'required|trim');
-        $this->form_validation->set_rules('pre_qty', 'Qty', 'required|trim');
+        $this->form_validation->set_rules('orders_number', 'Orders Number', 'required|trim');
+        $this->form_validation->set_rules('customer_id', 'Customers ID', 'required|trim');
+        $this->form_validation->set_rules('payment_method', 'Payment Method', 'required|trim');
+        $this->form_validation->set_rules('on_hold', 'On Hold', 'required|trim');
+        $this->form_validation->set_rules('payment_terms', 'Payment Terms ', 'required|trim');
+        $this->form_validation->set_rules('delivered', 'Delivered', 'required|trim');
+        $this->form_validation->set_rules('remarks', 'Remarks', 'required|trim');
+
+
+        $this->form_validation->set_rules('product', 'Description Details', 'required|trim');
+        $this->form_validation->set_rules('quantity', 'Qty', 'required|trim');
+        $this->form_validation->set_rules('selling_price', 'Selling Price', 'required|trim');
+        $this->form_validation->set_rules('taxable', 'Taxable', 'required|trim');
+        $this->form_validation->set_rules('discount', 'Discount', 'required|trim');
+        $this->form_validation->set_rules('tax', 'Tax', 'required|trim');
+        $this->form_validation->set_rules('total', 'Total', 'required|trim');
 
 
         if ($this->form_validation->run() == true) {
 
-            $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-            $data['sales_orders']            = $this->sales_orders_model->get_all('id', 'desc');
-            $data['option_departments']         = $this->sales_orders_model->departments();
+        //Global Location Number
+        $kode = 'QT-BIG';
+        date_default_timezone_set('Asia/Jakarta');
+        $tanggal = date('Y-m-d H:i:s');
+        $d = date('d', strtotime($tanggal));
+        $m = date('m', strtotime($tanggal));
+        $y = date('y', strtotime($tanggal));
+        $yx = date('Y', strtotime($tanggal));
 
-            $data['title']              = 'Pre Requisition';
-            $this->session->set_flashdata('required', 'incomplete data');
-            $this->template->load('template_neura/index', 'sales_orders/index', $data);
+        $last_code = $this->sales_orders_model->get_last_code($d, $m, $yx);
+        if ($last_code > 0) {
+            $l_code = substr($last_code['orders_number'], -4);
+            $count = (int)$l_code + 1;
+        } else {
+            $count = 1;
+        }
+        $count = str_pad($count, 4, '0', STR_PAD_LEFT);
+        $data['orders_number'] = $kode . $d . $m . $y . '-' . $count;
+        //END NO
+
+        $data['user']                       = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sales_orders']               = $this->sales_orders_model->get_all('id', 'desc');
+        $data['option_customers']           = $this->ref_customers_model->get_all('id', 'desc');
+        $data['products']                   = $this->sales_orders_model->getActiveProductData();
+
+        $data['title']                      = 'Sales Orders';
+        $data['title_items']                = 'Detail Items';
+        $this->template->load('template_neura/index', 'sales_orders/form', $data);
+
         } else {
 
-            $pre_code               = $this->input->post('pre_code');
-            $pre_date               = $this->input->post('pre_date');
-            $pre_deadline_date      = $this->input->post('pre_deadline_date');
-            $request_user_id        = $this->input->post('request_user_id');
-            $department_id          = $this->input->post('department_id');
-            $request_status         = $this->input->post('request_status');
-            $notes                  = $this->input->post('notes');
-            $item_name              = $this->input->post('item_name');
-            $pre_qty                = $this->input->post('pre_qty');
+            $orders_number               = $this->input->post('orders_number');
+            $customer_id                 = $this->input->post('customer_id');
+            $payment_method              = $this->input->post('payment_method');
+            $on_hold                     = $this->input->post('on_hold');
+            $payment_terms               = $this->input->post('payment_terms');
+            $delivered                   = $this->input->post('delivered');
+            $remarks                     = $this->input->post('remarks');
 
             $data = array(
-                'pre_code'          => $pre_code,
-                'pre_date'          => $pre_date,
-                'pre_deadline_date' => $pre_deadline_date,
-                'request_user_id'   => $request_user_id,
-                'department_id'     => $department_id,
-                'request_status'    => $request_status,
-                'notes'             => $notes,
-                'input_by'          => $this->session->userdata('fullname'),
-                'input_date'        => date('Y-m-d H:i:s')
+                'orders_number'          => $orders_number,
+                'customer_id'            => $customer_id,
+                'payment_method'         => $payment_method,
+                'on_hold'                => $on_hold,
+                'payment_terms'          => $payment_terms,
+                'delivered'              => $delivered,
+                'remarks'                => $remarks,
+                'sales_person_id'        => $this->session->role_id,
+                'sales_person_text'      => $this->session->userdata('fullname'),
+                'created_by'             => $this->session->userdata('fullname'),
             );
 
             $insert = $this->sales_orders_model->insert($data);
 
-            $measurement            = $this->input->post('measurement');
-            $estimated_price        = $this->input->post('estimated_price');
-            $item_name              = $this->input->post('item_name');
-            $pre_qty                = $this->input->post('pre_qty');
-            $status                 = $this->input->post('status');
-            $data1 = array();   
+            $quantity                   = $this->input->post('quantity');
+            $selling_price              = $this->input->post('selling_price_value');
+            $taxable                    = $this->input->post('taxable');
+            $discount                   = $this->input->post('discount');
+            $tax                        = $this->input->post('tax_value');
+            $tax_rate                   = $this->input->post('product_tax_rate_value');
+            $total                      = $this->input->post('total_value');
+
+            $count_product = count($this->input->post('product'));
+
+            for ($x=0; $x < $count_product; $x++) { 
+                $data1 = array(
+                    'sales_orders_id'        => $orders_number,
+                    'product_id'             => $this->input->post('product')[$x],
+                    'quantity'               => $quantity[$x],
+                    'selling_price'          => $selling_price[$x],
+                    'taxable'                => $taxable[$x],
+                    'discount'               => $discount[$x],
+                    'tax'                    => $tax[$x],
+                    'tax_rate'               => $tax_rate[$x],
+                    'total'                  => $total[$x],
+                    'created_by'             => $this->session->userdata('fullname'),
+                    'created_date'           => date('Y-m-d H:i:s'),
+                );
+                       
+                $insert = $this->db->insert('sales_order_items', $data1);
+            }
+                if ($insert) {
+                    $this->session->set_flashdata('message', 'Success');
+                    redirect('sales_orders');
+                } else {
+                    $this->session->set_flashdata('message', 'Failed');
+                    redirect('sales_orders');
+                }
             
-            $index = 0;
-            foreach($item_name as $k){
-              array_push($data1, array(
-              'item_pre_code'       => $pre_code,  
-              'item_name'           => $k,  
-              'pre_qty'             => $pre_qty[$index],
-              'measurement'         => strtoupper($measurement[$index]),
-              'estimated_price'     => $estimated_price[$index],
-              'status'              => $status[$index],
-              'createdBy'           => $this->session->userdata('fullname'),
-              'created_at'          => date('Y-m-d H:i:s'),
-              ));
-              $index++;
-            }
-
-               
-            $insert = $this->db->insert_batch('sales_orders_item_detail', $data1);
-
-            if ($insert) {
-                $this->session->set_flashdata('message', 'Success');
-                redirect('sales_orders');
-            } else {
-                $this->session->set_flashdata('message', 'Failed');
-                redirect('sales_orders');
-            }
         }
     }
 
@@ -196,11 +228,11 @@ class Sales_orders extends CI_Controller
     }
 
 
-    public function delete($id,$pre_code)
+    public function delete($id,$orders_number)
     {
 
         $delete = $this->sales_orders_model->delete($id);
-        $delete = $this->sales_orders_detail_model->delete_item($pre_code);
+        $delete = $this->sales_orders_detail_model->delete($orders_number);
 
         if ($delete) {
             redirect('sales_orders');

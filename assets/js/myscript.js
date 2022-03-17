@@ -396,7 +396,7 @@ $(document).ready(function () {
                 var html = '<tr id="row_' + row_id + '">' +
                     '<td>' +
                     '<div class="col-sm-15" style="width:100%;">' +
-                    '<select class="form-control form-control-sm select2" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product_name[]" onchange="getProductData(' + row_id + ')">' +
+                    '<select class="form-control form-control-sm select2" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" onchange="getProductData(' + row_id + ')">' +
                     '<option value=""></option>';
                 $.each(response, function (index, value) {
                     html += '<option value="' + value.id + '">' + value.product_name + '</option>';
@@ -416,7 +416,7 @@ $(document).ready(function () {
                     '</select>' +
                     '</td>' +
 
-                    '<input type="hidden" id="product_tax_rate_value_' + row_id + '" class="form-control form-control-sm" autocomplete="off">' +
+                    '<input type="hidden" name="product_tax_rate_value[]" id="product_tax_rate_value_' + row_id + '" class="form-control form-control-sm" autocomplete="off">' +
                     '<td><input type="text" name="discount[]" id="discount_' + row_id + '" class="form-control form-control-sm"><input type="hidden" name="discount_value[]" id="discount_value_' + row_id + '" class="form-control form-control-sm"></td>' +
 
                     '<td><input type="text" name="tax[]" id="tax_' + row_id + '" class="form-control form-control-sm" disabled><input type="hidden" name="tax_value[]" id="tax_value_' + row_id + '" class="form-control form-control-sm"></td>' +

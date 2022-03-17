@@ -15,7 +15,7 @@ class Menu_model extends MY_Model
 
     function get_all()
     {
-        $sql = "SELECT * FROM auth_menu";
+        $sql = "SELECT * FROM auth_menu order by urutan asc";
         return $this->db->query($sql)->result_array();
     }
 
