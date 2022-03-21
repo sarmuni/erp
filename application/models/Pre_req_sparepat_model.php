@@ -1,12 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Requisition_model extends MY_Model
+class Pre_req_sparepat_model extends MY_Model
 {
 
-    protected $table = 'pre_requisition';
+    protected $table = 'requisition_sparepat';
     protected $primary_key = 'id';
-    protected $create_date = 'created_at';
-    protected $update_date = 'updated_at';
+    protected $create_date = 'created_date';
+    protected $update_date = 'updated_date';
 
     function __construct()
     {
@@ -15,62 +15,59 @@ class Requisition_model extends MY_Model
 
     function get_all()
     {
-        $role_id = $this->session->userdata('role_id');
-        if ($role_id==1 OR $role_id==2 OR $role_id==12 OR $role_id==8) {
-            $sql = "SELECT
-            a.id,
-            a.pre_code,
-            a.pre_date,
-            a.pre_deadline_date,
-            b.fullname,
-            c.name AS department,
-            a.department_id,
-            a.request_status,
-            a.request_user_id,
-            a.status,
-            a.notes,
-            a.approved_hod_date,
-            a.approved_hod_by,
-            a.verified_purchasing_date,
-            a.verified_purchasing_by,
-            a.approved_bod_by_date,
-            a.approved_bod_by,
-            a.approved_finance_date,
-            a.approved_finance_by,
-            a.paid_by,
-            a.paid_date,
-            SUM(d.pre_qty)AS total_item
-            FROM pre_requisition a
-            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
-            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
-            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
-            GROUP BY a.`id`";
-        }else{
-            $sql = "SELECT
-            a.id,
-            a.pre_code,
-            a.pre_date,
-            a.pre_deadline_date,
-            b.fullname,
-            c.name AS department,
-            a.request_status,
-            a.status,
-            a.notes,
-            SUM(d.pre_qty)AS total_item
-            FROM pre_requisition a
-            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
-            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
-            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
-            WHERE a.`department_id`='$role_id' and a.`status` = '2'
-            GROUP BY a.`id`";
-        }
+            $sql = "SELECT * FROM {$this->table}";
+     
         return $this->db->query($sql)->result_array();
     }
+
+    function get_all_join()
+    {
+            $sql = "SELECT
+            a.id,
+            a.orders_number,
+            a.created_date,
+            b.company_name,
+            a.sales_person_text,
+            a.payment_method,
+            COUNT(c.quantity)AS qty,
+            SUM(c.total) AS total
+            FROM sales_orders a
+            LEFT JOIN ref_customers b ON a.`customer_id`=b.`id`
+            LEFT JOIN sales_order_items c ON a.`orders_number`=c.`sales_orders_id`";
+     
+        return $this->db->query($sql)->result_array();
+    }
+
+    public function getActiveProductData()
+	{
+		$sql = "SELECT * FROM products";
+		$query = $this->db->query($sql, array(1));
+		return $query->result_array();
+	}
+
+	public function getProductData($id = null)
+	{
+		if($id) {
+			$sql = "SELECT * FROM products where id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT * FROM products ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+    function get_customers_id($id){
+        $hasil=$this->db->query("SELECT * FROM ref_customers WHERE id='$id'");
+        return $hasil->result();
+    }
+
 
     function get_by_id($id)
     {
         $role_id = $this->session->userdata('role_id');
-        if ($role_id==1 OR $role_id==2 OR $role_id==12 OR $role_id==8) {
+        if ($role_id==12 OR $role_id==1) {
             $sql = "SELECT
             a.id,
             a.pre_code,
@@ -78,69 +75,45 @@ class Requisition_model extends MY_Model
             a.pre_deadline_date,
             b.fullname,
             c.name AS department,
-            a.department_id,
             a.request_status,
-            a.request_user_id,
             a.status,
             a.notes,
-            a.approved_hod_date,
-            a.approved_hod_by,
-            a.verified_purchasing_date,
-            a.verified_purchasing_by,
-            a.approved_bod_by_date,
-            a.approved_bod_by,
-            a.approved_finance_date,
-            a.approved_finance_by,
-            a.paid_by,
-            a.paid_date,
             SUM(d.pre_qty)AS total_item
-            FROM pre_requisition a
+            FROM sales_orders a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
             LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
-            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            LEFT JOIN sales_orders_item_detail d ON a.`pre_code`=d.`item_pre_code`
             WHERE a.`id`='$id'
             GROUP BY a.`id`";
         }else{
             $sql = "SELECT
             a.id,
-             a.pre_code,
-             a.pre_date,
-             a.pre_deadline_date,
-             b.fullname,
-             c.name AS department,
-             a.department_id,
-             a.request_status,
-             a.request_user_id,
-             a.status,
-             a.notes,
-             a.approved_hod_date,
-             a.approved_hod_by,
-             a.verified_purchasing_date,
-             a.verified_purchasing_by,
-             a.approved_bod_by_date,
-             a.approved_bod_by,
-             a.approved_finance_date,
-             a.approved_finance_by,
-             a.paid_by,
-             a.paid_date,
-             SUM(d.pre_qty)AS total_item
-             FROM pre_requisition a
-             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
-             LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
-             LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
-             WHERE a.`department_id`='$role_id' AND a.id='$id'
-             GROUP BY a.`id`";
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.request_status,
+            a.status,
+            a.notes,
+            SUM(d.pre_qty)AS total_item
+            FROM sales_orders a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN sales_orders_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`department_id`='$role_id' AND a.id='$id'
+            GROUP BY a.`id`";
         }
         return $this->db->query($sql)->result_array();
     }
 
     function get_last_code($day, $month, $year)
     {
-        $this->db->where('DAY(created_at)', $day);
-        $this->db->where('MONTH(created_at)', $month);
-        $this->db->where('YEAR(created_at)', $year);
+        $this->db->where('DAY(created_date)', $day);
+        $this->db->where('MONTH(created_date)', $month);
+        $this->db->where('YEAR(created_date)', $year);
 
-        $this->db->order_by('created_at', 'desc');
+        $this->db->order_by('created_date', 'desc');
         $this->db->limit(1);
 
         return $this->db->get($this->table)->row_array();
@@ -304,4 +277,6 @@ class Requisition_model extends MY_Model
         //     return $this->db->query($sql)->result_array();
         // }
     }
+
+
 }

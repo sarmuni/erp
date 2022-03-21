@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-        foreach($pre_requisition as $row){
+        foreach($requisition as $row){
             $id                 = $row['id'];
             $pre_code           = $row['pre_code'];
             $pre_date           = $row['pre_date'];
@@ -10,6 +10,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $department_id      = $row['department'];
             $notes              = $row['notes'];
             $request_status     = $row['request_status'];
+
+            $approved_hod_date  = $row['approved_hod_date'];
+            $approved_hod_by    = $row['approved_hod_by'];
+
+            $verified_purchasing_date   = $row['verified_purchasing_date'];
+            $verified_purchasing_by     = $row['verified_purchasing_by'];
+
+            $approved_bod_by_date       = $row['approved_bod_by_date'];
+            $approved_bod_by            = $row['approved_bod_by'];
+
+            $approved_finance_date      = $row['approved_finance_date'];
+            $approved_finance_by        = $row['approved_finance_by'];
+
+            $paid_by                    = $row['paid_by'];
+            $paid_date                  = $row['paid_date'];
+
 
             if ($request_status==1) {
                 $_request_status="Normal";
@@ -94,7 +110,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </div>
 
                     <div class="col-lg-12"> 
-                        <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn btn-info btn-block mt-3 " title="Print To PDF" > Print To PDF
+                        <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $id; ?>/<?php echo $pre_code; ?>" target="_blank" class="btn btn-info btn-block mt-3 " title="Print To PDF" > Print To PDF
                         </a>
 
                     </div>
@@ -176,16 +192,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="dataTable1" class="table table-bordered" style="width:100%">
+                          
                             <tr>
-                                <td style="width:30%">Pre Requisition Code</td>
+                                <td style="width:30%">Approval by HOD</td>
                                 <td style="width:2%">:</td>
-                                <th><?php echo $pre_code; ?></th>
+                                <td><?php echo $approved_hod_by; ?></td>
                             </tr>
                             <tr>
-                                <td>Pre Requisition Date</td>
+                                <td>Approval Date</td>
                                 <td>:</td>
-                                <td><?php echo $pre_date; ?></td>
+                                <td><?php echo $approved_hod_date; ?></td>
                             </tr>
+
+                            <tr>
+                                <td style="width:30%">Approval by Purchasing</td>
+                                <td style="width:2%">:</td>
+                                <td><?php echo $verified_purchasing_by; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Approval Date</td>
+                                <td>:</td>
+                                <td><?php echo $verified_purchasing_date; ?></td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:30%">Approval by BOD</td>
+                                <td style="width:2%">:</td>
+                                <td><?php echo $approved_bod_by; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Approval Date</td>
+                                <td>:</td>
+                                <td><?php echo $approved_bod_by_date; ?></td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:30%">Approval by Finance</td>
+                                <td style="width:2%">:</td>
+                                <td><?php echo $approved_finance_by; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Approval Date</td>
+                                <td>:</td>
+                                <td><?php echo $approved_finance_date; ?></td>
+                            </tr>
+                          
                     </table>
                 </div>
             </div>

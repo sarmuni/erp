@@ -1,13 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
-<!-- 
-<?php
-foreach ($head_employee as $row) {
-    echo $row['id_user'];
-}
-?> -->
-
 <div class="col-12">
     <div class="card mb-3">
         <div class="card-header">
@@ -28,9 +21,9 @@ foreach ($head_employee as $row) {
             <!-- <a role="button" href="#" class="btn bg-danger btn-sm" title="Print PDF">
                 <i class="fas fa-print"></i> Print PDF
             </a> -->
-            <a role="button" href="#" class="btn bg-danger btn-sm" title="Export Excel">
+            <!-- <a role="button" href="#" class="btn bg-danger btn-sm" title="Export Excel">
                 <i class="fas fa-download"></i> Export Excel
-            </a>
+            </a> -->
             <a role="button" href="<?php echo base_url('pre_requisition'); ?>" class="btn bg-danger btn-sm" title="Refresh">
                 <i class="fas fa-sync-alt"></i> Refresh
             </a>
@@ -89,24 +82,65 @@ foreach ($head_employee as $row) {
                             <td><center><?php echo strtoupper($row['total_item']); ?></center></td>
                             <td>
                                 <?php if ($row['status'] == 0) { ?>
+                                <!-- User Requested -->
+                                    <?php if ($row['request_user_id'] != $this->session->id) { ?>
                                     <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/pre_req_aprov_hod/<?php echo $row['id']; ?>" id="pre_req_aprov_hod" class="btn bg-warning btn-sm pre_req_aprov_hod" title="Aktif">
                                     <i class="fas fa-check"></i> Approved HOD
                                         </a></center>
+
+                                    <?php }else{ ?>
+                                        Waiting for Approval HOD
+                                    <?php } ?>
+
                                 <?php } else if($row['status']==1) { ?>
-                                    <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/pre_req_aprov_purchasing/<?php echo $row['id']; ?>" id="pre_req_aprov_purchasing" class="btn bg-success btn-sm pre_req_aprov_purchasing" title="Aktif">
+                                    <!-- Suplay Chan -->
+                                        <?php if ($this->session->role_id == 12) { ?>
+                                            <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/pre_req_aprov_purchasing/<?php echo $row['id']; ?>" id="pre_req_aprov_purchasing" class="btn bg-success btn-sm pre_req_aprov_purchasing" title="Aktif">
                                             <i class="fas fa-check"></i> Approved Purchasing
                                         </a></center>
+                                    
+                                        <?php }else{ ?>
+                                            Waiting for Approval Purchasing                                          
+                                        <?php } ?>
+
+                                <?php } else if($row['status']==2) { ?>
+                                    <!-- BOD -->
+                                    <?php if ($this->session->role_id == 2) { ?>
+                                            <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/pre_req_approved_bod/<?php echo $row['id']; ?>" id="pre_req_approved_bod" class="btn bg-success btn-sm pre_req_approved_bod" title="Aktif">
+                                            <i class="fas fa-check"></i> Approved BOD
+                                        </a></center>
+                                    
+                                        <?php }else{ ?>
+                                            Waiting for Approval BOD                                       
+                                        <?php } ?>
+
+                                <?php } else if($row['status']==3) { ?>
+                                    <!-- Finance -->
+                                    <?php if ($this->session->role_id == 8) { ?>
+                                            <center><a role="button" href="<?php echo site_url(); ?>pre_requisition/pre_req_approved_bod/<?php echo $row['id']; ?>" id="pre_req_approved_bod" class="btn bg-success btn-sm pre_req_approved_bod" title="Aktif">
+                                            <i class="fas fa-check"></i> Approved Finance
+                                        </a></center>
+                                    
+                                        <?php }else{ ?>
+                                            Waiting for Approval Finance                                   
+                                        <?php } ?>
+
+
                                 <?php } ?>
                             </td>
                             <td>
                                 <!-- <a role="button" href="#" class="btn bg-warning btn-sm" title="Edit" data-toggle="modal" data-target="#edit_pre_requisition<?php echo $row['id']; ?>"><i class="fas fa-user-edit"></i>
                                 </a> -->
-                                
+
+                            <?php if ($row['status'] != 1) { ?>
+
                                  <a role="button" href="<?php echo site_url(); ?>pre_requisition/form_edit/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="edit" class="btn bg-warning btn-sm" title="Edit"><i class="fas fa-user-edit"></i>
                                  </a>
-
+                                
                                  <a role="button" href="<?php echo site_url(); ?>pre_requisition/delete/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="deleted" class="btn bg-danger btn-sm tombol-hapus" title="delete record"><i class="fas fa-trash-alt"></i>
                                  </a>
+
+                            <?php } ?>
 
                                  <a role="button" href="<?php echo site_url(); ?>cetak/pre_requisition/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" target="_blank" class="btn bg-info btn-sm" title="Cetak"><i class="fas fa-print"></i>
                                  </a>

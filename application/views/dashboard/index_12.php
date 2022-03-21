@@ -2,10 +2,10 @@
 <div class="row">
     
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-    <a href="<?php base_url() ?>account_user">
+    <a href="<?php base_url() ?>pre_requisition">
         <div class="card-box noradius noborder bg-danger">
-            <i class="fa fa-wrench float-right text-white"></i>
-            <h6 class="text-white text-uppercase m-b-20">Spare Parts</h6>
+            <i class="fa fa-shopping-cart float-right text-white"></i>
+            <h6 class="text-white text-uppercase m-b-20">Pre Requisition</h6>
             <h1 class="m-b-20 text-white counter">
                 <?php foreach ($count_users as $total_pengirim) {
                     echo $total_pengirim['total'];
@@ -21,7 +21,7 @@
     <a href="">
         <div class="card-box noradius noborder bg-purple">
             <i class="fa fa-shopping-cart float-right text-white"></i>
-            <h6 class="text-white text-uppercase m-b-20">Finish Product</h6>
+            <h6 class="text-white text-uppercase m-b-20">Requisition</h6>
             <h1 class="m-b-20 text-white counter">
                 <?php foreach ($count_departments as $total_barang) {
                     // echo $total_barang['total'];
@@ -35,8 +35,8 @@
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
     <a href="<?php base_url(); ?>materials">
         <div class="card-box noradius noborder bg-warning">
-            <i class="fa fa-truck float-right text-white"></i>
-            <h6 class="text-white text-uppercase m-b-20">Material</h6>
+            <i class="fas fa-database float-right text-white"></i>
+            <h6 class="text-white text-uppercase m-b-20">Purchase Order (PO)</h6>
             <h1 class="m-b-20 text-white counter">
                 <?php foreach ($count_materials as $total_barang) {
                     echo $total_barang['total'];
@@ -49,8 +49,8 @@
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
     <a href="<?php base_url(); ?>machinery">
         <div class="card-box noradius noborder bg-success">
-            <i class="fa fa-truck float-right text-white"></i>
-            <h6 class="text-white text-uppercase m-b-20">Machinery</h6>
+            <i class="fa fa-list float-right text-white"></i>
+            <h6 class="text-white text-uppercase m-b-20">Tiket</h6>
             <h1 class="m-b-20 text-white counter">
                 <?php foreach ($count_machinery as $total_pengirim) {
                     echo $total_pengirim['total'];

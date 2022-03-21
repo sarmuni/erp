@@ -214,7 +214,7 @@
                             </div>
 
                             <!-- item-->
-                            <a href="<?= base_url('account_user/profile'); ?>" class="dropdown-item notify-item">
+                            <a href="<?= base_url('user/profile'); ?>" class="dropdown-item notify-item">
                                 <i class="fas fa-user"></i>
                                 <span>Profile</span>
                             </a>
@@ -287,7 +287,7 @@
 
                                 </h1>
                                 <ol class="breadcrumb float-right">
-                                    <li class="breadcrumb-item">You are logged in as [ <a href="<?php echo base_url() ?>account_user/profile"><?php echo $user['fullname']; ?></a> ]</li>
+                                    <li class="breadcrumb-item">You are logged in as [ <a href="<?php echo base_url() ?>user/profile"><?php echo $user['fullname']; ?></a> ]</li>
                                     <!-- <li class="breadcrumb-item active"><?php echo $title; ?></li> -->
                                 </ol>
                                 <div class="clearfix"></div>
@@ -324,10 +324,11 @@
 
         </div>
         <!-- END content-page -->
-
+        <?php $company = $this->db->get_where('ref_companies', ['id' => 1])->row_array();
+        $companyName = $company['companyName']; ?>
         <footer class="footer">
             <span class="text-right">
-                Copyright @ 2021-<?php echo date('Y'); ?> <a target="_blank" href="https://bataviaindoglobal.com/">PT. Batavia Indo Global</a>
+                Copyright @ 2021-<?php echo date('Y'); ?> <a target="_blank" href="https://bataviaindoglobal.com/"><?php echo $companyName; ?></a>
             </span>
             <span class="float-right">
                 <!-- Copyright footer link MUST remain intact if you download free version. -->

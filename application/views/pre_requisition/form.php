@@ -189,7 +189,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
        
 
-            <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%"> 
+            <!-- <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%"> 
                 <thead>
                         <tr>
                         <th colspan="2" style="width:48%; text-align: center;">Total</th>
@@ -200,7 +200,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <th style="width:8%"></th>
                         </tr>
                 </thead>
-            </table>
+            </table> -->
 
         </div>
 

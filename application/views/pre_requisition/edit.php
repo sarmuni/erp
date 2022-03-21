@@ -76,29 +76,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <div class="form-group row">
                             <label for="department_id" class="col-sm-2 col-form-label">Request Departments</label>
                             <div class="col-sm-3">
-                            <?php if ($user['role_id'] == 1) { 
+                            <?php if ($user['role_id'] == 2) { 
                                     $role_id= "Departments Board of Director";
-                                }elseif ($user['role_id'] == 2) {
-                                    $role_id= "Departments Factory Management";
                                 }elseif ($user['role_id'] == 3) {
-                                    $role_id= "Departments Quality Assurance";
+                                    $role_id= "Departments Factory Management";
                                 }elseif ($user['role_id'] == 4) {
-                                    $role_id= "Departments Production";
+                                    $role_id= "Departments Quality Assurance";
                                 }elseif ($user['role_id'] == 5) {
-                                    $role_id= "Departments Engineer";
+                                    $role_id= "Departments Production";
                                 }elseif ($user['role_id'] == 6) {
-                                    $role_id= "Departments HR & GA";
+                                    $role_id= "Departments Engineer";
                                 }elseif ($user['role_id'] == 7) {
-                                    $role_id= "Departments Finance";
+                                    $role_id= "Departments HR & GA";
                                 }elseif ($user['role_id'] == 8) {
-                                    $role_id= "Departments Warehouse";
+                                    $role_id= "Departments Finance";
                                 }elseif ($user['role_id'] == 9) {
-                                    $role_id= "Departments Building Management";
+                                    $role_id= "Departments Warehouse";
                                 }elseif ($user['role_id'] == 10) {
-                                    $role_id= "Departments Internal Securit";
+                                    $role_id= "Departments Building Management";
                                 }elseif ($user['role_id'] == 11) {
-                                    $role_id= "Departments Supply Chain";
+                                    $role_id= "Departments Internal Securit";
                                 }elseif ($user['role_id'] == 12) {
+                                    $role_id= "Departments Supply Chain";
+                                }elseif ($user['role_id'] == 13) {
                                     $role_id= "Departments Information Technology";
                                 } ?>
                                 <input type="text" class="form-control form-control-sm" readonly value="<?php echo $role_id; ?>" placeholder="Request User" autocomplete="off">

@@ -9,11 +9,11 @@
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
             <div class="flash-data-required" data-flashdata="<?= $this->session->flashdata('required'); ?>"></div>
 
-            <?php foreach ($account_user as $row) { 
+            <?php foreach ($profile as $row) { 
                 $id = $row['id'];?>
 
                 <div class="card-body">
-                <form autocomplete="off" action="<?php echo base_url('account_user/profile_edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
+                <form autocomplete="off" action="<?php echo base_url('user/profile_edit/' . $id); ?>" method="POST" enctype="multipart/form-data">
 
                         <div class="row">
                             <div class="col-lg-6">
@@ -89,7 +89,7 @@
                             <div class="col-lg-12">
                                 <hr>
                                 <button type="submit" class="btn bg-success btn-sm"> <i class="fas fa-save"></i> Update</button>
-                                <a href="<?php echo base_url('dashboard'); ?>"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i> Kembali</button></a>
+                                <a href="<?php echo base_url('user'); ?>"><button type="button" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i> Kembali</button></a>
                             </div>
                         </div>
                     </form>
@@ -136,7 +136,7 @@
 
 <!-- Modal Edit -->
 <?php
-foreach ($account_user as $i) :
+foreach ($profile as $i) :
     $id = $i['id'];
     $image = $i['image'];
 ?>
@@ -158,7 +158,7 @@ foreach ($account_user as $i) :
 
                         <div class="card-body">
 
-                            <form autocomplete="off" action="<?php echo base_url('account_user/upload_avatar/' . $id); ?>" method="POST" enctype="multipart/form-data">
+                            <form autocomplete="off" action="<?php echo base_url('user/upload_avatar/' . $id); ?>" method="POST" enctype="multipart/form-data">
                                 <div class="form-row">
                                    
                                     <div class="form-group col-md-6">

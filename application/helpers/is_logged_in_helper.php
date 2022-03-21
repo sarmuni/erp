@@ -6,20 +6,29 @@ function is_logged_in()
     if (!$ci->session->userdata('email')) {
         redirect('auth');
     } else {
-        $role_id = $ci->session->userdata('role_id');
-        $menu = $ci->uri->segment(1);
+        $company = $ci->db->get_where('ref_companies', ['id' => 1])->row_array();
+        $companyName = $company['companyName'];
+        $key = "UFQgQmF0YXZpYSBJbmRvIEdsb2JhbA==";
 
-        $queryMenu = $ci->db->get_where('auth_menu', ['menu' => $menu])->row_array();
-        $menu_id = $queryMenu['id'];
-        $name_menu = $queryMenu['menu'];
+        if ($companyName == base64_decode($key)) {
+            $role_id = $ci->session->userdata('role_id');
+            $menu = $ci->uri->segment(1);
+    
+            $queryMenu = $ci->db->get_where('auth_menu', ['menu' => $menu])->row_array();
+            $menu_id = $queryMenu['id'];
+            $name_menu = $queryMenu['menu'];
+    
+    
+            $user_access = $ci->db->get_where('auth_user_access_menu', [
+                'role_id' => $role_id,
+                'menu_id' => $menu_id
+            ]);
+    
+            if ($user_access->num_rows() < 1) {
+                redirect('auth/blocked');
+            }
 
-
-        $user_access = $ci->db->get_where('auth_user_access_menu', [
-            'role_id' => $role_id,
-            'menu_id' => $menu_id
-        ]);
-
-        if ($user_access->num_rows() < 1) {
+        }else{
             redirect('auth/blocked');
         }
     }

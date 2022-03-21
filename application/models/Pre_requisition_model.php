@@ -16,7 +16,7 @@ class Pre_requisition_model extends MY_Model
     function get_all()
     {
         $role_id = $this->session->userdata('role_id');
-        if ($role_id==12 OR $role_id==1) {
+        if ($role_id==1 OR $role_id==2  OR $role_id==12) {
             $sql = "SELECT
             a.id,
             a.pre_code,
@@ -26,6 +26,7 @@ class Pre_requisition_model extends MY_Model
             c.name AS department,
             a.department_id,
             a.request_status,
+            a.request_user_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -42,8 +43,11 @@ class Pre_requisition_model extends MY_Model
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
             LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
-            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
-            GROUP BY a.`id`";
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`";
+            if ($role_id==12 OR $role_id==2) {
+                $sql .=" WHERE a.status != 2 and a.status != 3";
+            }
+            $sql .=" GROUP BY a.`id`";
         }else{
             $sql = "SELECT
             a.id,
@@ -54,6 +58,7 @@ class Pre_requisition_model extends MY_Model
             c.name AS department,
             a.department_id,
             a.request_status,
+            a.request_user_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -80,7 +85,7 @@ class Pre_requisition_model extends MY_Model
     function get_by_id($id)
     {
         $role_id = $this->session->userdata('role_id');
-        if ($role_id==12 OR $role_id==1) {
+        if ($role_id==1 OR $role_id==2 OR $role_id==12 OR $role_id==8) {
             $sql = "SELECT
             a.id,
             a.pre_code,
@@ -90,8 +95,19 @@ class Pre_requisition_model extends MY_Model
             c.name AS department,
             a.department_id,
             a.request_status,
+            a.request_user_id,
             a.status,
             a.notes,
+            a.approved_hod_date,
+            a.approved_hod_by,
+            a.verified_purchasing_date,
+            a.verified_purchasing_by,
+            a.approved_bod_by_date,
+            a.approved_bod_by,
+            a.approved_finance_date,
+            a.approved_finance_by,
+            a.paid_by,
+            a.paid_date,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
@@ -101,7 +117,7 @@ class Pre_requisition_model extends MY_Model
             GROUP BY a.`id`";
         }else{
             $sql = "SELECT
-            a.id,
+           a.id,
             a.pre_code,
             a.pre_date,
             a.pre_deadline_date,
@@ -109,8 +125,19 @@ class Pre_requisition_model extends MY_Model
             c.name AS department,
             a.department_id,
             a.request_status,
+            a.request_user_id,
             a.status,
             a.notes,
+            a.approved_hod_date,
+            a.approved_hod_by,
+            a.verified_purchasing_date,
+            a.verified_purchasing_by,
+            a.approved_bod_by_date,
+            a.approved_bod_by,
+            a.approved_finance_date,
+            a.approved_finance_by,
+            a.paid_by,
+            a.paid_date,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`

@@ -1,38 +1,31 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pre_requisition extends CI_Controller
+class Inventaris extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         is_logged_in();
-
-        $this->load->model('pre_requisition_model');
-        $this->load->model('pre_requisition_detail_model');
-        $this->load->model('departments_model');
-        $this->load->model('employee_model');
+        $this->load->model('inventaris_model');
+        $this->load->model('category_inventaris_model');
         $this->load->library('form_validation');
     }
 
     public function index()
     {
         
-        $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['pre_requisition']               = $this->pre_requisition_model->get_all('id', 'desc');
-        $data['option_departments']            = $this->pre_requisition_model->departments();
-        $data['part_departments']              = $this->pre_requisition_model->part_departments();
-        $data['employee']                      = $this->employee_model->get_all('id','desc');
+        $data['user'] = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['inventaris'] = $this->inventaris_model->get_all('id', 'desc');
 
-
-        $data['title'] = 'Pre Requisition';
-        $this->template->load('template_neura/index', 'pre_requisition/index', $data);
+        $data['title'] = 'Register Inventaris';
+        $this->template->load('template_neura/index', 'inventaris/index', $data);
     }
 
     public function form()
     {
         //Global Location Number
-        $kode = 'PRE-REQ';
+        $kode = 'INV-BIG';
         date_default_timezone_set('Asia/Jakarta');
         $tanggal = date('Y-m-d H:i:s');
         $d = date('d', strtotime($tanggal));
@@ -40,26 +33,23 @@ class Pre_requisition extends CI_Controller
         $y = date('y', strtotime($tanggal));
         $yx = date('Y', strtotime($tanggal));
 
-        $last_code = $this->pre_requisition_model->get_last_code($d, $m, $yx);
+        $last_code = $this->inventaris_model->get_last_code($d, $m, $yx);
         if ($last_code > 0) {
-            $l_code = substr($last_code['pre_code'], -4);
+            $l_code = substr($last_code['no_inventaris'], -4);
             $count = (int)$l_code + 1;
         } else {
             $count = 1;
         }
         $count = str_pad($count, 4, '0', STR_PAD_LEFT);
-
-        $data['pre_code'] = $kode . $d . $m . $y . '-' . $count;
+        $data['no_inventaris'] = $kode . $d . $m . $y . '-' . $count;
         //END NO
 
-        $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['pre_requisition']               = $this->pre_requisition_model->get_all('id', 'desc');
-        $data['option_departments']            = $this->pre_requisition_model->departments();
-        $data['part_departments']              = $this->pre_requisition_model->part_departments();
+        $data['user']    = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['inventaris']  = $this->inventaris_model->get_all('id', 'desc');
+        $data['select_category']  = $this->category_inventaris_model->get_all('id', 'desc');
 
-        $data['title'] = 'Form Pre Requisition';
-        $data['title_items'] = 'Detail Items';
-        $this->template->load('template_neura/index', 'pre_requisition/form', $data);
+        $data['title'] = 'Form Register Inventaris';
+        $this->template->load('template_neura/index', 'inventaris/form', $data);
     }
 
     public function view($id,$pre_code)

@@ -10,6 +10,8 @@ class Requisition extends CI_Controller
 
         $this->load->model('requisition_model');
         $this->load->model('requisition_detail_model');
+        $this->load->model('pre_requisition_model');
+        $this->load->model('pre_requisition_detail_model');
         $this->load->model('departments_model');
         $this->load->model('employee_model');
         $this->load->library('form_validation');
@@ -24,7 +26,6 @@ class Requisition extends CI_Controller
         $data['part_departments']              = $this->requisition_model->part_departments();
         $data['employee']                      = $this->employee_model->get_all('id','desc');
 
-        $id                                    = $this->session->userdata('id');
 
         $data['title'] = 'Requisition';
         $this->template->load('template_neura/index', 'requisition/index', $data);
@@ -66,14 +67,31 @@ class Requisition extends CI_Controller
     public function view($id,$pre_code)
     {
         $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
-        $data['pre_requisition']               = $this->pre_requisition_model->get_by_id($id);
-        $data['pre_requisition_detail']        = $this->pre_requisition_detail_model->get_all_item($pre_code);
+        $data['requisition']                   = $this->requisition_model->get_by_id($id);
+        $data['requisition_detail']            = $this->requisition_detail_model->get_all_item($pre_code);
+        
         $data['option_departments']            = $this->pre_requisition_model->departments();
         $data['part_departments']              = $this->pre_requisition_model->part_departments();
         $data['employee']                      = $this->employee_model->get_all('id','desc');
 
         $data['title'] = 'View Pre Requisition';
-        $this->template->load('template_neura/index', 'pre_requisition/view', $data);
+        $this->template->load('template_neura/index', 'requisition/view', $data);
+    }
+
+    public function form_edit()
+    {
+        $id = $this->uri->segment(3);
+        $pre_code = $this->uri->segment(4);
+
+        $data['user']                          = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['pre_requisition']               = $this->pre_requisition_model->get_by_id($id);
+        $data['pre_requisition_detail']        = $this->pre_requisition_detail_model->get_all_item($pre_code);
+        $data['option_departments']            = $this->pre_requisition_model->departments();
+        $data['part_departments']              = $this->pre_requisition_model->part_departments();
+
+        $data['title'] = 'Form Edit Pre Requisition';
+        $data['title_items'] = 'Edit Detail Items';
+        $this->template->load('template_neura/index', 'pre_requisition/edit', $data);
     }
 
     public function add()
@@ -285,9 +303,9 @@ class Requisition extends CI_Controller
 
         $update = $this->pre_requisition_model->update($id, $data);
         if ($update) {
-            redirect('pre_requisition');
+            redirect('requisition');
         } else {
-            redirect('pre_requisition');
+            redirect('requisition');
         }
     }
 
@@ -301,9 +319,9 @@ class Requisition extends CI_Controller
 
         $update = $this->pre_requisition_model->update($id, $data);
         if ($update) {
-            redirect('pre_requisition');
+            redirect('requisition');
         } else {
-            redirect('pre_requisition');
+            redirect('requisition');
         }
     }
 
@@ -317,9 +335,9 @@ class Requisition extends CI_Controller
 
         $update = $this->pre_requisition_model->update($id, $data);
         if ($update) {
-            redirect('pre_requisition');
+            redirect('requisition');
         } else {
-            redirect('pre_requisition');
+            redirect('requisition');
         }
     }
 
