@@ -1,12 +1,12 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Suppliers_model extends MY_Model
+class Purchase_order_model extends MY_Model
 {
 
-    protected $table = 'ref_suppliers';
+    protected $table = 'purchase_order';
     protected $primary_key = 'id';
-    protected $create_date = 'created_at';
-    protected $update_date = 'updated_at';
+    protected $create_date = 'created_date';
+    protected $update_date = 'update_date';
 
     function __construct()
     {
@@ -15,27 +15,90 @@ class Suppliers_model extends MY_Model
 
     function get_all()
     {
-        $sql = "SELECT * FROM ref_suppliers";
+        $sql = "SELECT * FROM purchase_order";
         return $this->db->query($sql)->result_array();
     }
 
     function get_by_id($id)
     {
-        $sql = "SELECT * FROM ref_suppliers Where id = $id";
+        $role_id = $this->session->userdata('role_id');
+        if ($role_id==1 OR $role_id==2 OR $role_id==12 OR $role_id==8) {
+            $sql = "SELECT
+            a.id,
+            a.pre_code,
+            a.pre_date,
+            a.pre_deadline_date,
+            b.fullname,
+            c.name AS department,
+            a.department_id,
+            a.request_status,
+            a.request_user_id,
+            a.status,
+            a.notes,
+            a.approved_hod_date,
+            a.approved_hod_by,
+            a.verified_purchasing_date,
+            a.verified_purchasing_by,
+            a.approved_bod_by_date,
+            a.approved_bod_by,
+            a.approved_finance_date,
+            a.approved_finance_by,
+            a.paid_by,
+            a.paid_date,
+            SUM(d.pre_qty)AS total_item
+            FROM pre_requisition a
+            LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+            LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+            LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+            WHERE a.`id`='$id'
+            GROUP BY a.`id`";
+        }else{
+            $sql = "SELECT
+            a.id,
+             a.pre_code,
+             a.pre_date,
+             a.pre_deadline_date,
+             b.fullname,
+             c.name AS department,
+             a.department_id,
+             a.request_status,
+             a.request_user_id,
+             a.status,
+             a.notes,
+             a.approved_hod_date,
+             a.approved_hod_by,
+             a.verified_purchasing_date,
+             a.verified_purchasing_by,
+             a.approved_bod_by_date,
+             a.approved_bod_by,
+             a.approved_finance_date,
+             a.approved_finance_by,
+             a.paid_by,
+             a.paid_date,
+             SUM(d.pre_qty)AS total_item
+             FROM pre_requisition a
+             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
+             LEFT JOIN ref_departments c ON a.`department_id`=c.`id`
+             LEFT JOIN pre_requisition_item_detail d ON a.`pre_code`=d.`item_pre_code`
+             WHERE a.`department_id`='$role_id' AND a.id='$id'
+             GROUP BY a.`id`";
+        }
         return $this->db->query($sql)->result_array();
     }
 
-    // function get_last_code_resi($day, $month, $year)
-    // {
-    //     $this->db->where('DAY(tanggal_dibuat)', $day);
-    //     $this->db->where('MONTH(tanggal_dibuat)', $month);
-    //     $this->db->where('YEAR(tanggal_dibuat)', $year);
+    function get_last_code($day, $month, $year)
+    {
+        $this->db->where('DAY(created_date)', $day);
+        $this->db->where('MONTH(created_date)', $month);
+        $this->db->where('YEAR(created_date)', $year);
 
-    //     $this->db->order_by('tanggal_dibuat', 'desc');
-    //     $this->db->limit(1);
+        $this->db->order_by('created_date', 'desc');
+        $this->db->limit(1);
 
-    //     return $this->db->get($this->table)->row_array();
-    // }
+        return $this->db->get($this->table)->row_array();
+    }
+
+
 
     // function get_all_join_pelanggan_penerima()
     // {
@@ -52,7 +115,7 @@ class Suppliers_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,
@@ -92,7 +155,7 @@ class Suppliers_model extends MY_Model
     //     a.ukuran_foto,
     //     a.status,
     //     a.id_kurir,
-    //     a.tanggal_dibuat,
+    //     a.date_created,
     //     b.nama AS nama_penerima,
     //     b.alamat AS alamat_penerima,
     //     b.rt,
@@ -117,23 +180,30 @@ class Suppliers_model extends MY_Model
     //     return $this->db->query($sql)->result_array();
     // }
 
-    // function provinsi()
-    // {
-    //     $this->db->order_by('name', 'ASC');
-    //     $provinces = $this->db->get('tabel_master_provinsi');
-    //     return $provinces->result_array();
-    // }
+    function departments()
+    {
+        $this->db->order_by('name', 'ASC');
+        $result = $this->db->get('ref_departments');
+        return $result->result_array();
+    }
 
-    // function kabupaten($provId)
-    // {
-    //     $kabupaten = "<option value='0'>Pilih</pilih>";
-    //     $this->db->order_by('name', 'ASC');
-    //     $kab = $this->db->get_where('tabel_master_kabupaten', array('province_id' => $provId));
-    //     foreach ($kab->result_array() as $data) {
-    //         $kabupaten .= "<option value='$data[id]'>$data[name]</option>";
-    //     }
-    //     return $kabupaten;
-    // }
+    function part_departments()
+    {
+        $this->db->order_by('name', 'ASC');
+        $result = $this->db->get('ref_departments_detail');
+        return $result->result_array();
+    }
+
+    function part_departments_id($id_def)
+    {
+        $part_departments_id = "<option value='0'>-- Select --</pilih>";
+        $this->db->order_by('name', 'ASC');
+        $result = $this->db->get_where('ref_departments_detail', array('id_def' => $id_def));
+        foreach ($result->result_array() as $data) {
+            $part_departments_id .= "<option value='$data[id]'>$data[name]</option>";
+        }
+        return $part_departments_id;
+    }
 
     // function kecamatan($kabId)
     // {

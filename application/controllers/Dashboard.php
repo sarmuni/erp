@@ -19,7 +19,6 @@ class Dashboard extends CI_Controller
     {
         $data['user'] = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
 
-
         $data['title'] = 'Dashboard';
         $data['count_spareparts'] = $this->spareparts_model->count_spareparts();
         $data['count_warehouses'] = $this->warehouses_model->count_warehouses();

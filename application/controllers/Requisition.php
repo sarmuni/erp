@@ -9,6 +9,7 @@ class Requisition extends CI_Controller
         is_logged_in();
 
         $this->load->model('requisition_model');
+        $this->load->model('purchase_order_model');
         $this->load->model('requisition_detail_model');
         $this->load->model('pre_requisition_model');
         $this->load->model('pre_requisition_detail_model');
@@ -327,13 +328,37 @@ class Requisition extends CI_Controller
 
     public function pre_req_approved_finance($id)
     {
+         //No PO
+         $kode = 'PO-BIG';
+         date_default_timezone_set('Asia/Jakarta');
+         $tanggal = date('Y-m-d H:i:s');
+         $d = date('d', strtotime($tanggal));
+         $m = date('m', strtotime($tanggal));
+         $y = date('y', strtotime($tanggal));
+         $yx = date('Y', strtotime($tanggal));
+ 
+         $last_code = $this->pre_requisition_model->get_last_code($d, $m, $yx);
+         if ($last_code > 0) {
+             $l_code = substr($last_code['number_po'], -4);
+             $count = (int)$l_code + 1;
+         } else {
+             $count = 1;
+         }
+         $count = str_pad($count, 4, '0', STR_PAD_LEFT);
+ 
+         $number_po = $kode . $d . $m . $y . '-' . $count;
+         //END No PO
+
         $data = array(
             'status'                    => 4,
+            'number_po'                 => $number_po,
             'approved_finance_date'     => date('Y-m-d H:i:s'),
             'approved_finance_by'       => $this->session->fullname
         );
 
         $update = $this->pre_requisition_model->update($id, $data);
+
+
         if ($update) {
             redirect('requisition');
         } else {

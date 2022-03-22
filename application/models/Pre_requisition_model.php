@@ -27,6 +27,7 @@ class Pre_requisition_model extends MY_Model
             a.department_id,
             a.request_status,
             a.request_user_id,
+            a.supliers_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -39,6 +40,7 @@ class Pre_requisition_model extends MY_Model
             a.approved_finance_by,
             a.paid_by,
             a.paid_date,
+            a.created_at,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
@@ -59,6 +61,7 @@ class Pre_requisition_model extends MY_Model
             a.department_id,
             a.request_status,
             a.request_user_id,
+            a.supliers_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -71,6 +74,7 @@ class Pre_requisition_model extends MY_Model
             a.approved_finance_by,
             a.paid_by,
             a.paid_date,
+            a.created_at,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
@@ -89,6 +93,7 @@ class Pre_requisition_model extends MY_Model
             $sql = "SELECT
             a.id,
             a.pre_code,
+            a.number_po,
             a.pre_date,
             a.pre_deadline_date,
             b.fullname,
@@ -96,6 +101,7 @@ class Pre_requisition_model extends MY_Model
             a.department_id,
             a.request_status,
             a.request_user_id,
+            a.supliers_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -108,6 +114,7 @@ class Pre_requisition_model extends MY_Model
             a.approved_finance_by,
             a.paid_by,
             a.paid_date,
+            a.created_at,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`
@@ -119,6 +126,7 @@ class Pre_requisition_model extends MY_Model
             $sql = "SELECT
            a.id,
             a.pre_code,
+            a.number_po,
             a.pre_date,
             a.pre_deadline_date,
             b.fullname,
@@ -126,6 +134,7 @@ class Pre_requisition_model extends MY_Model
             a.department_id,
             a.request_status,
             a.request_user_id,
+            a.supliers_id,
             a.status,
             a.notes,
             a.approved_hod_date,
@@ -138,6 +147,7 @@ class Pre_requisition_model extends MY_Model
             a.approved_finance_by,
             a.paid_by,
             a.paid_date,
+            a.created_at,
             SUM(d.pre_qty)AS total_item
             FROM pre_requisition a
             LEFT JOIN auth_user b ON a.`request_user_id`=b.`id`

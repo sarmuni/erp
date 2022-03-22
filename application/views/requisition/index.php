@@ -117,8 +117,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <?php } else if($row['status']==3) { ?>
                                     <!-- Finance -->
                                     <?php if ($this->session->role_id == 8) { ?>
-                                            <center><a role="button" href="<?php echo site_url(); ?>requisition/pre_req_approved_finance/<?php echo $row['id']; ?>" id="pre_req_approved_finance" class="btn bg-success btn-sm pre_req_approved_finance" title="Aktif">
-                                            <i class="fas fa-check"></i> Approved Finance
+                                            <center><a role="button" href="<?php echo site_url(); ?>requisition/pre_req_approved_finance/<?php echo $row['id']; ?>/<?php echo $row['pre_code']; ?>" id="pre_req_approved_finance" class="btn bg-success btn-sm pre_req_approved_finance" title="Aktif">
+                                            <i class="fas fa-check"></i> Approved Finance & PO
                                         </a></center>
                                     
                                         <?php }else{ ?>

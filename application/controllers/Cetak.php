@@ -19,6 +19,7 @@ class Cetak extends CI_Controller
         $this->load->model('pre_requisition_detail_model');
         $this->load->model('departments_model');
         $this->load->model('employee_model');
+        $this->load->model('suppliers_model');
 
         $this->load->library('form_validation');
         $this->load->library('pdf_barcode');
@@ -140,12 +141,28 @@ class Cetak extends CI_Controller
             $department_id      = $row['department'];
             $notes              = $row['notes'];
             $request_status     = $row['request_status'];
+            $created_at         = $row['created_at'];
 
             if ($request_status==1) {
                 $_request_status="Normal";
             }else{
                 $_request_status="Urgent";
             }
+
+            $approved_hod_date  = $row['approved_hod_date'];
+            $approved_hod_by    = $row['approved_hod_by'];
+
+            $verified_purchasing_date   = $row['verified_purchasing_date'];
+            $verified_purchasing_by     = $row['verified_purchasing_by'];
+
+            $approved_bod_by_date       = $row['approved_bod_by_date'];
+            $approved_bod_by            = $row['approved_bod_by'];
+
+            $approved_finance_date      = $row['approved_finance_date'];
+            $approved_finance_by        = $row['approved_finance_by'];
+
+            $paid_by                    = $row['paid_by'];
+            $paid_date                  = $row['paid_date'];
 
             $code_replace       = str_replace("-","","$pre_code");
             $substr_replace     = substr($code_replace,6);
@@ -315,11 +332,11 @@ class Cetak extends CI_Controller
         $pdf->row(array('','','','','','',''));
         $pdf->row(array('','','','','','',''));
         $pdf->SetFont('Arial','BU',9);
-        $pdf->row(array('',''.$request_user_id.'','','','','',''.$request_user_id.''));
+        $pdf->row(array('',''.$request_user_id.'','','','','',''.$approved_hod_by.''));
         $pdf->SetFont('Arial','',8);
         $pdf->row(array('','( _______________________ )','','','','','( _______________________ )'));
         $pdf->SetFont('Arial','',5);
-        $pdf->row(array('','Signature Date','','','','','Signature Date'));
+        $pdf->row(array('',''.$created_at.'','','','','',''.$approved_hod_date.''));
 
         $pdf->Ln(10);
 
@@ -331,11 +348,221 @@ class Cetak extends CI_Controller
         $pdf->row(array('','','','','','',''));
         $pdf->row(array('','','','','','',''));
         $pdf->SetFont('Arial','BU',9);
-        $pdf->row(array('','Joey Ooi','','','','','Joey Ooi'));
+        $pdf->row(array('',''.$approved_bod_by.'','','','','',''.$approved_finance_by.''));
         $pdf->SetFont('Arial','',8);
         $pdf->row(array('','( _______________________ )','','','','','( _______________________ )'));
         $pdf->SetFont('Arial','',5);
-        $pdf->row(array('','Signature Date','','','','','Signature Date'));
+        $pdf->row(array('',''.$approved_bod_by_date.'','','','','',''.$approved_finance_date.''));
+
+        //END PDF//////////////////////////////////////////
+
+        $pdf->Output('pre_requisition_form'.'.pdf','I');
+        
+    }
+
+
+    public function purchase_order_po($pre_code)
+    {
+
+        $pre_requisition= $this->pre_requisition_model->get_by_id($pre_code);
+        foreach($pre_requisition as $row){
+            $id                 = $row['id'];
+            $pre_code           = $row['pre_code'];
+            $pre_date           = $row['pre_date'];
+            $supliers_id        = $row['supliers_id'];
+            $pre_deadline_date  = $row['pre_deadline_date'];
+            $request_user_id    = $row['fullname'];
+            $department_id      = $row['department'];
+            $notes              = $row['notes'];
+            $request_status     = $row['request_status'];
+            $created_at         = $row['created_at'];
+            $number_po          = $row['number_po'];
+
+            if ($request_status==1) {
+                $_request_status="Normal";
+            }else{
+                $_request_status="Urgent";
+            }
+
+            $approved_hod_date  = $row['approved_hod_date'];
+            $approved_hod_by    = $row['approved_hod_by'];
+
+            $verified_purchasing_date   = $row['verified_purchasing_date'];
+            $verified_purchasing_by     = $row['verified_purchasing_by'];
+
+            $approved_bod_by_date       = $row['approved_bod_by_date'];
+            $approved_bod_by            = $row['approved_bod_by'];
+
+            $approved_finance_date      = $row['approved_finance_date'];
+            $approved_finance_by        = $row['approved_finance_by'];
+
+            $paid_by                    = $row['paid_by'];
+            $paid_date                  = $row['paid_date'];
+
+            $code_replace       = str_replace("-","","$pre_code");
+            $substr_replace     = substr($code_replace,6);
+        }
+
+
+        $suppliers= $this->suppliers_model->get_by_id($supliers_id);
+        foreach ($suppliers as $key => $value) {
+            $supplierName = $value['supplierName'];
+            $address = $value['address'];
+            $phone = $value['phone'];
+            $email = $value['email'];
+        }
+
+        // QR CODE
+        $tempdir = "uploads/qr_po/"; 
+        if (!file_exists($tempdir))
+            mkdir($tempdir);
+
+        $isi_teks1 = $number_po;
+        $namafile1 = $number_po.".png";
+        $quality1 = 'H'; 
+        $ukuran1 = 8; 
+        $padding1 = 0; 
+        QRCode::png($isi_teks1,$tempdir.$namafile1,$quality1,$ukuran1,$padding1);
+        // END QR CODE
+
+        $pre_code_uri = $this->uri->segment(4);
+        $pre_req_detail = $this->pre_requisition_detail_model->get_all_item($pre_code_uri);
+
+        //BEGIN PDF///////////////////////////////////////////
+        $pdf = new PDF_BARCODE();
+        $pdf->SetTitle('PURCHASE ORDER (PO)');
+        $pdf->addpage('P','A4');
+        $pdf->AliasNbPages();
+
+        $pdf->SetFont('Times','I',8);
+        $pdf->image(base_url().'assets/img/logo_print.png',10,10,10,10);
+        $pdf->Image('uploads/qr_po/'.$number_po.".png", 156, 30, 20, 20, "png");
+        $pdf->cell(10);
+        $pdf->cell(0,3,$this->_nama,0,1);
+        $pdf->cell(10);
+        $pdf->cell(0,3,$this->_motto,0,1);
+        $pdf->cell(10);
+        $pdf->cell(0,3,$this->_alamat,0,1);
+
+        $_nmbulan = array('','Januari','Pebruari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','Nopember','Desember');
+
+        $pdf->ln(15);
+        $pdf->SetFont('Arial','BU',13);
+        $pdf->cell(0,5,'PURCHASE ORDER (PO)',0,1,'C');
+        $pdf->SetFont('Arial','B',11);
+        $pdf->cell(0,7,strtoupper($number_po),0,1,'C');
+        // $pdf->EAN13(150,75,$substr_replace, 5, 0.5, 9);
+
+        $pdf->SetFont('Arial','',8);
+        $pdf->SetWidths(array(5,30,3,60,30,3,45));
+        $pdf->SetAligns(array('L','L','C','L','L','C','L'));
+        $pdf->SetFonts(array(9,9,9,9,9,9,9));
+        $pdf->ln(10);
+
+        $pdf->SetFontsType(array('','','','','','',''));
+        $pdf->row(array('','VENDOR','','','SHIP TO','',''));
+        $pdf->row(array('','Company Name',':',''.$supplierName.'','Company Name',':','PT. Batavia Indo Global'));
+        $pdf->row(array('','Address',':',''.$address.'','Address',':','Modern Cikande Industrial Estate Block D No 1 & 2 Jalan Raya Jakarta Serang KM 68 Banten.'));
+        $pdf->row(array('','','','','City',':','Serang 42186'));
+        $pdf->row(array('','Phone',':',''.$phone.'','Phone',':','-'));
+        $pdf->ln(5);
+
+
+         ///////////////////////////////////////////////////
+         $pdf->cell(5);
+         $pdf->SetFont('Arial','',9);
+         // Column headings
+         $header = array('No',
+                         'Description Details',
+                         'Qty',
+                         'Unit',
+                         'Price',
+                         'Total'
+                         );
+ 
+         // Data loading
+         $data = $pre_req_detail;
+         // Colors, line width and bold font
+         $pdf->SetFillColor(224,224,224);
+         $pdf->SetTextColor(0);
+         $pdf->SetDrawColor(0,0,0);
+         $pdf->SetLineWidth(.1);
+         $pdf->SetFont('','B');
+         // Header
+         $w = array(8,100,10,10,23,22,);
+         for($i=0;$i<count($header);$i++)
+             $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
+         $pdf->Ln();
+         // Color and font restoration
+         $pdf->SetFillColor(255,255,255);
+         $pdf->SetTextColor(0);
+         $pdf->SetFont('');
+         // Data
+         $fill = false;
+
+         $no = 1;
+         $total_harga = 0;
+         foreach($data as $row)
+        {
+            
+            $pdf->cell(5);
+            $pdf->Cell($w[0],6,$no,1,0,'C',$fill);
+            $pdf->Cell($w[1],6,$row['item_name'],1,0,'L',$fill);
+            $pdf->Cell($w[2],6,$row['pre_qty'],1,0,'C',$fill);
+            $pdf->Cell($w[3],6,$row['measurement'],1,0,'C',$fill);
+            $pdf->Cell($w[4],6,number_format($row['estimated_price']),1,0,'R',$fill);
+            $pdf->Cell($w[5],6,number_format($row['pre_qty']*$row['estimated_price']),1,0,'R',$fill);
+            $pdf->Ln();
+            $fill = !$fill;
+
+            $no = $no+1;
+            $total_harga = $total_harga+($row['pre_qty']*$row['estimated_price']);
+        }
+
+        $pdf->cell(5);
+        // Column footer
+        $footer = array('Total',
+                        number_format($total_harga)
+                        );
+
+        // Colors, line width and bold font
+        $pdf->SetFillColor(255,255,255);
+        $pdf->SetTextColor(0);
+        $pdf->SetDrawColor(0,0,0);
+        $pdf->SetLineWidth(.1);
+        $pdf->SetFont('','B');
+
+        $w = array(151,22);
+        for($i=0;$i<count($footer);$i++)
+            if ($i == 0)
+            {
+                $pdf->Cell($w[$i],7,$footer[$i],1,0,'R',true);
+            } else
+            {
+                $pdf->Cell($w[$i],7,$footer[$i],1,0,'R',true);    
+            }           
+        ;
+        $pdf->Ln();
+
+        // Closing line
+        $pdf->cell(5);
+        $pdf->Cell(array_sum($w),0,'','T');
+
+        //////////////////////////////////////////////////
+        // $pdf->SetFont('Arial','',9);
+        // $pdf->row(array('','','','','','',''));
+        // $pdf->SetWidths(array(5,30,3,65,0,0,0));
+        // $pdf->row(array('','Notes',':',$notes.'','','',''));
+        // $pdf->row(array('','Status Requisition',':',$_request_status.'','','',''));
+        // $pdf->row(array('','','','','','',''));
+        // $pdf->row(array('','','','','','',''));
+        // $pdf->SetWidths(array(0,65,0,0,65,0,65));
+        // $pdf->SetAligns(array('L','C','R','L','C','L','C'));
+        // $pdf->SetFonts(array(9,9,9,9,9,9,9));
+
+
+
+       
 
         //END PDF//////////////////////////////////////////
 
