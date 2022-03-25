@@ -28,7 +28,8 @@ class Administrator extends CI_Controller
         $data['count_materials'] = $this->materials_model->count_materials();
         $data['count_machinery'] = $this->machinery_model->count_machinery();
 
-        $this->template->load('template_neura/index', 'dashboard/index_1', $data);
+        // $this->template->load('template_neura/index', 'dashboard/index_1', $data);
+        $this->template->load('template_adminlte/index', 'dashboard/index_1a', $data);
     }
 
     public function role()
@@ -37,7 +38,8 @@ class Administrator extends CI_Controller
         $data['user'] = $this->db->get_where('auth_user', ['email' => $this->session->userdata('email')])->row_array();
         $data['role'] = $this->db->get('auth_role')->result_array();
         $data['title'] = 'Module Role';
-        $this->template->load('template_neura/index', 'role/index', $data);
+        $this->template->load('template_adminlte/index', 'role/index', $data);
+        // $this->template->load('template_neura/index', 'role/index', $data);
     }
 
 
@@ -52,7 +54,8 @@ class Administrator extends CI_Controller
         $this->db->where('id !=', 12);
         $data['menu'] = $this->db->get('auth_menu')->result_array();
 
-        $this->template->load('template_neura/index', 'role/role_access', $data);
+        $this->template->load('template_adminlte/index', 'role/role_access', $data);
+        // $this->template->load('template_neura/index', 'role/role_access', $data);
     }
 
     public function changeAccess()

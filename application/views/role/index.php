@@ -26,7 +26,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <hr> -->
 
             <div class="table-responsive">
-                <table id="dataTable1" class="table table-bordered table-hover display" style="width:100%">
+                <table id="dataTable" class="table table-bordered table-hover display" style="width:100%">
                     <thead>
                         <tr>
                             <th>No</th>

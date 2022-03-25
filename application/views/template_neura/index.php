@@ -229,31 +229,19 @@
 
                 </ul>
 
-                <ul class="list-inline menu-left mb-0">
-                    <li class="float-left">
-                        <button class="button-menu-mobile open-left">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                    </li>
-                </ul>
-
             </nav>
 
         </div>
         <!-- End Navigation -->
 
-        <!-- Left Sidebar Menu-->
-        <?php include_once "menu_sidebar.php"; ?>
-        <!-- End Sidebar Menu-->
 
-        <div class="content-page">
+
 
             <!-- Start content -->
             <div class="content">
 
                 <div class="container-fluid">
 
-                    <div class="row">
                         <div class="col-xl-12">
                             <div class="breadcrumb-holder">
                                 <h1 class="main-title float-left">
@@ -305,7 +293,6 @@
                                 <a class="btn btn-success" href="pro.html">More info</a>
                             </div> -->
 
-                        </div>
                     </div>
                     <!-- end row -->
 
@@ -322,7 +309,6 @@
             </div>
             <!-- END content -->
 
-        </div>
         <!-- END content-page -->
         <?php $company = $this->db->get_where('ref_companies', ['id' => 1])->row_array();
         $companyName = $company['companyName']; ?>

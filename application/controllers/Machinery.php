@@ -59,7 +59,8 @@ class Machinery extends CI_Controller
         //END NO
         
 
-        $this->template->load('template_neura/index', 'machinery/index', $data);
+        $this->template->load('template_adminlte/index', 'machinery/index', $data);
+        // $this->template->load('template_neura/index', 'machinery/index', $data);
     }
 
     // public function form()
